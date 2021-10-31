@@ -1,0 +1,15 @@
+{
+  "name": "senla--pet-library",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SENLA - pet-project Library",
+  "scripts": {
+
+  },
+  "devDependencies": {
+
+  },
+  "engines": {
+    "node": "10"
+  }
+}
