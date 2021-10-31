@@ -1,4 +1,6 @@
 const path = require(`path`);
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 
 module.exports = {
   entry: `./src/index.js`,
@@ -23,5 +25,13 @@ module.exports = {
       }
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+        title: 'SENLA - pet-project Library',
+        template: path.resolve(__dirname, './src/index-template.html'),
+        filename: 'index.html',
+    }),
+  ],
   devtool: `source-map`,
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development'
 };
