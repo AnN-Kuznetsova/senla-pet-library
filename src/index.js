@@ -1,1 +1,1 @@
-//index.js
+document.body.style.backgroundColor = `#f53256`;
