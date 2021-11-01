@@ -1,0 +1,36 @@
+env:
+  es6: true
+  browser: true
+  commonjs: true
+
+extends: [
+  "plugin:import/react",
+  "plugin:react/recommended",
+  "plugin:react-hooks/recommended",
+]
+
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: 6
+  sourceType: module
+
+plugins: [
+  "react",
+  "react-hooks",
+]
+
+rules: {
+  "react-hooks/rules-of-hooks": "error",
+  "react-hooks/exhaustive-deps": "warn",
+  "react-hooks/exhaustive-deps": ["warn", {
+    "additionalHooks": "(useMyCustomHook|useMyOtherCustomHook)"
+  }],
+}
+
+settings:
+  react:
+    version: "16"
+  import/resolver:
+    node:
+      extensions: [".js", ".jsx"]
