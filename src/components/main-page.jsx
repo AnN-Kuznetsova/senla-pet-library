@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {Button, List, ListItem, ListItemText} from "@mui/material";
 import { connect } from "react-redux";
 import { getBooks } from "../store/books/selectors";
@@ -6,6 +6,13 @@ import { getBooks } from "../store/books/selectors";
 
 const MainPageComponent = (props) => {
   const {books} = props;
+
+  const [state, setBooksState] = useState(books);
+  if (state.length) {
+    useEffect(() => {
+      console.log(state);
+    });
+  }
 
   return (
     <main>

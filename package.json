@@ -4,6 +4,8 @@
   "private": true,
   "description": "SENLA - pet-project Library",
   "scripts": {
+    "eslint": "eslint --ext .jsx --ext .js src/",
+    "test": "npm run eslint",
     "build": "webpack --mode production",
     "start": "webpack-dev-server"
   },
@@ -13,6 +15,10 @@
     "@babel/preset-react": "7.16.0",
     "babel-loader": "8.2.3",
     "clean-webpack-plugin": "4.0.0",
+    "eslint": "6.8.0",
+    "eslint-plugin-import": "2.25.2",
+    "eslint-plugin-react": "7.26.1",
+    "eslint-plugin-react-hooks": "4.2.0",
     "html-webpack-plugin": "5.5.0",
     "webpack": "5.24.2",
     "webpack-cli": "3.3.11",
