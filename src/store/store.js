@@ -1,6 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit';
 
 import {reducer as booksReducer} from './books/books';
+import {reducer as readersReducer} from './readers/readers';
 
 
 const middleware = (getDefaultMiddleware) => getDefaultMiddleware({
@@ -10,7 +11,10 @@ const middleware = (getDefaultMiddleware) => getDefaultMiddleware({
 });
 
 export const store = configureStore({
- reducer: {booksReducer},
- middleware,
- devTools: process.env.NODE_ENV !== 'production',
+  reducer: {
+    books: booksReducer,
+    readers: readersReducer,
+ },
+  middleware,
+  devTools: process.env.NODE_ENV !== 'production',
 });

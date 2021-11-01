@@ -3,9 +3,12 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const booksSlice = createSlice({
   name: `books`,
-  initialState: [],
+  initialState: {
+    list: [],
+    promoBook: null,
+  },
   reducers: {
-    loadBooks: (state, action) => state = action.payload,
+    loadBooks: (state, action) => {state.list = action.payload},
   },
 });
 
