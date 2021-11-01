@@ -7,13 +7,6 @@ import { getBooks } from "../store/books/selectors";
 const MainPageComponent = (props) => {
   const {books} = props;
 
-  const [state, setBooksState] = useState(books);
-  if (state.length) {
-    useEffect(() => {
-      console.log(state);
-    });
-  }
-
   return (
     <main>
       <Button variant="contained">show books list</Button>
