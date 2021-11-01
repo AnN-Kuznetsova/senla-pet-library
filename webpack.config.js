@@ -33,7 +33,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
         title: 'SENLA - pet-project Library',
-        template: path.resolve(__dirname, './src/index-template.html'),
+        template: path.resolve(__dirname, './src/assets/index-template.html'),
         filename: 'index.html',
     }),
   ],
