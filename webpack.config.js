@@ -18,6 +18,18 @@ module.exports = {
     inline: true,
     port: 1337,
     historyApiFallback: true,
+    setup(app) {
+      app.get(`/books`, function(req, res) {
+        let p = path.json(__dirname, `mocks/books.json`);
+        let a = require(p);
+        res.send(a);
+      });
+      app.get(`/readers`, function(req, res) {
+        let p = path.json(__dirname, `mocks/readers.json`);
+        let a = require(p);
+        res.send(a);
+      });
+    },
   },
   module: {
     rules: [
