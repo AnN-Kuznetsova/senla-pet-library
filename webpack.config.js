@@ -4,7 +4,7 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 
 module.exports = {
-  entry: `./src/index.js`,
+  entry: [`babel-polyfill`, `./src/index.js`],
   output: {
     filename: `bundle.js`,
     path: path.join(__dirname, `public`),
@@ -20,12 +20,12 @@ module.exports = {
     historyApiFallback: true,
     setup(app) {
       app.get(`/books`, function(req, res) {
-        let p = path.json(__dirname, `mocks/books.json`);
+        let p = path.join(__dirname, `mocks/books.json`);
         let a = require(p);
         res.send(a);
       });
       app.get(`/readers`, function(req, res) {
-        let p = path.json(__dirname, `mocks/readers.json`);
+        let p = path.join(__dirname, `mocks/readers.json`);
         let a = require(p);
         res.send(a);
       });
