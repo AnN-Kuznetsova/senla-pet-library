@@ -1,6 +1,13 @@
 import axios from "axios";
 
 
+export const FetchStatus = {
+  LOADING: `LOADING`,
+  RESOLVED: `RESOLVED`,
+  REJECTED: `REJECTED`,
+};
+
+
 export const createAPI = (onFailRequest) => {
   const api = axios.create({
     baseURL: location.origin,

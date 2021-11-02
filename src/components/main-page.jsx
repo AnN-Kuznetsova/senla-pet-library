@@ -1,25 +1,32 @@
-import React, { useEffect, useState } from "react";
-import {Button, List, ListItem, ListItemText} from "@mui/material";
-import { connect } from "react-redux";
-import { getBooks } from "../store/books/selectors";
+import React from "react";
+import {Button} from "@mui/material";
+import {connect} from "react-redux";
+
+import {BooksList} from "./books-list";
+import {FetchStatus} from "../api";
+import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
 
 
 const MainPageComponent = (props) => {
-  const {books} = props;
+  const {
+    books,
+    booksError,
+    booksStatus,
+  } = props;
 
   return (
     <main>
-      <Button variant="contained">show books list</Button>
+      <Button
+        variant="contained"
+        disabled={booksError && true}
+        // onClick={renderBooksList}
+      >
+        Show books list
+      </Button>
 
-      <List>
-        {
-          books.map((book, index) => (
-            <ListItem key={index + book.id}>
-              <ListItemText primary={book.title} secondary={book.autor} />
-            </ListItem>
-          ))
-        }
-      </List>
+      {booksStatus === FetchStatus.LOADING && <h2>Loading...</h2>}
+
+      {booksError && <h2>Error: {booksError}</h2>}
     </main>
   );
 };
@@ -27,6 +34,8 @@ const MainPageComponent = (props) => {
 
 const mapStateToProps = (state) => ({
   books: getBooks(state),
+  booksStatus: getBooksStatus(state),
+  booksError: getBooksError(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
