@@ -1,6 +1,6 @@
 import React from "react";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {lime, lightGreen} from '@mui/material/colors';
+import {lime, lightGreen, pink} from '@mui/material/colors';
 
 import {MainPage} from "./main-page";
 
@@ -13,12 +13,12 @@ const THEME = createTheme({
       dark: lime[600],
       contrastText: lightGreen[800],
     },
-    /* secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
-    }, */
+    secondary: {
+      light: pink[300],
+      main: pink[500],
+      dark: pink[700],
+      contrastText: lightGreen[800],
+    },
   },
 });
 

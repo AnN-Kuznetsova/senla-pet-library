@@ -1,6 +1,10 @@
-const getReaders = (state) => state.readers;
+const getReadersInfo = (state) => ({
+  list: state.readers.list,
+  status: state.readers.status,
+  error: state.readers.error,
+});
 
 
 export {
-  getReaders,
+  getReadersInfo,
 };

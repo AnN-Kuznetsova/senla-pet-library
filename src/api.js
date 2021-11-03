@@ -8,7 +8,7 @@ export const FetchStatus = {
 };
 
 
-export const createAPI = (onFailRequest) => {
+export const createAPI = (onFailRequest=()=>{}) => {
   const api = axios.create({
     baseURL: location.origin,
     timeout: 1000 * 5,

@@ -4,16 +4,12 @@ import {Provider} from "react-redux";
 
 import {App} from "./components/app";
 import {createAPI} from "./api";
-import {fetchBooks, loadBooks} from "./store/books/books";
-import {loadReaders} from "./store/readers/readers";
+import {fetchBooks} from "./store/books/books";
+import {fetchReaders} from "./store/readers/readers";
 import {store} from "./store/store";
 
 
-const onFailRequest = (error) => {
-  // TODO: обработать ошибку загрузки данных
-};
-
-const api = createAPI(onFailRequest);
+const api = createAPI();
 
 const renderDom = () => {
   ReactDom.render(
@@ -26,6 +22,6 @@ const renderDom = () => {
 
 
 const booksLoader = store.dispatch(fetchBooks(api));
-// const readers = store.dispatch(loadReaders(require(`./mocks/readers.json`)));
+const readersLoader = store.dispatch(fetchReaders(api));
 
 renderDom();
