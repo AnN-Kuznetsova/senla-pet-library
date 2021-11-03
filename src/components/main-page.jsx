@@ -4,12 +4,13 @@ import {useSelector} from "react-redux";
 
 import {BooksList} from "./books-list";
 import {FetchStatus} from "../api";
+import { getBooks, getBooksError, getBooksStatus } from "../store/books/selectors";
 
 
 export const MainPage = () => {
-  const books = useSelector((state) => state.books.list);
-  const booksError = useSelector((state) => state.books.error);
-  const booksStatus = useSelector((state) => state.books.status);
+  const books = useSelector(getBooks);
+  const booksStatus = useSelector(getBooksStatus);
+  const booksError = useSelector(getBooksError);
 
   const [isBooksListShow, changeIsBooksListShow] = useState(false);
 

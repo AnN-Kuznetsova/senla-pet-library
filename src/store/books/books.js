@@ -15,17 +15,6 @@ const fetchBooks = createAsyncThunk(
   }
 );
 
-/* const fetchBooks = (api) => createAsyncThunk(
-  `books/fetchBooks`,
-  new Promise((resolve) => {
-    api.get(`/books`)
-      .then((response) => {
-        console.log(response.data);
-        resolve(response.data);
-      });
-  })
-); */
-
 const booksSlice = createSlice({
   name: `books`,
   initialState: {
