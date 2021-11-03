@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+/* import {createSlice} from "@reduxjs/toolkit";
 
 
 const applicationSlice = createSlice({
@@ -20,4 +20,4 @@ export const {
 
 export {
   reducer,
-};
+}; */

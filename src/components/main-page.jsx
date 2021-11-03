@@ -1,29 +1,28 @@
-import React from "react";
+import React, {useState} from "react";
 import {Button} from "@mui/material";
-import {connect} from "react-redux";
+import {useSelector} from "react-redux";
 
 import {BooksList} from "./books-list";
 import {FetchStatus} from "../api";
-import {changeBooksListShowed} from "../store/application/application";
-import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
-import {getIsBooksListShow} from "../store/application/selectors";
 
 
-const MainPageComponent = (props) => {
-  const {
-    books,
-    booksError,
-    booksStatus,
-    isBooksListShow,
-    onShowBooksButtonClick,
-  } = props;
+export const MainPage = () => {
+  const books = useSelector((state) => state.books.list);
+  const booksError = useSelector((state) => state.books.error);
+  const booksStatus = useSelector((state) => state.books.status);
+
+  const [isBooksListShow, changeIsBooksListShow] = useState(false);
+
+  const handleShowBooksButtonClick = () => {
+    changeIsBooksListShow(!isBooksListShow);
+  };
 
   return (
     <main>
       <Button
         variant="contained"
         disabled={booksError && true}
-        onClick={onShowBooksButtonClick}
+        onClick={handleShowBooksButtonClick}
       >
         {isBooksListShow && `Hide books list` || `Show books list`}
       </Button>
@@ -35,26 +34,4 @@ const MainPageComponent = (props) => {
       {isBooksListShow && <BooksList books={books} />}
     </main>
   );
-};
-
-
-const mapStateToProps = (state) => ({
-  books: getBooks(state),
-  booksStatus: getBooksStatus(state),
-  booksError: getBooksError(state),
-  isBooksListShow: getIsBooksListShow(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onShowBooksButtonClick() {
-    dispatch(changeBooksListShowed());
-  },
-});
-
-const MainPage = connect(mapStateToProps, mapDispatchToProps)(MainPageComponent);
-
-
-export {
-  MainPageComponent,
-  MainPage,
 };

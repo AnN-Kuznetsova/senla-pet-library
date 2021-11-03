@@ -1,4 +1,4 @@
-const getBooks = (state) => state.books.list;
+/* const getBooks = (state) => state.books.list;
 
 const getBooksStatus = (state) => state.books.status;
 
@@ -9,4 +9,4 @@ export {
   getBooks,
   getBooksError,
   getBooksStatus,
-};
+}; */

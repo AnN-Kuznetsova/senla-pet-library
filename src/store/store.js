@@ -15,7 +15,7 @@ export const store = configureStore({
   reducer: {
     books: booksReducer,
     readers: readersReducer,
-    application: applicationReducer,
+    // application: applicationReducer,
  },
   middleware,
   devTools: process.env.NODE_ENV !== 'production',
