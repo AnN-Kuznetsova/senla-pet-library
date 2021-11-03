@@ -1,4 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import { createBooks } from "../../adapters/book";
 
 import {FetchStatus} from "../../api";
 
@@ -32,7 +33,7 @@ const booksSlice = createSlice({
     },
     [fetchBooks.fulfilled]: (state, action) => {
       state.status = FetchStatus.RESOLVED;
-      state.list = action.payload;
+      state.list = createBooks(action.payload);
     },
     [fetchBooks.rejected]: (state, action) => {
       state.status = FetchStatus.REJECTED;

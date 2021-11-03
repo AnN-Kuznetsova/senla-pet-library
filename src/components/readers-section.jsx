@@ -6,6 +6,11 @@ import {FetchStatus} from "../api";
 import {getReadersInfo} from "../store/readers/selectors";
 
 
+const renderReaderStatus = (readerStatus) => (
+  <span style={{display: `block`, width: `15px`, height: `15px`, backgroundColor: readerStatus ? `green` : `red`, borderRadius: `50%`}}>
+  </span>
+);
+
 export const ReadersSection = () => {
   const {list: readers, status: readresStatus, error: readersError} = useSelector(getReadersInfo);
 
@@ -33,7 +38,7 @@ export const ReadersSection = () => {
         <List>{
           readers.map((reader, index) => (
             <ListItem key={index + reader.id}>
-              <ListItemText primary={reader.name} secondary={reader.age} />
+              <ListItemText primary={reader.name} secondary={renderReaderStatus(!reader.booksIds.length)} />
             </ListItem>
           ))
         }</List>

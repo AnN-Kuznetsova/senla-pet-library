@@ -1,4 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import { createReaders } from "../../adapters/reader";
 
 import { FetchStatus } from "../../api";
 
@@ -32,7 +33,7 @@ const readersSlice = createSlice({
     },
     [fetchReaders.fulfilled]: (state, action) => {
       state.status = FetchStatus.RESOLVED;
-      state.list = action.payload;
+      state.list = createReaders(action.payload);
     },
     [fetchReaders.rejected]: (state, action) => {
       state.status = FetchStatus.REJECTED;

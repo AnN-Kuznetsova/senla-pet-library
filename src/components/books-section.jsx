@@ -35,7 +35,7 @@ export const BooksSection = () => {
         <List>{
           books.map((book, index) => (
             <ListItem key={index + book.id}>
-              <ListItemText primary={book.title} secondary={book.autor} />
+              <ListItemText primary={book.title} style={{color: `${book.isTaken ? `red` : `black`}`}} secondary={book.autor} />
             </ListItem>
           ))
         }</List>

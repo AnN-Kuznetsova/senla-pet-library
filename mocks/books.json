@@ -4,7 +4,7 @@
     "title": "The Hound of the Baskervilles",
     "autor": "Arthur Conan Doyle",
     "coverImgUrl": "hound.jpg",
-    "isTaken": false
+    "isTaken": true
   },
   {
     "id": "b2",
