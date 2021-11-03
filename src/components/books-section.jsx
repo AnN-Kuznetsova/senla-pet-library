@@ -21,7 +21,7 @@ export const BooksSection = () => {
     <Stack>
       <Button
         variant="contained"
-        disabled={booksError && true}
+        disabled={booksError && true || !books.length}
         onClick={handleShowBooksButtonClick}
       >
         {isBooksListShow && `Hide books list` || `Show books list`}

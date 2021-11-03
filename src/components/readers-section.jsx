@@ -12,7 +12,7 @@ const renderReaderStatus = (readerStatus) => (
 );
 
 export const ReadersSection = () => {
-  const {list: readers, status: readresStatus, error: readersError} = useSelector(getReadersInfo);
+  const {list: readers, status: readersStatus, error: readersError} = useSelector(getReadersInfo);
 
   const [isReadersListShow, changeIsReadersListShow] = useState(false);
 
@@ -24,13 +24,13 @@ export const ReadersSection = () => {
     <Stack>
       <Button
         variant="contained"
-        disabled={readersError && true}
+        disabled={readersError && true || !readers.length}
         onClick={handleShowReadersButtonClick}
       >
         {isReadersListShow && `Hide readers list` || `Show readers list`}
       </Button>
 
-      {readresStatus === FetchStatus.LOADING && <h2>Loading...</h2>}
+      {readersStatus === FetchStatus.LOADING && <h2>Loading...</h2>}
 
       {readersError && <h2>Sorry! Readers have not loaded!</h2>}
 

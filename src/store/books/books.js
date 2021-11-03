@@ -27,7 +27,7 @@ const booksSlice = createSlice({
     // loadBooks: (state, action) => {state.list = action.payload},
   },
   extraReducers: {
-    [fetchBooks.rejected]: (state, action) => {
+    [fetchBooks.pending]: (state, action) => {
       state.status = FetchStatus.LOADING;
       state.error = null;
     },

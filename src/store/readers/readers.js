@@ -27,7 +27,7 @@ const readersSlice = createSlice({
     loadReaders: (state, action) => state = action.payload,
   }, */
   extraReducers: {
-    [fetchReaders.rejected]: (state, action) => {
+    [fetchReaders.pending]: (state, action) => {
       state.status = FetchStatus.LOADING;
       state.error = null;
     },
