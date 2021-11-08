@@ -4,7 +4,7 @@
   "private": true,
   "description": "SENLA - pet-project Library",
   "scripts": {
-    "eslint": "eslint --ext .jsx --ext .js src/",
+    "eslint": "eslint --ext .tsx --ext .ts src/",
     "test": "npm run eslint",
     "build": "webpack --mode production",
     "start": "webpack-dev-server"
@@ -14,6 +14,10 @@
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "7.16.0",
     "@babel/preset-react": "7.16.0",
+    "@babel/preset-typescript": "7.16.0",
+    "@types/react": "17.0.34",
+    "@typescript-eslint/eslint-plugin": "^5.3.0",
+    "@typescript-eslint/parser": "^5.3.0",
     "babel-loader": "8.2.3",
     "babel-polyfill": "6.26.0",
     "clean-webpack-plugin": "4.0.0",
@@ -22,6 +26,9 @@
     "eslint-plugin-react": "7.26.1",
     "eslint-plugin-react-hooks": "4.2.0",
     "html-webpack-plugin": "5.5.0",
+    "ts-loader": "9.2.6",
+    "typescript": "4.4.4",
+    "utility-types": "3.10.0",
     "webpack": "5.24.2",
     "webpack-cli": "3.3.11",
     "webpack-dev-server": "3.11.2"

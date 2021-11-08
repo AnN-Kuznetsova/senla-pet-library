@@ -4,13 +4,10 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 
 module.exports = {
-  entry: [`babel-polyfill`, `./src/index.js`],
+  entry: [`babel-polyfill`, `./src/index.tsx`],
   output: {
     filename: `bundle.js`,
     path: path.join(__dirname, `public`),
-  },
-  resolve: {
-    extensions: [`.js`, `.jsx`],
   },
   devServer: {
     contentBase: path.join(__dirname, `public`),
@@ -38,8 +35,14 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: `babel-loader`,
-        },
-      }
+        }
+      }, {
+        test: /\.(tsx|ts)?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: `ts-loader`,
+        }
+      },
     ],
   },
   plugins: [
@@ -50,6 +53,9 @@ module.exports = {
         filename: 'index.html',
     }),
   ],
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', 'json'],
+  },
   devtool: `source-map`,
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development'
 };
