@@ -1,12 +1,13 @@
-import React, {useState} from "react";
+import * as React from "react";
 import {Button, Stack, List, ListItem, ListItemText} from "@mui/material";
 import {useSelector} from "react-redux";
+import {useState} from "react";
 
 import {FetchStatus} from "../api";
 import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
 
 
-export const BooksSection = () => {
+export const BooksSection: React.FC = () => {
   const books = useSelector(getBooks);
   const booksStatus = useSelector(getBooksStatus);
   const booksError = useSelector(getBooksError);

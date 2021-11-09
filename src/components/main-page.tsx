@@ -1,11 +1,11 @@
-import React from "react";
+import * as React from "react";
 import {Stack} from "@mui/material";
 
 import {BooksSection} from "./books-section";
-import { ReadersSection } from "./readers-section";
+import {ReadersSection} from "./readers-section";
 
 
-export const MainPage = () => {
+export const MainPage: React.FC = () => {
   return (
     <main>
       <Stack spacing={2} direction="row">

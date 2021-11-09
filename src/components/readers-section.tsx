@@ -1,17 +1,19 @@
-import React, {useState} from "react";
+import * as React from "react";
 import {Button, List, ListItem, Stack, ListItemText} from "@mui/material";
 import {useSelector} from "react-redux";
+import {useState} from "react";
 
 import {FetchStatus} from "../api";
 import {getReadersInfo} from "../store/readers/selectors";
 
 
-const renderReaderStatus = (readerStatus) => (
+const renderReaderStatus = (readerStatus: boolean) => (
   <span style={{display: `block`, width: `15px`, height: `15px`, backgroundColor: readerStatus ? `green` : `red`, borderRadius: `50%`}}>
   </span>
 );
 
-export const ReadersSection = () => {
+
+export const ReadersSection: React.FC = () => {
   const {list: readers, status: readersStatus, error: readersError} = useSelector(getReadersInfo);
 
   const [isReadersListShow, changeIsReadersListShow] = useState(false);

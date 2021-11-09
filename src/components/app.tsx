@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {lime, lightGreen, pink} from '@mui/material/colors';
 
@@ -23,7 +23,7 @@ const THEME = createTheme({
 });
 
 
-export const App = () => {
+export const App: React.FC = () => {
   return (
     <ThemeProvider theme={THEME}>
       <MainPage />
