@@ -1,15 +1,16 @@
 import {AxiosInstance} from "axios";
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 import {FetchStatus} from "../../api";
-import {ReaderType} from "../../types";
+import {ErrorType, ReaderType} from "../../types";
 import {createReaders, ReaderDataType} from "../../adapters/reader";
+import {createErrorValue} from "../../utils";
 
 
 interface ReadersStateType {
   list: ReaderType[],
   status: string | null,
-  error: string | null,
+  error: ErrorType | null,
 }
 
 
@@ -25,8 +26,8 @@ const fetchReaders = createAsyncThunk(
     try {
       const response = await api.get(`/readers`);
       return response.data;
-    } catch (error: unknown) {
-      return rejectWithValue(error);
+    } catch (error) {
+      return rejectWithValue(createErrorValue(error));
     }
   }
 );
@@ -42,11 +43,11 @@ const readersSlice = createSlice({
       state.status = FetchStatus.LOADING;
       state.error = null;
     },
-    [fetchReaders.fulfilled.toString()]: (state, action) => {
+    [fetchReaders.fulfilled.toString()]: (state, action: PayloadAction<ReaderType[]>) => {
       state.status = FetchStatus.RESOLVED;
       state.list = createReaders(action.payload);
     },
-    [fetchReaders.rejected.toString()]: (state, action) => {
+    [fetchReaders.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
       state.status = FetchStatus.REJECTED;
       state.error = action.payload;
     },

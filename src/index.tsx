@@ -21,7 +21,7 @@ const renderDom = () => {
 };
 
 
-const booksLoader = store.dispatch(fetchBooks(api));
-const readersLoader = store.dispatch(fetchReaders(api));
+store.dispatch(fetchBooks(api));
+store.dispatch(fetchReaders(api));
 
 renderDom();

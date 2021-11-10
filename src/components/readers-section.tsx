@@ -34,7 +34,10 @@ export const ReadersSection: React.FC = () => {
 
       {readersStatus === FetchStatus.LOADING && <h2>Loading...</h2>}
 
-      {readersError && <h2>Sorry! Readers have not loaded!</h2>}
+      {readersError && <h2>Sorry! Readers have not loaded!
+        {readersError.status && <br/>}
+        {readersError.status && readersError.status}
+      </h2>}
 
       {isReadersListShow &&
         <List>{

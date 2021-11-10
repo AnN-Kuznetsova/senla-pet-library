@@ -1,11 +1,11 @@
-import {ReaderType} from "../../types";
+import {ErrorType, ReaderType} from "../../types";
 import {RootState} from "../store";
 
 
 interface ReadersInfoType {
   list: ReaderType[],
   status: string | null,
-  error: string | null,
+  error: ErrorType | null,
 }
 
 

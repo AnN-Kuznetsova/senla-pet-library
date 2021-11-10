@@ -1,3 +1,5 @@
+type ErrorType = Error & {status: number | string | null};
+
 interface BookType {
   id: string,
   title: string,
@@ -16,5 +18,6 @@ interface ReaderType {
 
 export {
   BookType,
+  ErrorType,
   ReaderType,
 };

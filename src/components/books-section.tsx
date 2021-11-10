@@ -30,7 +30,10 @@ export const BooksSection: React.FC = () => {
 
       {booksStatus === FetchStatus.LOADING && <h2>Loading...</h2>}
 
-      {booksError && <h2>Sorry! Books have not loaded!</h2>}
+      {booksError && <h2>Sorry! Books have not loaded!
+        {booksError.status && <br/>}
+        {booksError.status && booksError.status}
+      </h2>}
 
       {isBooksListShow &&
         <List>{
