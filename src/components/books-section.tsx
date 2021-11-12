@@ -15,7 +15,7 @@ export const BooksSection: React.FC = () => {
   const [isBooksListShow, changeIsBooksListShow] = useState(false);
 
   const handleShowBooksButtonClick = () => {
-    changeIsBooksListShow(!isBooksListShow);
+    changeIsBooksListShow((isBooksListShow) => !isBooksListShow);
   };
 
   return (

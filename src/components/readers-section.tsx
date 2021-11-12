@@ -19,7 +19,7 @@ export const ReadersSection: React.FC = () => {
   const [isReadersListShow, changeIsReadersListShow] = useState(false);
 
   const handleShowReadersButtonClick = () => {
-    changeIsReadersListShow(!isReadersListShow);
+    changeIsReadersListShow((isReadersListShow) => !isReadersListShow);
   };
 
   return (
