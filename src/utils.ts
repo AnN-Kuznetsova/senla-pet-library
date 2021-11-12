@@ -1,16 +1,11 @@
-import { ErrorType } from "./types";
-
-
-const createErrorValue = (error: {
-  name: string,
-  message: string,
-  response?: {status: number}
-}): ErrorType => {
-  return {
-    name: error.name,
-    message: error.message,
-    status: error.response ? error.response.status : `Timeout`,
-  };
+const createErrorValue = (error: unknown & {response?: object, request: XMLHttpRequest, message: string}) => {
+  if (error.response) {
+    return error.response;
+  } else if (error.request) {
+    return error.request;
+  } else {
+    return error.message;
+  }
 };
 
 

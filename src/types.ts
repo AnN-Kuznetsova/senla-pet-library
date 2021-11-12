@@ -1,4 +1,4 @@
-type ErrorType = Error & {status: number | string | null};
+type ErrorType = unknown & {status: string | number | null};
 
 interface BookType {
   id: string,
