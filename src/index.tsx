@@ -6,10 +6,12 @@ import {App} from "./components/app";
 import {createAPI} from "./api";
 import {fetchBooks} from "./store/books/books";
 import {fetchReaders} from "./store/readers/readers";
-import {store} from "./store/store";
+import {createStore} from "./store/store";
 
 
 const api = createAPI();
+const store = createStore(api);
+
 
 const renderDom = () => {
   ReactDom.render(
@@ -21,7 +23,12 @@ const renderDom = () => {
 };
 
 
-store.dispatch(fetchBooks(api));
-store.dispatch(fetchReaders(api));
+store.dispatch(fetchBooks());
+store.dispatch(fetchReaders());
 
 renderDom();
+
+console.log(typeof store.getState());
+
+export type RootStateType = ReturnType<typeof store.getState>;
+export type AppDispatchType = typeof store.dispatch;

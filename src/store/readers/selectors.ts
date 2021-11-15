@@ -1,5 +1,5 @@
 import {ErrorType, ReaderType} from "../../types";
-import {RootState} from "../store";
+import {RootStateType} from "../..";
 
 
 interface ReadersInfoType {
@@ -9,7 +9,7 @@ interface ReadersInfoType {
 }
 
 
-const getReadersInfo = (state: RootState): ReadersInfoType => ({
+const getReadersInfo = (state: RootStateType): ReadersInfoType => ({
   list: state.readers.list,
   status: state.readers.status,
   error: state.readers.error,

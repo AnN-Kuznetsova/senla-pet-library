@@ -1,12 +1,16 @@
 type ErrorType = unknown & {status: string | number | null};
 
-interface BookType {
-  id: string,
+interface NewBookType {
   title: string,
   autor: string,
   coverImgUrl: string,
+}
+
+type BookType = NewBookType & {
+  id: string,
   isTaken: boolean,
 }
+
 
 interface ReaderType {
   id: string,
@@ -17,6 +21,7 @@ interface ReaderType {
 
 
 export {
+  NewBookType,
   BookType,
   ErrorType,
   ReaderType,

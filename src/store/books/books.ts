@@ -1,10 +1,11 @@
 import {AxiosInstance} from "axios";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-import {BookType, ErrorType} from "../../types";
+import {BookType, ErrorType, NewBookType} from "../../types";
 import {FetchStatus} from "../../api";
 import {createBooks} from "../../adapters/book";
 import {createErrorValue} from "../../utils";
+import { RootStateType } from "../..";
 
 
 interface BooksStateType {
@@ -20,12 +21,42 @@ const initialState = {
   error: null,
 } as BooksStateType;
 
-const fetchBooks = createAsyncThunk(
+const fetchBooks = createAsyncThunk<
+  Promise<BookType[] | unknown>,
+  void,
+  {
+    extra: AxiosInstance
+  }
+>(
   `books/fetchBooks`,
-  async (api: AxiosInstance, {rejectWithValue}): Promise<BookType[] | unknown> => {
+  async (_, {extra: api, rejectWithValue}) => {
     try {
       const response = await api.get(`/books`);
-      console.log(response.status);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(createErrorValue(error));
+    }
+  }
+);
+
+const addNewBook = createAsyncThunk<
+  Promise<BookType | unknown>,
+  NewBookType,
+  {
+    extra: AxiosInstance,
+  }
+>(
+  `books/addNewBook`,
+  async (newBook, {extra: api, rejectWithValue, getState}) => {
+    try {
+      // const booksCount: number = (<RootStateType>getState()).books.list.length;
+      const {books} = getState() as {books: BooksStateType};
+      const booksCount: number = books.list.length;
+
+      const response = await api.post(`/books`, {
+        newBook,
+        booksCount,
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(createErrorValue(error));
@@ -38,6 +69,7 @@ const booksSlice = createSlice({
   initialState,
   reducers: {
     // loadBooks: (state, action) => {state.list = action.payload},
+    // addNewBook: (state, action: PayloadAction<BookType>) => {state.list.push(action.payload)},
   },
   extraReducers: {
     [fetchBooks.pending.toString()]: (state) => {
@@ -52,6 +84,11 @@ const booksSlice = createSlice({
       state.status = FetchStatus.REJECTED;
       state.error = action.payload;
     },
+    //[addNewBook.pending.toString()]: (state) => {},
+    [addNewBook.fulfilled.toString()]: (state, action: PayloadAction<BookType>) => {
+      state.list.push(action.payload);
+    },
+    //[addNewBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {},
   },
 });
 
@@ -59,10 +96,12 @@ const {/* actions, */ reducer} = booksSlice;
 
 
 /* export const {
-  loadBooks,
+  // loadBooks,
+  //addNewBook,
 } = actions; */
 
 export {
   reducer,
   fetchBooks,
+  addNewBook,
 };

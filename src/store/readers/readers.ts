@@ -20,9 +20,15 @@ const initialState = {
   error: null,
 } as ReadersStateType;
 
-const fetchReaders = createAsyncThunk(
+const fetchReaders = createAsyncThunk<
+Promise<ReaderDataType[] | unknown>,
+  void,
+  {
+    extra: AxiosInstance
+  }
+>(
   `readers/fetchReaders`,
-  async (api: AxiosInstance, {rejectWithValue}): Promise<ReaderDataType[] | unknown> => {
+  async (_, {extra: api, rejectWithValue}) => {
     try {
       const response = await api.get(`/readers`);
       return response.data;
