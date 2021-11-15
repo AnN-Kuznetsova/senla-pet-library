@@ -28,12 +28,17 @@ module.exports = {
 
       app.post(`/books`, function(req, res) {
         const newBookData = req.body.newBook;
-        const booksCount = req.body.booksCount;
+        const lastBookId = req.body.lastBookId;
         const newBook = Object.assign(newBookData, {
-          id: `b${booksCount + 1}`,
+          id: `b${Number.parseInt(lastBookId.replace(`b`, ``), 10) + 1}`,
           isTaken: false,
         });
         res.send(newBook);
+      });
+
+      app.delete(`/books/:id`, function(req, res) {
+        const bookId = req.originalUrl.replace(`/books/`, ``);
+        res.send(bookId);
       });
 
       app.get(`/readers`, function(req, res) {

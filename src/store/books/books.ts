@@ -5,7 +5,6 @@ import {BookType, ErrorType, NewBookType} from "../../types";
 import {FetchStatus} from "../../api";
 import {createBooks} from "../../adapters/book";
 import {createErrorValue} from "../../utils";
-import { RootStateType } from "../..";
 
 
 interface BooksStateType {
@@ -14,12 +13,12 @@ interface BooksStateType {
   error: ErrorType | null,
 }
 
-
 const initialState = {
   list: [],
   status: null,
   error: null,
 } as BooksStateType;
+
 
 const fetchBooks = createAsyncThunk<
   Promise<BookType[] | unknown>,
@@ -49,13 +48,13 @@ const addNewBook = createAsyncThunk<
   `books/addNewBook`,
   async (newBook, {extra: api, rejectWithValue, getState}) => {
     try {
-      // const booksCount: number = (<RootStateType>getState()).books.list.length;
       const {books} = getState() as {books: BooksStateType};
       const booksCount: number = books.list.length;
+      const lastBookId: string = books.list[booksCount - 1].id;
 
       const response = await api.post(`/books`, {
         newBook,
-        booksCount,
+        lastBookId,
       });
       return response.data;
     } catch (error) {
@@ -63,6 +62,25 @@ const addNewBook = createAsyncThunk<
     }
   }
 );
+
+const deleteBook = createAsyncThunk<
+  Promise<BookType | unknown>,
+  string,
+  {
+    extra: AxiosInstance,
+  }
+>(
+  `books/deleteBook`,
+  async (bookId, {extra: api, rejectWithValue}) => {
+    try {
+      const response = await api.delete(`/books/${bookId}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(createErrorValue(error));''
+    }
+  }
+);
+
 
 const booksSlice = createSlice({
   name: `books`,
@@ -85,10 +103,16 @@ const booksSlice = createSlice({
       state.error = action.payload;
     },
     //[addNewBook.pending.toString()]: (state) => {},
+    //[addNewBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {},
     [addNewBook.fulfilled.toString()]: (state, action: PayloadAction<BookType>) => {
       state.list.push(action.payload);
     },
-    //[addNewBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {},
+    //[deleteBook.pending.toString()]: (state) => {},
+    //[deleteBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {},
+    [deleteBook.fulfilled.toString()]: (state, action: PayloadAction<string>) => {
+      const bookId = action.payload;
+      state.list = state.list.filter((book) => book.id !== bookId);
+    },
   },
 });
 
@@ -104,4 +128,5 @@ export {
   reducer,
   fetchBooks,
   addNewBook,
+  deleteBook,
 };

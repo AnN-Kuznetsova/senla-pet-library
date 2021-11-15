@@ -4,17 +4,39 @@ import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 
 import {FetchStatus} from "../api";
-import {addNewBook} from "../store/books/books";
+import {addNewBook, deleteBook} from "../store/books/books";
 import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
+
+
+const itemButtonStyle = {
+  width: `40px`,
+  height: `40px`,
+  padding: `0`,
+  flexGrow: 0,
+};
 
 
 export const BooksSection: React.FC = () => {
   const books = useSelector(getBooks);
   const booksStatus = useSelector(getBooksStatus);
   const booksError = useSelector(getBooksError);
-
   const dispatch = useDispatch();
-  const handleAddNewButtonClick = () => {
+
+  const [isBooksListShow, changeIsBooksListShow] = useState(false);
+
+  const handleShowBooksButtonClick = () => {
+    changeIsBooksListShow((isBooksListShow) => !isBooksListShow);
+  };
+
+  const handleDeleteBookButtonClick = (bookId: string) => {
+    dispatch(deleteBook(bookId));
+  };
+
+  const handleMoreButtonClick = () => {
+    //
+  };
+
+  const handleAddNewBookButtonClick = () => {
     const newBook = {
       "title": "new Book",
       "autor": "new Autor",
@@ -24,14 +46,8 @@ export const BooksSection: React.FC = () => {
     dispatch(addNewBook(newBook));
   };
 
-  const [isBooksListShow, changeIsBooksListShow] = useState(false);
-
-  const handleShowBooksButtonClick = () => {
-    changeIsBooksListShow((isBooksListShow) => !isBooksListShow);
-  };
-
   return (
-    <Stack>
+    <Stack style={{width: `50%`}}>
       <Button
         variant="contained"
         disabled={booksError && true || !books.length}
@@ -42,7 +58,7 @@ export const BooksSection: React.FC = () => {
       <Button
         variant="contained"
         disabled={booksError && true || !books.length}
-        onClick={handleAddNewButtonClick}
+        onClick={handleAddNewBookButtonClick}
       >+</Button>
 
       {booksStatus === FetchStatus.LOADING && <h2>Loading...</h2>}
@@ -56,7 +72,21 @@ export const BooksSection: React.FC = () => {
         <List>{
           books.map((book, index) => (
             <ListItem key={index + book.id}>
-              <ListItemText primary={book.title} style={{color: `${book.isTaken ? `red` : `black`}`}} secondary={book.autor} />
+              <ListItemText
+                primary={book.title}
+                secondary={book.autor}
+                style={{color: `${book.isTaken ? `red` : `black`}`}}
+              />
+              <Button
+                variant="outlined"
+                style={itemButtonStyle}
+                onClick={handleMoreButtonClick}
+              >...</Button>
+              <Button
+                variant="outlined"
+                style={itemButtonStyle}
+                onClick={handleDeleteBookButtonClick.bind(null, book.id)}
+              >-</Button>
             </ListItem>
           ))
         }</List>
