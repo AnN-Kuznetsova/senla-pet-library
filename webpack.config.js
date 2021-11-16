@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 
-
 module.exports = {
   entry: [`babel-polyfill`, `./src/index.tsx`],
   output: {
@@ -12,21 +11,29 @@ module.exports = {
     path: path.join(__dirname, `public`),
   },
   devServer: {
-    contentBase: path.join(__dirname, `public`),
+    static: {
+      directory: path.join(__dirname, 'public'),
+    },
     open: true,
-    inline: true,
+    hot: true,
+    liveReload: true,
     port: 1337,
     historyApiFallback: true,
-    setup(app) {
-      app.use(bodyParser.json());
 
-      app.get(`/books`, function(req, res) {
+    onBeforeSetupMiddleware: function (devServer) {
+      if (!devServer) {
+        throw new Error('webpack-dev-server is not defined');
+      }
+
+      devServer.app.use(bodyParser.json());
+
+      devServer.app.get('/books', function (req, res) {
         let p = path.join(__dirname, `mocks/books.json`);
         let a = require(p);
         res.send(a);
       });
 
-      app.post(`/books`, function(req, res) {
+      devServer.app.post('/books', function (req, res) {
         const newBookData = req.body.newBook;
         const lastBookId = req.body.lastBookId;
         const newBook = Object.assign(newBookData, {
@@ -36,12 +43,12 @@ module.exports = {
         res.send(newBook);
       });
 
-      app.delete(`/books/:id`, function(req, res) {
+      devServer.app.delete('/books/:id', function (req, res) {
         const bookId = req.originalUrl.replace(`/books/`, ``);
         res.send(bookId);
       });
 
-      app.get(`/readers`, function(req, res) {
+      devServer.app.get('/readers', function (req, res) {
         let p = path.join(__dirname, `mocks/readers.json`);
         let a = require(p);
         res.send(a);
@@ -62,7 +69,11 @@ module.exports = {
         use: {
           loader: `ts-loader`,
         }
-      },
+      }/* , {
+        test: /\.(scss|css)$/,
+        exclude: /node_modules/,
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+      } */
     ],
   },
   plugins: [
