@@ -1,5 +1,6 @@
 const path = require(`path`);
 const bodyParser = require('body-parser');
+const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
@@ -82,6 +83,11 @@ module.exports = {
         title: 'SENLA - pet-project Library',
         template: path.resolve(__dirname, './src/assets/index-template.html'),
         filename: 'index.html',
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: path.resolve(__dirname, './src/assets/img'), to: "assets/img" },
+      ],
     }),
   ],
   resolve: {

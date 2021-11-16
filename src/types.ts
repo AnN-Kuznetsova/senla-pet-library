@@ -3,7 +3,7 @@ type ErrorType = unknown & {status: string | number | null};
 interface NewBookType {
   title: string,
   autor: string,
-  coverImgUrl: string,
+  coverImgUrl: string | null,
 }
 
 type BookType = NewBookType & {

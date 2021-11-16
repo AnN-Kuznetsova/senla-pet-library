@@ -4,6 +4,7 @@ import {Button} from "@mui/material";
 
 interface PropsType {
   textValue: string,
+  className?: string,
   onClick: () => void,
 }
 
@@ -11,13 +12,14 @@ interface PropsType {
 export const ItemButton: React.FC<PropsType> = (props: PropsType) => {
   const {
     textValue,
+    className,
     onClick,
   } = props;
 
   return (
     <Button
       variant="outlined"
-      className="item-button"
+      className={`item-button ${className}`}
       color="secondary"
       onClick={onClick}
     >{textValue}</Button>

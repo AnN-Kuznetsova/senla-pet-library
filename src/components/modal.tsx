@@ -38,8 +38,6 @@ export const Modal: React.FC<PropsType> = (props: PropsType) => {
     }
   }, [isOpen]);
 
-  console.log(isOpen);
-
   const handleCloseButtonClick = () => {
     onClose();
     closeModal();
@@ -50,6 +48,7 @@ export const Modal: React.FC<PropsType> = (props: PropsType) => {
       <ItemButton
         textValue="X"
         onClick={handleCloseButtonClick}
+        className="modal-close-button"
       />
       {children}
     </React.Fragment>,

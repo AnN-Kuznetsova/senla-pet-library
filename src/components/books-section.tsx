@@ -3,13 +3,13 @@ import {Button, Stack, List, ListItem, ListItemText} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 
+import {BookModal} from "./book-modal";
 import {BookType} from "../types";
 import {ItemButton} from "./item-button";
 import {FetchStatus} from "../api";
+import {Modal} from "./modal";
 import {addNewBook, deleteBook} from "../store/books/books";
 import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
-import { BookModal } from "./book-modal";
-import { Modal } from "./modal";
 
 
 export const BooksSection: React.FC = () => {
@@ -28,11 +28,17 @@ export const BooksSection: React.FC = () => {
   };
 
   const [activeBook, setActiveBook] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBookModalOpen, setIsBookModalOpen] = useState(false);
+  const [isNewBookModalOpen, setIsNewBookModalOpen] = useState(false);
 
   const handleMoreButtonClick = (book: BookType) => {
     setActiveBook(book);
-    setIsModalOpen(true);
+    setIsBookModalOpen(true);
+  };
+
+  const handleMoreModalClose = () => {
+    setActiveBook(null);
+    setIsBookModalOpen(false);
   };
 
   const handleAddNewBookButtonClick = () => {
@@ -41,16 +47,14 @@ export const BooksSection: React.FC = () => {
       "autor": "new Autor",
       "coverImgUrl": "",
     };
+    //setIsNewBookModalOpen(true);
 
     dispatch(addNewBook(newBook));
   };
 
-  const handleModalClose = () => {
-    setActiveBook(null);
-    setIsModalOpen(false);
-  };
+  const handleNewBookModalClose = () => {
 
-  console.log(isModalOpen);
+  };
 
   return (
     <Stack className="section">
@@ -96,13 +100,19 @@ export const BooksSection: React.FC = () => {
         }</List>
       }
 
-      {isModalOpen &&
+      {isBookModalOpen &&
         <Modal
-          isOpen={isModalOpen}
-          onClose={handleModalClose}
+          isOpen={isBookModalOpen}
+          onClose={handleMoreModalClose}
         >
           <BookModal book={activeBook} />
         </Modal>}
+
+      {/* isNewBookModalOpen &&
+        <Modal
+          isOpen={isNewBookModalOpen}>
+          onClose={handleNewBookModalClose}
+        </Modal> */}
     </Stack>
   );
 };
