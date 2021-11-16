@@ -3,11 +3,13 @@ import {Button, Stack, List, ListItem, ListItemText} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 
+import {BookType} from "../types";
+import {ItemButton} from "./item-button";
 import {FetchStatus} from "../api";
 import {addNewBook, deleteBook} from "../store/books/books";
 import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
-import { ItemButton } from "./item-button";
-import { BookType } from "../types";
+import { BookModal } from "./book-modal";
+import { Modal } from "./modal";
 
 
 export const BooksSection: React.FC = () => {
@@ -17,7 +19,6 @@ export const BooksSection: React.FC = () => {
   const dispatch = useDispatch();
 
   const [isBooksListShow, changeIsBooksListShow] = useState(false);
-
   const handleShowBooksButtonClick = () => {
     changeIsBooksListShow((isBooksListShow) => !isBooksListShow);
   };
@@ -26,8 +27,12 @@ export const BooksSection: React.FC = () => {
     dispatch(deleteBook(bookId));
   };
 
+  const [activeBook, setActiveBook] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleMoreButtonClick = (book: BookType) => {
-    //
+    setActiveBook(book);
+    setIsModalOpen(true);
   };
 
   const handleAddNewBookButtonClick = () => {
@@ -39,6 +44,13 @@ export const BooksSection: React.FC = () => {
 
     dispatch(addNewBook(newBook));
   };
+
+  const handleModalClose = () => {
+    setActiveBook(null);
+    setIsModalOpen(false);
+  };
+
+  console.log(isModalOpen);
 
   return (
     <Stack className="section">
@@ -83,6 +95,14 @@ export const BooksSection: React.FC = () => {
           ))
         }</List>
       }
+
+      {isModalOpen &&
+        <Modal
+          isOpen={isModalOpen}
+          onClose={handleModalClose}
+        >
+          <BookModal book={activeBook} />
+        </Modal>}
     </Stack>
   );
 };
