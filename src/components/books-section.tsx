@@ -6,6 +6,8 @@ import {useState} from "react";
 import {FetchStatus} from "../api";
 import {addNewBook, deleteBook} from "../store/books/books";
 import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
+import { ItemButton } from "./item-button";
+import { BookType } from "../types";
 
 
 export const BooksSection: React.FC = () => {
@@ -24,7 +26,7 @@ export const BooksSection: React.FC = () => {
     dispatch(deleteBook(bookId));
   };
 
-  const handleMoreButtonClick = () => {
+  const handleMoreButtonClick = (book: BookType) => {
     //
   };
 
@@ -69,16 +71,14 @@ export const BooksSection: React.FC = () => {
                 secondary={book.autor}
                 style={{color: `${book.isTaken ? `red` : `black`}`}}
               />
-              <Button
-                variant="outlined"
-                className="item-button"
-                onClick={handleMoreButtonClick}
-              >...</Button>
-              <Button
-                variant="outlined"
-                className="item-button"
+              <ItemButton
+                textValue="..."
+                onClick={handleMoreButtonClick.bind(null, book)}
+              />
+              <ItemButton
+                textValue="-"
                 onClick={handleDeleteBookButtonClick.bind(null, book.id)}
-              >-</Button>
+              />
             </ListItem>
           ))
         }</List>
