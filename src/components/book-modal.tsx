@@ -19,7 +19,12 @@ export const BookModal: React.FC<PropsType> = (props: PropsType) => {
 
       <div className="book-modal--info">
         <h2>{book.title}</h2>
-        <p>{book.autor}</p>
+        <p>{book.autor}
+          <span
+            className="book-is-taken"
+            style={{color: book.isTaken ? `red` : `green`}}
+          >{book.isTaken ? `Is taken` : `Free`}</span>
+        </p>
       </div>
     </div>
   );
