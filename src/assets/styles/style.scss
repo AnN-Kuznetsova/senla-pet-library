@@ -1,0 +1,19 @@
+.modal {
+  position: absolute;
+  width: 80%;
+  padding: 50px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.section {
+  width: 50%;
+}
+
+.item-button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  flex-grow: 0;
+}

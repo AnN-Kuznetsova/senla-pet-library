@@ -23,7 +23,7 @@ export const ReadersSection: React.FC = () => {
   };
 
   return (
-    <Stack style={{width: `50%`}}>
+    <Stack className="section">
       <Button
         variant="contained"
         disabled={readersError && true || !readers.length}

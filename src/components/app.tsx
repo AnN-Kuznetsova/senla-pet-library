@@ -27,6 +27,8 @@ export const App: React.FC = () => {
   return (
     <ThemeProvider theme={THEME}>
       <MainPage />
+      
+      <div id="modal" className="modal"></div>
     </ThemeProvider>
   );
 };

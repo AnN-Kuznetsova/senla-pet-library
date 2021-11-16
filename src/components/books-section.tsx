@@ -8,14 +8,6 @@ import {addNewBook, deleteBook} from "../store/books/books";
 import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
 
 
-const itemButtonStyle = {
-  width: `40px`,
-  height: `40px`,
-  padding: `0`,
-  flexGrow: 0,
-};
-
-
 export const BooksSection: React.FC = () => {
   const books = useSelector(getBooks);
   const booksStatus = useSelector(getBooksStatus);
@@ -47,7 +39,7 @@ export const BooksSection: React.FC = () => {
   };
 
   return (
-    <Stack style={{width: `50%`}}>
+    <Stack className="section">
       <Button
         variant="contained"
         disabled={booksError && true || !books.length}
@@ -79,12 +71,12 @@ export const BooksSection: React.FC = () => {
               />
               <Button
                 variant="outlined"
-                style={itemButtonStyle}
+                className="item-button"
                 onClick={handleMoreButtonClick}
               >...</Button>
               <Button
                 variant="outlined"
-                style={itemButtonStyle}
+                className="item-button"
                 onClick={handleDeleteBookButtonClick.bind(null, book.id)}
               >-</Button>
             </ListItem>
