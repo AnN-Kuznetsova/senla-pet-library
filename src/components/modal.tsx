@@ -38,13 +38,21 @@ export const Modal: React.FC<PropsType> = (props: PropsType) => {
     }
   }, [isOpen]);
 
-  const handleCloseButtonClick = () => {
+  const close = () => {
     onClose();
     closeModal();
   };
 
   const handleModalInnerClick = (event: React.MouseEvent): void => {
     event.stopPropagation();
+  };
+
+  const handleCloseButtonClick = () => {
+    close();
+  };
+
+  const handleFormSubmit = (): void => {
+    close();
   };
 
   return ReactDOM.createPortal(
@@ -55,6 +63,7 @@ export const Modal: React.FC<PropsType> = (props: PropsType) => {
       <div
         className="modal__inner"
         onClick={handleModalInnerClick}
+        onSubmit={handleFormSubmit}
       >
         <ItemButton
           onClick={handleCloseButtonClick}

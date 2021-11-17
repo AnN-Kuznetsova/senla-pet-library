@@ -8,7 +8,7 @@ import {BookType} from "../types";
 import {ItemButton} from "./item-button";
 import {FetchStatus} from "../api";
 import {Modal} from "./modal";
-import {addNewBook, deleteBook} from "../store/books/books";
+import {deleteBook} from "../store/books/books";
 import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
 import { NewBookModal } from "./new-book-modal";
 
@@ -43,14 +43,7 @@ export const BooksSection: React.FC = () => {
   };
 
   const handleAddNewBookButtonClick = () => {
-    /* const newBook = {
-      "title": "new Book",
-      "autor": "new Autor",
-      "coverImgUrl": "",
-    }; */
     setIsNewBookModalOpen(true);
-
-    //dispatch(addNewBook(newBook));
   };
 
   const handleNewBookModalClose = () => {

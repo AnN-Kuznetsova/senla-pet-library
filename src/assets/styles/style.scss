@@ -39,3 +39,12 @@ img {
   margin-top: 50px;
   text-transform: uppercase;
 }
+
+div.form-control {
+  display: flex;
+  margin: 20px 0;
+
+  &:last-of-type {
+    margin-bottom: 50px;
+  }
+}
