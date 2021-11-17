@@ -43,14 +43,26 @@ export const Modal: React.FC<PropsType> = (props: PropsType) => {
     closeModal();
   };
 
+  const handleModalInnerClick = (event: React.MouseEvent): void => {
+    event.stopPropagation();
+  };
+
   return ReactDOM.createPortal(
-    <React.Fragment>
-      <ItemButton
-        onClick={handleCloseButtonClick}
-        className="item-button--close"
-      />
-      {children}
-    </React.Fragment>,
+    <section
+      className="modal__wrapper"
+      onClick={handleCloseButtonClick}
+    >
+      <div
+        className="modal__inner"
+        onClick={handleModalInnerClick}
+      >
+        <ItemButton
+          onClick={handleCloseButtonClick}
+          className="item-button--close"
+        />
+        {children}
+      </div>
+    </section>,
     modalElement
   );
 };

@@ -54,7 +54,7 @@ export const BooksSection: React.FC = () => {
   };
 
   const handleNewBookModalClose = () => {
-
+    setIsNewBookModalOpen(false);
   };
 
   return (
