@@ -1,4 +1,6 @@
-$modal-padding: 50px;
+@import "./const";
+@import "./item-button";
+
 
 img {
   display: block;
@@ -27,23 +29,10 @@ img {
   &--js-isShow {
     display: block;
   }
-
-  & .modal-close-button {
-    position: absolute;
-    top: $modal-padding / 2;
-    right: $modal-padding / 2;
-  }
 }
 
 .section {
   width: 50%;
-}
-
-.item-button {
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  flex-grow: 0;
 }
 
 .book-modal {

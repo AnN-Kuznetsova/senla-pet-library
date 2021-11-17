@@ -10,6 +10,7 @@ import {FetchStatus} from "../api";
 import {Modal} from "./modal";
 import {addNewBook, deleteBook} from "../store/books/books";
 import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
+import { NewBookModal } from "./new-book-modal";
 
 
 export const BooksSection: React.FC = () => {
@@ -42,14 +43,14 @@ export const BooksSection: React.FC = () => {
   };
 
   const handleAddNewBookButtonClick = () => {
-    const newBook = {
+    /* const newBook = {
       "title": "new Book",
       "autor": "new Autor",
       "coverImgUrl": "",
-    };
-    //setIsNewBookModalOpen(true);
+    }; */
+    setIsNewBookModalOpen(true);
 
-    dispatch(addNewBook(newBook));
+    //dispatch(addNewBook(newBook));
   };
 
   const handleNewBookModalClose = () => {
@@ -88,12 +89,12 @@ export const BooksSection: React.FC = () => {
                 style={{color: `${book.isTaken ? `red` : `black`}`}}
               />
               <ItemButton
-                textValue="..."
                 onClick={handleMoreButtonClick.bind(null, book)}
+                className="item-button--more"
               />
               <ItemButton
-                textValue="-"
                 onClick={handleDeleteBookButtonClick.bind(null, book.id)}
+                className="item-button--delete"
               />
             </ListItem>
           ))
@@ -108,11 +109,13 @@ export const BooksSection: React.FC = () => {
           <BookModal book={activeBook} />
         </Modal>}
 
-      {/* isNewBookModalOpen &&
+      {isNewBookModalOpen &&
         <Modal
-          isOpen={isNewBookModalOpen}>
+          isOpen={isNewBookModalOpen}
           onClose={handleNewBookModalClose}
-        </Modal> */}
+        >
+          <NewBookModal />
+        </Modal>}
     </Stack>
   );
 };

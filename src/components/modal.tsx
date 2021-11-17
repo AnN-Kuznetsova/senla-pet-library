@@ -46,9 +46,8 @@ export const Modal: React.FC<PropsType> = (props: PropsType) => {
   return ReactDOM.createPortal(
     <React.Fragment>
       <ItemButton
-        textValue="X"
         onClick={handleCloseButtonClick}
-        className="modal-close-button"
+        className="item-button--close"
       />
       {children}
     </React.Fragment>,

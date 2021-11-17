@@ -3,9 +3,9 @@ import {Button} from "@mui/material";
 
 
 interface PropsType {
-  textValue: string,
+  textValue?: string,
   className?: string,
-  onClick: () => void,
+  onClick?: () => void,
 }
 
 
@@ -22,6 +22,9 @@ export const ItemButton: React.FC<PropsType> = (props: PropsType) => {
       className={`item-button ${className}`}
       color="secondary"
       onClick={onClick}
-    >{textValue}</Button>
+    >
+      {textValue}
+      <span className="item-button__inner"></span>
+    </Button>
   );
 };
