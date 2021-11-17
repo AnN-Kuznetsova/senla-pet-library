@@ -7,10 +7,11 @@ import {BookModal} from "./book-modal";
 import {BookType} from "../types";
 import {ItemButton} from "./item-button";
 import {FetchStatus} from "../api";
-import {Modal} from "./modal";
+import {Modal, closeModal} from "./modal";
+import {NewBookModal} from "./new-book-modal";
+import {Wait} from "./wait";
 import {deleteBook} from "../store/books/books";
 import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
-import { NewBookModal } from "./new-book-modal";
 
 
 export const BooksSection: React.FC = () => {
@@ -19,35 +20,35 @@ export const BooksSection: React.FC = () => {
   const booksError = useSelector(getBooksError);
   const dispatch = useDispatch();
 
+  const [modalChildren, setModalChildren] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [isBooksListShow, changeIsBooksListShow] = useState(false);
   const handleShowBooksButtonClick = () => {
     changeIsBooksListShow((isBooksListShow) => !isBooksListShow);
   };
 
   const handleDeleteBookButtonClick = (bookId: string) => {
-    dispatch(deleteBook(bookId));
+    setModalChildren(<Wait />);
+    setIsModalOpen(true);
+    dispatch(deleteBook({
+      bookId,
+      cb: closeModal,
+    }));
   };
-
-  const [activeBook, setActiveBook] = useState(null);
-  const [isBookModalOpen, setIsBookModalOpen] = useState(false);
-  const [isNewBookModalOpen, setIsNewBookModalOpen] = useState(false);
 
   const handleMoreButtonClick = (book: BookType) => {
-    setActiveBook(book);
-    setIsBookModalOpen(true);
-  };
-
-  const handleMoreModalClose = () => {
-    setActiveBook(null);
-    setIsBookModalOpen(false);
+    setModalChildren(<BookModal book={book} />);
+    setIsModalOpen(true);
   };
 
   const handleAddNewBookButtonClick = () => {
-    setIsNewBookModalOpen(true);
+    setModalChildren(<NewBookModal />);
+    setIsModalOpen(true);
   };
 
-  const handleNewBookModalClose = () => {
-    setIsNewBookModalOpen(false);
+  const handleModalClose = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -94,20 +95,12 @@ export const BooksSection: React.FC = () => {
         }</List>
       }
 
-      {isBookModalOpen &&
+      {isModalOpen &&
         <Modal
-          isOpen={isBookModalOpen}
-          onClose={handleMoreModalClose}
+          isOpen={isModalOpen}
+          onClose={handleModalClose}
         >
-          <BookModal book={activeBook} />
-        </Modal>}
-
-      {isNewBookModalOpen &&
-        <Modal
-          isOpen={isNewBookModalOpen}
-          onClose={handleNewBookModalClose}
-        >
-          <NewBookModal />
+          {modalChildren}
         </Modal>}
     </Stack>
   );

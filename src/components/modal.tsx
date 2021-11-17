@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 import {useEffect} from "react";
 
 import {ItemButton} from "./item-button";
+import { Wait } from "./wait";
 
 
 const modalElement = document.querySelector(`#modal`);
@@ -11,13 +12,13 @@ const openModal = () => {
   modalElement.classList.add(`modal--js-isShow`);
 };
 
-const closeModal = () => {
+export const closeModal = () => {
   modalElement.classList.remove(`modal--js-isShow`);
 };
 
 
 interface PropsType {
-  children: React.ReactChild,
+  children: React.ReactElement,
   isOpen: boolean,
   onClose?: () => void,
 }
@@ -27,8 +28,10 @@ export const Modal: React.FC<PropsType> = (props: PropsType) => {
   const {
     isOpen,
     onClose,
-    children
+    children,
   } = props;
+
+  const isCloseButton = (children.type === Wait) ? false : true;
 
   useEffect(() => {
     if (isOpen) {
@@ -65,10 +68,12 @@ export const Modal: React.FC<PropsType> = (props: PropsType) => {
         onClick={handleModalInnerClick}
         onSubmit={handleFormSubmit}
       >
-        <ItemButton
-          onClick={handleCloseButtonClick}
-          className="item-button--close"
-        />
+        {isCloseButton &&
+          <ItemButton
+            onClick={handleCloseButtonClick}
+            className="item-button--close"
+          />
+        }
         {children}
       </div>
     </section>,

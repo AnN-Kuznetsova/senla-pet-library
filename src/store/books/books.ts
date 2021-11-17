@@ -64,16 +64,20 @@ const addNewBook = createAsyncThunk<
 );
 
 const deleteBook = createAsyncThunk<
-  Promise<BookType | unknown>,
-  string,
+  Promise<string | unknown>,
+  {
+    bookId: string,
+    cb: () => void,
+  },
   {
     extra: AxiosInstance,
   }
 >(
   `books/deleteBook`,
-  async (bookId, {extra: api, rejectWithValue}) => {
+  async ({bookId, cb}, {extra: api, rejectWithValue}) => {
     try {
       const response = await api.delete(`/books/${bookId}`);
+      cb();
       return response.data;
     } catch (error) {
       return rejectWithValue(createErrorValue(error));''
@@ -90,6 +94,7 @@ const booksSlice = createSlice({
     // addNewBook: (state, action: PayloadAction<BookType>) => {state.list.push(action.payload)},
   },
   extraReducers: {
+    // fetch
     [fetchBooks.pending.toString()]: (state) => {
       state.status = FetchStatus.LOADING;
       state.error = null;
@@ -102,14 +107,20 @@ const booksSlice = createSlice({
       state.status = FetchStatus.REJECTED;
       state.error = action.payload;
     },
+    // addNewBook
     //[addNewBook.pending.toString()]: (state) => {},
     //[addNewBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {},
     [addNewBook.fulfilled.toString()]: (state, action: PayloadAction<BookType>) => {
       state.list.push(action.payload);
     },
-    //[deleteBook.pending.toString()]: (state) => {},
+    // deleteBook
+    [deleteBook.pending.toString()]: (state) => {
+      state.status = FetchStatus.WAIT;
+      state.error = null;
+    },
     //[deleteBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {},
     [deleteBook.fulfilled.toString()]: (state, action: PayloadAction<string>) => {
+      state.status = FetchStatus.RESOLVED;
       const bookId = action.payload;
       state.list = state.list.filter((book) => book.id !== bookId);
     },
