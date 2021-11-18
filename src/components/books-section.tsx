@@ -12,7 +12,7 @@ import {Modal, closeModal} from "./modal";
 import {NewBookModal} from "./new-book-modal";
 import {Wait} from "./wait";
 import {deleteBook, resetBooksStatus} from "../store/books/books";
-import {getBooks, getBooksAddNewError, getBooksDeleteError, getBooksFetchError, getBooksStatus} from "../store/books/selectors";
+import {getBooks, getBooksAddNewError, getBooksDeleteError, getBooksLoadError, getBooksStatus} from "../store/books/selectors";
 
 
 export const BooksSection: React.FC = () => {
@@ -23,7 +23,7 @@ export const BooksSection: React.FC = () => {
 
   const books = useSelector(getBooks);
   const booksStatus = useSelector(getBooksStatus);
-  const booksFetchError = useSelector(getBooksFetchError);
+  const booksLoadError = useSelector(getBooksLoadError);
   const booksDeleteError = useSelector(getBooksDeleteError);
   const booksAddNewError = useSelector(getBooksAddNewError);
 
@@ -82,22 +82,22 @@ export const BooksSection: React.FC = () => {
     <Stack className="section">
       <Button
         variant="contained"
-        disabled={booksFetchError && true || !books.length}
+        disabled={booksLoadError && true || !books.length}
         onClick={handleShowBooksButtonClick}
       >
         {isBooksListShow && `Hide books list` || `Show books list`}
       </Button>
       <Button
         variant="contained"
-        disabled={booksFetchError && true || !books.length}
+        disabled={booksLoadError && true || !books.length}
         onClick={handleAddNewBookButtonClick}
       >+</Button>
 
       {booksStatus === FetchStatus.LOADING && <h2>Loading...</h2>}
 
-      {booksFetchError && <h2>Sorry! Books have not loaded!
-        {booksFetchError.status && <br/>}
-        {booksFetchError.status && booksFetchError.status}
+      {booksLoadError && <h2>Sorry! Books have not loaded!
+        {booksLoadError.status && <br/>}
+        {booksLoadError.status && booksLoadError.status}
       </h2>}
 
       {isBooksListShow &&

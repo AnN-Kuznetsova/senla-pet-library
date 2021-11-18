@@ -20,14 +20,14 @@ const initialState = {
   error: null,
 } as ReadersStateType;
 
-const fetchReaders = createAsyncThunk<
+const loadReaders = createAsyncThunk<
 Promise<ReaderDataType[] | unknown>,
   void,
   {
     extra: AxiosInstance
   }
 >(
-  `readers/fetchReaders`,
+  `readers/loadReaders`,
   async (_, {extra: api, rejectWithValue}) => {
     try {
       const response = await api.get(`/readers`);
@@ -45,15 +45,15 @@ const readersSlice = createSlice({
     //loadReaders: (state, action) => state = action.payload,
   },
   extraReducers: {
-    [fetchReaders.pending.toString()]: (state) => {
+    [loadReaders.pending.toString()]: (state) => {
       state.status = FetchStatus.LOADING;
       state.error = null;
     },
-    [fetchReaders.fulfilled.toString()]: (state, action: PayloadAction<ReaderType[]>) => {
+    [loadReaders.fulfilled.toString()]: (state, action: PayloadAction<ReaderType[]>) => {
       state.status = FetchStatus.RESOLVED;
       state.list = createReaders(action.payload);
     },
-    [fetchReaders.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
+    [loadReaders.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
       state.status = FetchStatus.REJECTED;
       state.error = action.payload;
     },
@@ -69,5 +69,5 @@ const {/* actions, */ reducer} = readersSlice;
 
 export {
   reducer,
-  fetchReaders,
+  loadReaders,
 };

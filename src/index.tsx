@@ -6,8 +6,8 @@ import {Provider} from "react-redux";
 
 import {App} from "./components/app";
 import {createAPI} from "./api";
-import {fetchBooks} from "./store/books/books";
-import {fetchReaders} from "./store/readers/readers";
+import {loadBooks} from "./store/books/books";
+import {loadReaders} from "./store/readers/readers";
 import {createStore} from "./store/store";
 
 
@@ -25,8 +25,8 @@ const renderDom = () => {
 };
 
 
-store.dispatch(fetchBooks());
-store.dispatch(fetchReaders());
+store.dispatch(loadBooks());
+store.dispatch(loadReaders());
 
 renderDom();
 

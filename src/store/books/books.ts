@@ -10,7 +10,7 @@ import {createErrorValue} from "../../utils";
 interface BooksStateType {
   list: BookType[],
   status: string | null,
-  fetchError: ErrorType | null,
+  loadError: ErrorType | null,
   deleteError: ErrorType | null,
   addNewError: ErrorType | null,
 }
@@ -18,20 +18,20 @@ interface BooksStateType {
 const initialState = {
   list: [],
   status: null,
-  fetchError: null,
+  loadError: null,
   deleteError: null,
   addNewError: null,
 } as BooksStateType;
 
 
-const fetchBooks = createAsyncThunk<
+const loadBooks = createAsyncThunk<
   Promise<BookType[] | unknown>,
   void,
   {
     extra: AxiosInstance
   }
 >(
-  `books/fetchBooks`,
+  `books/loadBooks`,
   async (_, {extra: api, rejectWithValue}) => {
     try {
       const response = await api.get(`/books`);
@@ -99,18 +99,18 @@ const booksSlice = createSlice({
     resetAddNewBookError: (state) => {state.addNewError = null},
   },
   extraReducers: {
-    // fetch
-    [fetchBooks.pending.toString()]: (state) => {
+    // load
+    [loadBooks.pending.toString()]: (state) => {
       state.status = FetchStatus.LOADING;
-      state.fetchError = null;
+      state.loadError = null;
     },
-    [fetchBooks.fulfilled.toString()]: (state, action: PayloadAction<BookType[]>) => {
+    [loadBooks.fulfilled.toString()]: (state, action: PayloadAction<BookType[]>) => {
       state.status = FetchStatus.RESOLVED;
       state.list = createBooks(action.payload);
     },
-    [fetchBooks.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
+    [loadBooks.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
       state.status = FetchStatus.REJECTED;
-      state.fetchError = action.payload;
+      state.loadError = action.payload;
     },
     // addNewBook
     [addNewBook.pending.toString()]: (state) => {
@@ -152,7 +152,7 @@ export const {
 
 export {
   reducer,
-  fetchBooks,
+  loadBooks,
   addNewBook,
   deleteBook,
 };

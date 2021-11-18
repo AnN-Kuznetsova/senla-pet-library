@@ -6,7 +6,7 @@ const getBooks = (state: RootStateType): BookType[] => state.books.list;
 
 const getBooksStatus = (state: RootStateType): string | null => state.books.status;
 
-const getBooksFetchError = (state: RootStateType): ErrorType | null => state.books.fetchError;
+const getBooksLoadError = (state: RootStateType): ErrorType | null => state.books.loadError;
 
 const getBooksDeleteError = (state: RootStateType): ErrorType | null => state.books.deleteError;
 
@@ -16,7 +16,7 @@ const getBooksAddNewError = (state: RootStateType): ErrorType | null => state.bo
 export {
   getBooks,
   getBooksStatus,
-  getBooksFetchError,
+  getBooksLoadError,
   getBooksDeleteError,
   getBooksAddNewError,
 };
