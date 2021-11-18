@@ -1,18 +1,15 @@
 import * as React from "react";
-import {Button, Stack, List, ListItem, ListItemText} from "@mui/material";
+import {Button, Stack} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {useState, useEffect} from "react";
 
-import {BookModal} from "./book-modal";
-import {BookType} from "../types";
 import {ErrorComponent} from "./error-component";
 import {FetchStatus} from "../api";
-import {ItemButton} from "./item-button";
 import {Modal, closeModal} from "./modal";
 import {NewBookModal} from "./new-book-modal";
-import {Wait} from "./wait";
-import {deleteBook, resetBooksStatus} from "../store/books/books";
+import {resetBooksStatus} from "../store/books/books";
 import {getBooks, getBooksAddNewError, getBooksDeleteError, getBooksLoadError, getBooksStatus} from "../store/books/selectors";
+import { BooksList } from "./books-list";
 
 
 export const BooksSection: React.FC = () => {
@@ -35,6 +32,11 @@ export const BooksSection: React.FC = () => {
     changeIsBooksListShow((isBooksListShow) => !isBooksListShow);
   };
 
+  const openModal = (children: React.ReactElement) => {
+    setModalChildren(children);
+    setIsModalOpen(true);
+  };
+
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
@@ -44,30 +46,14 @@ export const BooksSection: React.FC = () => {
     handleModalClose();
   };
 
-  const handleDeleteBookButtonClick = (bookId: string) => {
-    setModalChildren(<Wait />);
-    setIsModalOpen(true);
-    dispatch(deleteBook({
-      bookId,
-      cb: onModalClose,
-    }));
-  };
-
-  const handleMoreButtonClick = (book: BookType) => {
-    setModalChildren(<BookModal book={book} />);
-    setIsModalOpen(true);
-  };
-
   const handleAddNewBookButtonClick = () => {
     dispatch(resetBooksStatus());
-    setModalChildren(<NewBookModal />);
-    setIsModalOpen(true);
+    openModal(<NewBookModal />);
   };
 
   useEffect(() => {
     if (booksDeleteError) {
-      setModalChildren(<ErrorComponent />);
-      setIsModalOpen(true);
+      openModal(<ErrorComponent />);
     }
   }, [booksDeleteError]);
 
@@ -100,27 +86,7 @@ export const BooksSection: React.FC = () => {
         {booksLoadError.status && booksLoadError.status}
       </h2>}
 
-      {isBooksListShow &&
-        <List>{
-          books.map((book, index) => (
-            <ListItem key={index + book.id}>
-              <ListItemText
-                primary={book.title}
-                secondary={book.autor}
-                style={{color: `${book.isTaken ? `red` : `black`}`}}
-              />
-              <ItemButton
-                onClick={handleMoreButtonClick.bind(null, book)}
-                className="item-button--more"
-              />
-              <ItemButton
-                onClick={handleDeleteBookButtonClick.bind(null, book.id)}
-                className="item-button--delete"
-              />
-            </ListItem>
-          ))
-        }</List>
-      }
+      {isBooksListShow && <BooksList openModal={openModal} closeModal={onModalClose} /> }
 
       {isModalOpen &&
         <Modal
