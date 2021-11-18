@@ -54,10 +54,6 @@ export const Modal: React.FC<PropsType> = (props: PropsType) => {
     close();
   };
 
-  const handleFormSubmit = (): void => {
-    close();
-  };
-
   return ReactDOM.createPortal(
     <section
       className="modal__wrapper"
@@ -66,7 +62,6 @@ export const Modal: React.FC<PropsType> = (props: PropsType) => {
       <div
         className="modal__inner"
         onClick={handleModalInnerClick}
-        onSubmit={handleFormSubmit}
       >
         {isCloseButton &&
           <ItemButton

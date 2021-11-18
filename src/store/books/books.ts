@@ -11,14 +11,16 @@ interface BooksStateType {
   list: BookType[],
   status: string | null,
   fetchError: ErrorType | null,
-  error: ErrorType | null,
+  deleteError: ErrorType | null,
+  addNewError: ErrorType | null,
 }
 
 const initialState = {
   list: [],
   status: null,
   fetchError: null,
-  error: null,
+  deleteError: null,
+  addNewError: null,
 } as BooksStateType;
 
 
@@ -93,8 +95,8 @@ const booksSlice = createSlice({
   name: `books`,
   initialState,
   reducers: {
-    // loadBooks: (state, action) => {state.list = action.payload},
-    // addNewBook: (state, action: PayloadAction<BookType>) => {state.list.push(action.payload)},
+    resetBooksStatus: (state) => {state.status = null},
+    resetAddNewBookError: (state) => {state.addNewError = null},
   },
   extraReducers: {
     // fetch
@@ -111,19 +113,26 @@ const booksSlice = createSlice({
       state.fetchError = action.payload;
     },
     // addNewBook
-    //[addNewBook.pending.toString()]: (state) => {},
-    //[addNewBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {},
+    [addNewBook.pending.toString()]: (state) => {
+      state.status = FetchStatus.WAIT;
+      state.addNewError = null;
+    },
+    [addNewBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
+      state.status = FetchStatus.REJECTED;
+      state.addNewError = action.payload;
+    },
     [addNewBook.fulfilled.toString()]: (state, action: PayloadAction<BookType>) => {
+      state.status = FetchStatus.RESOLVED;
       state.list.push(action.payload);
     },
     // deleteBook
     [deleteBook.pending.toString()]: (state) => {
       state.status = FetchStatus.WAIT;
-      state.error = null;
+      state.deleteError = null;
     },
     [deleteBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
       state.status = FetchStatus.REJECTED;
-      state.error = action.payload;
+      state.deleteError = action.payload;
     },
     [deleteBook.fulfilled.toString()]: (state, action: PayloadAction<string>) => {
       state.status = FetchStatus.RESOLVED;
@@ -133,13 +142,13 @@ const booksSlice = createSlice({
   },
 });
 
-const {/* actions, */ reducer} = booksSlice;
+const {actions, reducer} = booksSlice;
 
 
-/* export const {
-  // loadBooks,
-  //addNewBook,
-} = actions; */
+export const {
+  resetBooksStatus,
+  resetAddNewBookError,
+} = actions;
 
 export {
   reducer,

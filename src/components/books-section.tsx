@@ -11,16 +11,21 @@ import {ItemButton} from "./item-button";
 import {Modal, closeModal} from "./modal";
 import {NewBookModal} from "./new-book-modal";
 import {Wait} from "./wait";
-import {deleteBook} from "../store/books/books";
-import {getBooks, getBooksError, getBooksFetchError, getBooksStatus} from "../store/books/selectors";
+import {deleteBook, resetBooksStatus} from "../store/books/books";
+import {getBooks, getBooksAddNewError, getBooksDeleteError, getBooksFetchError, getBooksStatus} from "../store/books/selectors";
 
 
 export const BooksSection: React.FC = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(resetBooksStatus());
+  }, [dispatch]);
+
   const books = useSelector(getBooks);
   const booksStatus = useSelector(getBooksStatus);
   const booksFetchError = useSelector(getBooksFetchError);
-  const booksError = useSelector(getBooksError);
-  const dispatch = useDispatch();
+  const booksDeleteError = useSelector(getBooksDeleteError);
+  const booksAddNewError = useSelector(getBooksAddNewError);
 
   const [modalChildren, setModalChildren] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,15 +39,17 @@ export const BooksSection: React.FC = () => {
     setIsModalOpen(false);
   };
 
+  const onModalClose = () => {
+    closeModal();
+    handleModalClose();
+  };
+
   const handleDeleteBookButtonClick = (bookId: string) => {
     setModalChildren(<Wait />);
     setIsModalOpen(true);
     dispatch(deleteBook({
       bookId,
-      cb: () => {
-        closeModal();
-        handleModalClose();
-      },
+      cb: onModalClose,
     }));
   };
 
@@ -52,16 +59,24 @@ export const BooksSection: React.FC = () => {
   };
 
   const handleAddNewBookButtonClick = () => {
+    dispatch(resetBooksStatus());
     setModalChildren(<NewBookModal />);
     setIsModalOpen(true);
   };
 
   useEffect(() => {
-    if (booksError) {
+    if (booksDeleteError) {
       setModalChildren(<ErrorComponent />);
       setIsModalOpen(true);
     }
-  }, [booksError]);
+  }, [booksDeleteError]);
+
+  useEffect(() => {
+    if (booksStatus === FetchStatus.RESOLVED && !booksAddNewError) {
+      onModalClose();
+      dispatch(resetBooksStatus());
+    }
+  });
 
   return (
     <Stack className="section">

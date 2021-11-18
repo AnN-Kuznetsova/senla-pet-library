@@ -1,9 +1,13 @@
 import * as React from "react";
-import {useState} from "react";
 import {Button, FormControl, Input, InputLabel, Typography} from "@mui/material";
-import {useDispatch} from "react-redux";
+import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
-import {addNewBook} from "../store/books/books";
+import {FetchStatus} from "../api";
+import {ErrorComponent} from "./error-component";
+import {Wait} from "./wait";
+import {addNewBook, resetAddNewBookError} from "../store/books/books";
+import {getBooksAddNewError, getBooksStatus} from "../store/books/selectors";
 
 
 const getInputTextValidation = (text: string): boolean => {
@@ -13,6 +17,8 @@ const getInputTextValidation = (text: string): boolean => {
 
 export const NewBookModal: React.FC = () => {
   const dispatch = useDispatch();
+  const status = useSelector(getBooksStatus);
+  const error = useSelector(getBooksAddNewError);
   let isValidate = false;
 
   const [title, setTitle] = useState("");
@@ -35,6 +41,10 @@ export const NewBookModal: React.FC = () => {
     };
 
     dispatch(addNewBook(newBook));
+  };
+
+  const handleErrorComponentClick = () => {
+    dispatch(resetAddNewBookError());
   };
 
   isValidate = getInputTextValidation(title) && getInputTextValidation(autor);
@@ -68,6 +78,21 @@ export const NewBookModal: React.FC = () => {
           Send
         </Button>
       </form>
+
+      {status === FetchStatus.WAIT &&
+        <div className="absolute">
+          <Wait />
+        </div>
+      }
+
+      {error && status !== FetchStatus.WAIT &&
+        <div
+          className="absolute absolute--clickable"
+          onClick={handleErrorComponentClick}
+        >
+          <ErrorComponent />
+        </div>
+      }
     </React.Fragment>
   );
 };

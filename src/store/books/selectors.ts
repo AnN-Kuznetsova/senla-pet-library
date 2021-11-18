@@ -8,12 +8,15 @@ const getBooksStatus = (state: RootStateType): string | null => state.books.stat
 
 const getBooksFetchError = (state: RootStateType): ErrorType | null => state.books.fetchError;
 
-const getBooksError = (state: RootStateType): ErrorType | null => state.books.error;
+const getBooksDeleteError = (state: RootStateType): ErrorType | null => state.books.deleteError;
+
+const getBooksAddNewError = (state: RootStateType): ErrorType | null => state.books.addNewError;
 
 
 export {
   getBooks,
-  getBooksFetchError,
-  getBooksError,
   getBooksStatus,
+  getBooksFetchError,
+  getBooksDeleteError,
+  getBooksAddNewError,
 };
