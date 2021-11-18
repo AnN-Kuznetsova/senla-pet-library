@@ -10,12 +10,14 @@ import {createErrorValue} from "../../utils";
 interface BooksStateType {
   list: BookType[],
   status: string | null,
+  fetchError: ErrorType | null,
   error: ErrorType | null,
 }
 
 const initialState = {
   list: [],
   status: null,
+  fetchError: null,
   error: null,
 } as BooksStateType;
 
@@ -77,10 +79,11 @@ const deleteBook = createAsyncThunk<
   async ({bookId, cb}, {extra: api, rejectWithValue}) => {
     try {
       const response = await api.delete(`/books/${bookId}`);
-      cb();
       return response.data;
     } catch (error) {
       return rejectWithValue(createErrorValue(error));''
+    } finally {
+      cb();
     }
   }
 );
@@ -97,7 +100,7 @@ const booksSlice = createSlice({
     // fetch
     [fetchBooks.pending.toString()]: (state) => {
       state.status = FetchStatus.LOADING;
-      state.error = null;
+      state.fetchError = null;
     },
     [fetchBooks.fulfilled.toString()]: (state, action: PayloadAction<BookType[]>) => {
       state.status = FetchStatus.RESOLVED;
@@ -105,7 +108,7 @@ const booksSlice = createSlice({
     },
     [fetchBooks.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
       state.status = FetchStatus.REJECTED;
-      state.error = action.payload;
+      state.fetchError = action.payload;
     },
     // addNewBook
     //[addNewBook.pending.toString()]: (state) => {},
@@ -118,7 +121,10 @@ const booksSlice = createSlice({
       state.status = FetchStatus.WAIT;
       state.error = null;
     },
-    //[deleteBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {},
+    [deleteBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
+      state.status = FetchStatus.REJECTED;
+      state.error = action.payload;
+    },
     [deleteBook.fulfilled.toString()]: (state, action: PayloadAction<string>) => {
       state.status = FetchStatus.RESOLVED;
       const bookId = action.payload;

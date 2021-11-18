@@ -33,18 +33,18 @@ export const Modal: React.FC<PropsType> = (props: PropsType) => {
 
   const isCloseButton = (children.type === Wait) ? false : true;
 
+  const close = React.useCallback(() => {
+    onClose();
+    closeModal();
+  }, [onClose]);
+
   useEffect(() => {
     if (isOpen) {
       openModal();
     } else {
-      closeModal();
+      close();
     }
-  }, [isOpen]);
-
-  const close = () => {
-    onClose();
-    closeModal();
-  };
+  }, [isOpen, close]);
 
   const handleModalInnerClick = (event: React.MouseEvent): void => {
     event.stopPropagation();
