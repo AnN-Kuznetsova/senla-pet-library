@@ -28,7 +28,7 @@ button.item-button {
 
     & .item-button__inner {
       transition: all 0.3s;
-      
+
       &::before,
       &::after {
         content: "";
@@ -67,6 +67,10 @@ button.item-button {
       height: 1px;
       background-color: $red;
       transform: translate(-50%, -50%);
+    }
+
+    &:disabled .item-button__inner {
+      background-color: rgba(0, 0, 0, 0.5);
     }
   }
 

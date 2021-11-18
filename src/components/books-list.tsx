@@ -51,6 +51,7 @@ export const BooksList: React.FC<PropsType> = (props: PropsType) => {
           />
           <ItemButton
             onClick={handleDeleteBookButtonClick.bind(null, book.id)}
+            isDisabled={book.isTaken ? true : false}
             className="item-button--delete"
           />
         </ListItem>
