@@ -86,7 +86,13 @@ export const BooksSection: React.FC = () => {
         {booksLoadError.status && booksLoadError.status}
       </h2>}
 
-      {isBooksListShow && <BooksList openModal={openModal} closeModal={onModalClose} /> }
+      {isBooksListShow &&
+        <BooksList
+          books={books}
+          openModal={openModal}
+          closeModal={onModalClose}
+        />
+      }
 
       {isModalOpen &&
         <Modal
