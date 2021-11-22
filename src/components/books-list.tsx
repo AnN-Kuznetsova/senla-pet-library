@@ -3,10 +3,10 @@ import {List, ListItem, ListItemText} from "@mui/material";
 import {useDispatch} from "react-redux";
 
 import {BookModal} from "./book-modal";
-import {BookType} from "../types";
 import {ItemButton} from "./item-button";
 import {Wait} from "./wait";
 import {deleteBook} from "../store/books/books";
+import type {BookType} from "../types";
 
 
 interface PropsType {

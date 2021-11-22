@@ -3,13 +3,13 @@ import {Button, Stack} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {useState, useEffect} from "react";
 
+import {BooksList} from "./books-list";
 import {ErrorComponent} from "./error-component";
 import {FetchStatus} from "../api";
 import {Modal, closeModal} from "./modal";
 import {NewBookModal} from "./new-book-modal";
 import {resetBooksStatus} from "../store/books/books";
 import {getBooks, getBooksAddNewError, getBooksDeleteError, getBooksLoadError, getBooksStatus} from "../store/books/selectors";
-import { BooksList } from "./books-list";
 
 
 export const BooksSection: React.FC = () => {

@@ -1,4 +1,4 @@
-import {BookType} from "../types";
+import type {BookType} from "../types";
 
 
 interface BookDataType {

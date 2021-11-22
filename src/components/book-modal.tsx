@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {BookType} from "../types";
+import type {BookType} from "../types";
 
 
 interface PropsType {

@@ -1,4 +1,4 @@
-import {ReaderType} from "../types";
+import type {ReaderType} from "../types";
 
 
 export interface ReaderDataType {
