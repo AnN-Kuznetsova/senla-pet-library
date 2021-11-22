@@ -1,5 +1,5 @@
-import {ErrorType, ReaderType} from "../../types";
 import {RootStateType} from "../..";
+import type {ErrorType, ReaderType} from "../../types";
 
 
 interface ReadersInfoType {

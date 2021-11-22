@@ -1,5 +1,5 @@
-import {BookType, ErrorType} from "../../types";
 import {RootStateType} from "../..";
+import type {BookType, ErrorType} from "../../types";
 
 
 const getBooks = (state: RootStateType): BookType[] => state.books.list;

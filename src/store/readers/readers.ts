@@ -2,9 +2,9 @@ import {AxiosInstance} from "axios";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 import {FetchStatus} from "../../api";
-import {ErrorType, ReaderType} from "../../types";
 import {createReaders, ReaderDataType} from "../../adapters/reader";
 import {createErrorValue} from "../../utils";
+import type {ErrorType, ReaderType} from "../../types";
 
 
 interface ReadersStateType {

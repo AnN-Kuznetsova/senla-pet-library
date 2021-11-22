@@ -1,10 +1,10 @@
 import {AxiosInstance} from "axios";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-import {BookType, ErrorType, NewBookType} from "../../types";
 import {FetchStatus} from "../../api";
 import {createBooks} from "../../adapters/book";
 import {createErrorValue} from "../../utils";
+import type {BookType, ErrorType, NewBookType} from "../../types";
 
 
 interface BooksStateType {
