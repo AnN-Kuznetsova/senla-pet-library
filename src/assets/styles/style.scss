@@ -1,6 +1,8 @@
 @import "./const";
 @import "./item-button";
 @import "./modal";
+@import "./form";
+@import "./book-modal";
 
 
 img {
@@ -34,31 +36,7 @@ img {
   transform: translate(-50%, -50%);
 }
 
-.book-modal {
-  display: flex;
-
-  &--img {
-    flex-grow: 0;
-    flex-shrink: 0;
-  }
-
-  &--info {
-    flex-grow: 1;
-    padding-left: 50px;
-  }
-}
-
-.book-is-taken {
-  display: block;
-  margin-top: 50px;
-  text-transform: uppercase;
-}
-
-div.form-control {
-  display: flex;
-  margin: 20px 0;
-
-  &:last-of-type {
-    margin-bottom: 50px;
-  }
+.control-buttons button{
+  margin-top: 40px;
+  margin-right: 5px;
 }

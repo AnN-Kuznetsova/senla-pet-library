@@ -1,0 +1,19 @@
+.book-modal {
+  display: flex;
+}
+
+.book-modal__img {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.book-modal__info {
+  flex-grow: 1;
+  padding-left: 50px;
+}
+
+.book-modal__is-taken {
+  display: block;
+  margin-top: 50px;
+  text-transform: uppercase;
+}
