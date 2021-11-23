@@ -54,7 +54,7 @@ const addNewBook = createAsyncThunk<
     try {
       const {books} = getState() as {books: BooksStateType};
       const booksCount: number = books.list.length;
-      const lastBookId: string = books.list[booksCount - 1].id;
+      const lastBookId: string = booksCount ? books.list[booksCount - 1].id : null;
 
       const response = await api.post(`/books`, {
         newBook,

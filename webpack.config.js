@@ -37,8 +37,9 @@ module.exports = {
       devServer.app.post('/books', function (req, res) {
         const newBookData = req.body.newBook;
         const lastBookId = req.body.lastBookId;
+        const id = lastBookId ? `b${Number.parseInt(lastBookId.replace(`b`, ``), 10) + 1}` : `b0`;
         const newBook = Object.assign(newBookData, {
-          id: `b${Number.parseInt(lastBookId.replace(`b`, ``), 10) + 1}`,
+          id,
           isTaken: false,
         });
         res.send(newBook);

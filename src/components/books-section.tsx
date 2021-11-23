@@ -63,14 +63,14 @@ export const BooksSection: React.FC = () => {
     <Stack className="section">
       <Button
         variant="contained"
-        disabled={booksLoadError && true || !books.length}
+        disabled={!!booksLoadError || !books.length}
         onClick={handleShowBooksButtonClick}
       >
         {isBooksListShow && `Hide books list` || `Show books list`}
       </Button>
       <Button
         variant="contained"
-        disabled={booksLoadError && true || !books.length}
+        disabled={!!booksLoadError}
         onClick={handleAddNewBookButtonClick}
       >+</Button>
 

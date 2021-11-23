@@ -26,7 +26,7 @@ export const ReadersSection: React.FC = () => {
     <Stack className="section">
       <Button
         variant="contained"
-        disabled={readersError && true || !readers.length}
+        disabled={!!readersError || !readers.length}
         onClick={handleShowReadersButtonClick}
       >
         {isReadersListShow && `Hide readers list` || `Show readers list`}
