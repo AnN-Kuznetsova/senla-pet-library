@@ -17,12 +17,13 @@ interface PropsType {
 
 
 export const BooksList: React.FC<PropsType> = (props: PropsType) => {
-  const dispatch = useDispatch();
   const {
     books,
     openModal,
     closeModal,
   } = props;
+
+  const dispatch = useDispatch();
 
   const handleDeleteBookButtonClick = (bookId: string) => {
     openModal(<Wait />);

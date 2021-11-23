@@ -6,7 +6,7 @@ import {useState, useEffect} from "react";
 import {BooksList} from "./books-list";
 import {ErrorComponent} from "./error-component";
 import {FetchStatus} from "../api";
-import {Modal, closeModal} from "./modal";
+import {Modal} from "./modal";
 import {NewBookModal} from "./new-book-modal";
 import {resetBooksStatus} from "../store/books/books";
 import {getBooks, getBooksAddNewError, getBooksDeleteError, getBooksLoadError, getBooksStatus} from "../store/books/selectors";
@@ -26,34 +26,29 @@ export const BooksSection: React.FC = () => {
 
   const [modalChildren, setModalChildren] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [isBooksListShow, changeIsBooksListShow] = useState(false);
-  const handleShowBooksButtonClick = () => {
-    changeIsBooksListShow((isBooksListShow) => !isBooksListShow);
-  };
 
-  const openModal = (children: React.ReactElement) => {
+  const onModalOpen = (children: React.ReactElement) => {
     setModalChildren(children);
     setIsModalOpen(true);
   };
 
-  const handleModalClose = () => {
+  const onModalClose = () => {
     setIsModalOpen(false);
   };
 
-  const onModalClose = () => {
-    closeModal();
-    handleModalClose();
+  const handleShowBooksButtonClick = () => {
+    changeIsBooksListShow((isBooksListShow) => !isBooksListShow);
   };
 
   const handleAddNewBookButtonClick = () => {
     dispatch(resetBooksStatus());
-    openModal(<NewBookModal />);
+    onModalOpen(<NewBookModal />);
   };
 
   useEffect(() => {
     if (booksDeleteError) {
-      openModal(<ErrorComponent />);
+      onModalOpen(<ErrorComponent />);
     }
   }, [booksDeleteError]);
 
@@ -89,18 +84,18 @@ export const BooksSection: React.FC = () => {
       {isBooksListShow &&
         <BooksList
           books={books}
-          openModal={openModal}
+          openModal={onModalOpen}
           closeModal={onModalClose}
         />
       }
 
       {isModalOpen &&
         <Modal
-          isOpen={isModalOpen}
-          onClose={handleModalClose}
+          onClose={onModalClose}
         >
           {modalChildren}
-        </Modal>}
+        </Modal>
+      }
     </Stack>
   );
 };
