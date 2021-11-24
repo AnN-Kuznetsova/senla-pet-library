@@ -3,7 +3,7 @@ import {Button, List, ListItem, Stack, ListItemText} from "@mui/material";
 import {useSelector} from "react-redux";
 import {useState} from "react";
 
-import {FetchOperation, FetchStatus} from "../api";
+import {FetchOperation, FetchStatus} from "../const";
 import {getReadersInfo} from "../store/readers/selectors";
 
 
@@ -20,7 +20,7 @@ export const ReadersSection: React.FC = () => {
     status: readersStatus,
     error: readersError,
   } = useSelector(getReadersInfo);
-  
+
   const isReadersNotLoad = readersOperation === FetchOperation.LOAD && readersStatus === FetchStatus.REJECTED;
 
   const [isReadersListShow, changeIsReadersListShow] = useState(false);

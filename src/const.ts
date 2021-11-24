@@ -3,6 +3,19 @@ import {lime, lightGreen, red} from '@mui/material/colors';
 
 const WAIT_SHOW_DELAY = 300; // ms
 
+enum FetchStatus {
+  LOADING = `LOADING`,
+  RESOLVED = `RESOLVED`,
+  REJECTED = `REJECTED`,
+}
+
+enum FetchOperation {
+  LOAD = `LOAD`,
+  ADD_NEW = `ADD_NEW`,
+  UPDATE = `UPDATE`,
+  DELETE = `DELETE`,
+}
+
 const THEME = createTheme({
   palette: {
     primary: {
@@ -24,4 +37,6 @@ const THEME = createTheme({
 export {
   THEME,
   WAIT_SHOW_DELAY,
+  FetchOperation,
+  FetchStatus,
 };

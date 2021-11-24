@@ -3,7 +3,7 @@ import {FormControl, Input, InputLabel} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 
-import {FetchStatus} from "../api";
+import {FetchStatus} from "../const";
 import {FormButtonControls, FormButtonControlsType} from "./form-button-controls";
 import {Info, InfoType} from "./info";
 import {addNewBook, resetBooksStatus, updateBook} from "../store/books/books";

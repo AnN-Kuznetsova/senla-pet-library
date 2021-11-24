@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useState, useEffect} from "react";
 
 import {BooksList} from "./books-list";
-import {FetchOperation, FetchStatus} from "../api";
+import {FetchOperation, FetchStatus} from "../const";
 import {Info, InfoType} from "./info";
 import {Modal} from "./modal";
 import {NewBookModal} from "./new-book-modal";

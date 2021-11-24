@@ -1,7 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 
-import {FetchStatus} from "./api";
-import {WAIT_SHOW_DELAY} from "./const";
+import {WAIT_SHOW_DELAY, FetchStatus} from "./const";
 
 
 const createErrorValue = (error: unknown & {response?: object, request: XMLHttpRequest, message: string}) => {

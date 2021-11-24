@@ -1,20 +1,6 @@
 import axios, {AxiosInstance} from "axios";
 
 
-export enum FetchStatus {
-  LOADING = `LOADING`,
-  RESOLVED = `RESOLVED`,
-  REJECTED = `REJECTED`,
-}
-
-export enum FetchOperation {
-  LOAD = `LOAD`,
-  ADD_NEW = `ADD_NEW`,
-  UPDATE = `UPDATE`,
-  DELETE = `DELETE`,
-}
-
-
 export const createAPI = (onFailRequest?: (error: Error) => void): AxiosInstance => {
   const api = axios.create({
     baseURL: location.origin,

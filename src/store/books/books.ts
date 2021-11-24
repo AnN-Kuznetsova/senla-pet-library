@@ -1,7 +1,7 @@
 import {AxiosInstance} from "axios";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-import {FetchOperation, FetchStatus} from "../../api";
+import {FetchOperation, FetchStatus} from "../../const";
 import {createBooks} from "../../adapters/book";
 import {createErrorValue} from "../../utils";
 import type {BookType, ErrorType, NewBookType} from "../../types";
