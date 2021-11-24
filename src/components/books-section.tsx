@@ -9,20 +9,13 @@ import {FetchStatus} from "../api";
 import {Modal} from "./modal";
 import {NewBookModal} from "./new-book-modal";
 import {resetBooksStatus} from "../store/books/books";
-import {getBooks, /* getBooksAddNewError, getBooksDeleteError, getBooksLoadError */ getBooksError, getBooksStatus} from "../store/books/selectors";
+import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
 
 
 export const BooksSection: React.FC = () => {
   const dispatch = useDispatch();
-  /* useEffect(() => {
-    dispatch(resetBooksStatus());
-  }, [dispatch]); */
-
   const books = useSelector(getBooks);
   const booksStatus = useSelector(getBooksStatus);
-  /* const booksLoadError = useSelector(getBooksLoadError);
-  const booksDeleteError = useSelector(getBooksDeleteError);
-  const booksAddNewError = useSelector(getBooksAddNewError); */
   const booksError = useSelector(getBooksError);
 
   const [modalChildren, setModalChildren] = useState(null);
@@ -43,31 +36,23 @@ export const BooksSection: React.FC = () => {
   };
 
   const handleAddNewBookButtonClick = () => {
-    //dispatch(resetBooksStatus());
     onModalOpen(<NewBookModal />);
   };
 
   const isBooksNotLoad = booksStatus === FetchStatus.FETCH_REJECTED;
 
-  console.log(isModalOpen);
-
-
-  /* useEffect(() => {
-    if (booksDeleteError) {
+  useEffect(() => {
+    if (booksStatus === FetchStatus.DELETE_REJECTED) {
       onModalOpen(<ErrorComponent />);
     }
-  }, [booksDeleteError]); */
+  }, [booksStatus]);
 
   useEffect(() => {
-    /* if (booksStatus === FetchStatus.RESOLVED && !booksAddNewError) {
-      onModalClose();
-      dispatch(resetBooksStatus());
-    } */
     if (booksStatus === FetchStatus.ADD_NEW_RESOLVED) {
       onModalClose();
       dispatch(resetBooksStatus());
     }
-  });
+  }, [booksStatus, dispatch]);
 
   return (
     <Stack className="section">

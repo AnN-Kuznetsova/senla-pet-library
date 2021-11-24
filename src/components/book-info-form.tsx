@@ -3,14 +3,14 @@ import {FormControl, Input, InputLabel} from "@mui/material";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
-import {addNewBook, updateBook} from "../store/books/books";
+import {ErrorComponent} from "./error-component";
+import {FetchStatus} from "../api";
 import {FormButtonControls, FormButtonControlsType} from "./form-button-controls";
+import {Wait} from "./wait";
+import {addNewBook, resetBooksStatus, updateBook} from "../store/books/books";
+import {getBooksStatus} from "../store/books/selectors";
 import type {BookType} from "../types";
 import type {ControlButtonType} from "./form-button-controls";
-import { getBooksError, getBooksStatus } from "../store/books/selectors";
-import { FetchStatus } from "../api";
-import { Wait } from "./wait";
-import { ErrorComponent } from "./error-component";
 
 
 interface PropsType {
@@ -33,7 +33,7 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
   } = props;
 
   const dispatch = useDispatch();
-  //let isValidate = false;
+  const status = useSelector(getBooksStatus);
 
   const [title, setTitle] = useState(book ? book.title : "");
   const handleInputTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +44,10 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
   const handleInputAutorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAutor(event.target.value);
   };
+
+  const isValidate = getInputTextValidation(title) && getInputTextValidation(autor);
+  //const isNewData = book ? (title !== book.title || autor !== book.autor) : true;
+    //&& (title !== book.title || autor !== book.autor);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -64,9 +68,9 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
     }
   };
 
-  const isValidate = getInputTextValidation(title) && getInputTextValidation(autor);
-  //const isNewData = book ? (title !== book.title || autor !== book.autor) : true;
-    //&& (title !== book.title || autor !== book.autor);
+  const handleErrorComponentClick = () => {
+    dispatch(resetBooksStatus());
+  };
 
   const controlButtons: ControlButtonType[] = [];
   controlButtons.push({
@@ -81,15 +85,6 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
       onClick: onCancelButtonClick,
     })
   }
-
-
-  /////
-  const status = useSelector(getBooksStatus);
-  const error = useSelector(getBooksError);
-
-  const handleErrorComponentClick = () => {
-    //dispatch(resetAddNewBookError());
-  };
 
   return (
     <React.Fragment>
@@ -122,7 +117,7 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
         </div>
       }
 
-      {error && status !== FetchStatus.WAIT &&
+      {status === FetchStatus.REJECTED &&
         <div
           className="absolute absolute--clickable"
           onClick={handleErrorComponentClick}

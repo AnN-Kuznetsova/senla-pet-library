@@ -12,18 +12,12 @@ import type {BookType, ErrorType, NewBookType} from "../../types";
 interface BooksStateType {
   list: BookType[],
   status: string | null,
-  /* loadError: ErrorType | null,
-  deleteError: ErrorType | null,
-  addNewError: ErrorType | null, */
   error: ErrorType | null,
 }
 
 const initialState = {
   list: [],
   status: null,
-  /* loadError: null,
-  deleteError: null,
-  addNewError: null, */
   error: null,
 } as BooksStateType;
 
@@ -60,7 +54,7 @@ const addNewBook = createAsyncThunk<
       const booksCount: number = books.list.length;
       const lastBookId: string = booksCount ? books.list[booksCount - 1].id : null;
 
-      const response = await api.post(`/books`, {
+      const response = await api.post(`/books1`, {
         newBook,
         lastBookId,
       });
@@ -84,7 +78,7 @@ const deleteBook = createAsyncThunk<
   `books/deleteBook`,
   async ({bookId, cb}, {extra: api, rejectWithValue}) => {
     try {
-      const response = await api.delete(`/books/${bookId}`);
+      const response = await api.delete(`/books1/${bookId}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(createErrorValue(error));''
@@ -107,7 +101,7 @@ const updateBook = createAsyncThunk<
   `books/updateBook`,
   async ({book, onSubmit}, {extra: api, rejectWithValue}) => {
     try {
-      const response = await api.put(`/books/${book.id}`, book);
+      const response = await api.put(`/books1/${book.id}`, book);
       onSubmit();
       return response.data;
     } catch (error) {
@@ -122,7 +116,6 @@ const booksSlice = createSlice({
   initialState,
   reducers: {
     resetBooksStatus: (state) => {state.status = null},
-    //resetBooksError: (state) => {state.error = null},
   },
   extraReducers: {
     // load
@@ -144,7 +137,7 @@ const booksSlice = createSlice({
       state.error = null;
     },
     [addNewBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
-      state.status = FetchStatus.ADD_NEW_REJECTED;
+      state.status = FetchStatus.REJECTED;//ADD_NEW_REJECTED;
       state.error = action.payload;
     },
     [addNewBook.fulfilled.toString()]: (state, action: PayloadAction<BookType>) => {
@@ -171,7 +164,7 @@ const booksSlice = createSlice({
       state.error = null;
     },
     [updateBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
-      state.status = FetchStatus.UPDATE_REJECTED;
+      state.status = FetchStatus.REJECTED;//UPDATE_REJECTED;
       state.error = action.payload;
     },
     [updateBook.fulfilled.toString()]: (state, action: PayloadAction<BookType>) => {

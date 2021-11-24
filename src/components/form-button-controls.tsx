@@ -49,7 +49,7 @@ export const FormButtonControls: React.FC<PropsType> = (props: PropsType) => {
             variant="contained"
             disabled={button.isDisabled}
             type={`${button.isSubmit ? "submit" : "button"}`}
-            onClick={button.onClick} // ? button.onClick : ()=>{}}
+            onClick={button.onClick} 
           >
             {label}
           </Button>
