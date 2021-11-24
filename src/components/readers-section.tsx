@@ -15,14 +15,13 @@ const renderReaderStatus = (readerStatus: boolean) => (
 
 export const ReadersSection: React.FC = () => {
   const {list: readers, status: readersStatus, error: readersError} = useSelector(getReadersInfo);
+  const isReadersNotLoad = readersStatus === FetchStatus.FETCH_REJECTED;
 
   const [isReadersListShow, changeIsReadersListShow] = useState(false);
 
   const handleShowReadersButtonClick = () => {
     changeIsReadersListShow((isReadersListShow) => !isReadersListShow);
   };
-
-  const isReadersNotLoad = readersStatus === FetchStatus.FETCH_REJECTED;
 
   return (
     <Stack className="section">

@@ -1,22 +1,21 @@
 import * as React from "react";
 import {Button, Stack} from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {useState, useEffect} from "react";
 
 import {BooksList} from "./books-list";
-import {ErrorComponent} from "./error-component";
 import {FetchStatus} from "../api";
+import {Info, InfoType} from "./info";
 import {Modal} from "./modal";
 import {NewBookModal} from "./new-book-modal";
 import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
-import {resetBooksStatus} from "../store/books/books";
 
 
 export const BooksSection: React.FC = () => {
-  const dispatch = useDispatch();
   const books = useSelector(getBooks);
   const booksStatus = useSelector(getBooksStatus);
   const booksError = useSelector(getBooksError);
+  const isBooksNotLoad = booksStatus === FetchStatus.FETCH_REJECTED;
 
   const [modalChildren, setModalChildren] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,20 +38,17 @@ export const BooksSection: React.FC = () => {
     onModalOpen(<NewBookModal />);
   };
 
-  const isBooksNotLoad = booksStatus === FetchStatus.FETCH_REJECTED;
-
   useEffect(() => {
     if (booksStatus === FetchStatus.DELETE_REJECTED) {
-      onModalOpen(<ErrorComponent />);
+      onModalOpen(<Info type={InfoType.ERROR} />)
     }
   }, [booksStatus]);
 
   useEffect(() => {
     if (booksStatus === FetchStatus.ADD_NEW_RESOLVED) {
       onModalClose();
-      dispatch(resetBooksStatus());
     }
-  }, [booksStatus, dispatch]);
+  }, [booksStatus]);
 
   return (
     <Stack className="section">

@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
+import {InfoType } from "./info";
 import {ItemButton} from "./item-button";
-import {Wait} from "./wait";
 
 
 interface PropsType {
@@ -20,7 +20,7 @@ export const Modal: React.FC<PropsType> = (props: PropsType) => {
     children,
   } = props;
 
-  const isCloseButton = (children.type === Wait) ? false : true;
+  const isCloseButton = (children.props.type === InfoType.WAIT) ? false : true;
 
   const handleModalInnerClick = (event: React.MouseEvent): void => {
     event.stopPropagation();

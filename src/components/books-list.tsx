@@ -4,9 +4,9 @@ import {useDispatch} from "react-redux";
 
 import {BookModal} from "./book-modal";
 import {ItemButton} from "./item-button";
-import {Wait} from "./wait";
 import {deleteBook} from "../store/books/books";
 import type {BookType} from "../types";
+import { Info, InfoType } from "./info";
 
 
 interface PropsType {
@@ -26,7 +26,7 @@ export const BooksList: React.FC<PropsType> = (props: PropsType) => {
   const dispatch = useDispatch();
 
   const handleDeleteBookButtonClick = (bookId: string) => {
-    openModal(<Wait />);
+    openModal(<Info type={InfoType.WAIT} />); 
     dispatch(deleteBook({
       bookId,
       cb: closeModal,

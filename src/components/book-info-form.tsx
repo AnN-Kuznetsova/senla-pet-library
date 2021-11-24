@@ -3,14 +3,13 @@ import {FormControl, Input, InputLabel} from "@mui/material";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
-import {ErrorComponent} from "./error-component";
 import {FetchStatus} from "../api";
 import {FormButtonControls, FormButtonControlsType} from "./form-button-controls";
-import {Wait} from "./wait";
 import {addNewBook, resetBooksStatus, updateBook} from "../store/books/books";
 import {getBooksStatus} from "../store/books/selectors";
 import type {BookType} from "../types";
 import type {ControlButtonType} from "./form-button-controls";
+import { Info, InfoType } from "./info";
 
 
 interface PropsType {
@@ -112,7 +111,7 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
 
       {status === FetchStatus.WAIT &&
         <div className="absolute">
-          <Wait />
+          <Info type={InfoType.WAIT} />
         </div>
       }
 
@@ -121,7 +120,7 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
           className="absolute absolute--clickable"
           onClick={handleErrorComponentClick}
         >
-          <ErrorComponent />
+          <Info type={InfoType.ERROR} />
         </div>
       }
   </React.Fragment>

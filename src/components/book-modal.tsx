@@ -6,7 +6,6 @@ import {useState} from "react";
 import {BookInfoForm} from "./book-info-form";
 import {FormButtonControls, FormButtonControlsType} from "./form-button-controls";
 import {getBookById} from "../store/books/selectors";
-import type {BookType} from "../types";
 
 
 interface PropsType {
@@ -17,11 +16,11 @@ interface PropsType {
 export const BookModal: React.FC<PropsType> = (props: PropsType) => {
   const {bookId} = props;
 
-  const book: BookType = useSelector(getBookById(bookId));
+  const book = useSelector(getBookById(bookId));
 
   const [isChange, setIsChange] = useState(false);
 
-  const closeChange = () => {
+  const closeChangeWindow = () => {
     setIsChange(false);
   };
 
@@ -39,8 +38,8 @@ export const BookModal: React.FC<PropsType> = (props: PropsType) => {
         {isChange &&
           <BookInfoForm
             book={book}
-            onCancelButtonClick={closeChange}
-            onSubmit={closeChange}
+            onCancelButtonClick={closeChangeWindow}
+            onSubmit={closeChangeWindow}
           />
           ||
           <React.Fragment>
