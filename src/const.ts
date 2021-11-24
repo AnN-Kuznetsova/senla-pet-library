@@ -1,6 +1,7 @@
 import {createTheme} from '@mui/material/styles';
 import {lime, lightGreen, red} from '@mui/material/colors';
 
+const WAIT_SHOW_DELAY = 300; // ms
 
 const THEME = createTheme({
   palette: {
@@ -22,4 +23,5 @@ const THEME = createTheme({
 
 export {
   THEME,
+  WAIT_SHOW_DELAY,
 };

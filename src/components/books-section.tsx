@@ -8,6 +8,7 @@ import {FetchStatus} from "../api";
 import {Info, InfoType} from "./info";
 import {Modal} from "./modal";
 import {NewBookModal} from "./new-book-modal";
+import {useWaitShow} from "../utils";
 import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
 
 
@@ -16,6 +17,7 @@ export const BooksSection: React.FC = () => {
   const booksStatus = useSelector(getBooksStatus);
   const booksError = useSelector(getBooksError);
   const isBooksNotLoad = booksStatus === FetchStatus.FETCH_REJECTED;
+  const isWaitShow = useWaitShow(booksStatus);
 
   const [modalChildren, setModalChildren] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,10 +41,18 @@ export const BooksSection: React.FC = () => {
   };
 
   useEffect(() => {
-    if (booksStatus === FetchStatus.DELETE_REJECTED) {
-      onModalOpen(<Info type={InfoType.ERROR} />)
+    switch (booksStatus) {
+      case FetchStatus.DELETE_WAIT:
+        if (isWaitShow) {
+          onModalOpen(<Info type={InfoType.WAIT} />);
+        }
+        break;
+
+      case FetchStatus.DELETE_REJECTED:
+        onModalOpen(<Info type={InfoType.ERROR} />);
+        break;
     }
-  }, [booksStatus]);
+  }, [booksStatus, isWaitShow]);
 
   useEffect(() => {
     if (booksStatus === FetchStatus.ADD_NEW_RESOLVED) {

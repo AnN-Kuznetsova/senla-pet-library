@@ -144,7 +144,7 @@ const booksSlice = createSlice({
     },
     // deleteBook
     [deleteBook.pending.toString()]: (state) => {
-      state.status = FetchStatus.WAIT;
+      state.status = FetchStatus.DELETE_WAIT; //WAIT;
       state.error = null;
     },
     [deleteBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {

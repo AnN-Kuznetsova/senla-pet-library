@@ -1,15 +1,16 @@
 import * as React from "react";
 import {FormControl, Input, InputLabel} from "@mui/material";
-import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {useState} from "react";
 
 import {FetchStatus} from "../api";
 import {FormButtonControls, FormButtonControlsType} from "./form-button-controls";
+import {Info, InfoType} from "./info";
 import {addNewBook, resetBooksStatus, updateBook} from "../store/books/books";
 import {getBooksStatus} from "../store/books/selectors";
+import {useWaitShow} from "../utils";
 import type {BookType} from "../types";
 import type {ControlButtonType} from "./form-button-controls";
-import { Info, InfoType } from "./info";
 
 
 interface PropsType {
@@ -33,6 +34,7 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
 
   const dispatch = useDispatch();
   const status = useSelector(getBooksStatus);
+  const isWaitShow = useWaitShow(status);
 
   const [title, setTitle] = useState(book ? book.title : "");
   const handleInputTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,7 +111,7 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
         <FormButtonControls buttons={controlButtons} />
       </form>
 
-      {status === FetchStatus.WAIT &&
+      {isWaitShow &&
         <div className="absolute">
           <Info type={InfoType.WAIT} />
         </div>
