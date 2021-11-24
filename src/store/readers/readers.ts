@@ -1,14 +1,15 @@
 import {AxiosInstance} from "axios";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-import {FetchStatus} from "../../api";
+import {FetchOperation, FetchStatus} from "../../api";
 import {createReaders, ReaderDataType} from "../../adapters/reader";
 import {createErrorValue} from "../../utils";
 import type {ErrorType, ReaderType} from "../../types";
 
 
-interface ReadersStateType {
+export interface ReadersStateType {
   list: ReaderType[],
+  operation: string | null,
   status: string | null,
   error: ErrorType | null,
 }
@@ -16,6 +17,7 @@ interface ReadersStateType {
 
 const initialState = {
   list: [],
+  operation: null,
   status: null,
   error: null,
 } as ReadersStateType;
@@ -44,6 +46,7 @@ const readersSlice = createSlice({
   reducers: {},
   extraReducers: {
     [loadReaders.pending.toString()]: (state) => {
+      state.operation = FetchOperation.LOAD;
       state.status = FetchStatus.LOADING;
       state.error = null;
     },
@@ -52,7 +55,7 @@ const readersSlice = createSlice({
       state.list = createReaders(action.payload);
     },
     [loadReaders.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
-      state.status = FetchStatus.FETCH_REJECTED;
+      state.status = FetchStatus.REJECTED;
       state.error = action.payload;
     },
   },

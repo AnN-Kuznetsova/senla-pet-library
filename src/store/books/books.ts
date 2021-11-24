@@ -1,7 +1,7 @@
 import {AxiosInstance} from "axios";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-import {FetchStatus} from "../../api";
+import {FetchOperation, FetchStatus} from "../../api";
 import {createBooks} from "../../adapters/book";
 import {createErrorValue} from "../../utils";
 import type {BookType, ErrorType, NewBookType} from "../../types";
@@ -9,12 +9,14 @@ import type {BookType, ErrorType, NewBookType} from "../../types";
 
 interface BooksStateType {
   list: BookType[],
+  operation: string | null,
   status: string | null,
   error: ErrorType | null,
 }
 
 const initialState = {
   list: [],
+  operation: null,
   status: null,
   error: null,
 } as BooksStateType;
@@ -65,23 +67,18 @@ const addNewBook = createAsyncThunk<
 
 const deleteBook = createAsyncThunk<
   Promise<string | unknown>,
-  {
-    bookId: string,
-    cb: () => void,
-  },
+  string,
   {
     extra: AxiosInstance,
   }
 >(
   `books/deleteBook`,
-  async ({bookId, cb}, {extra: api, rejectWithValue}) => {
+  async (bookId, {extra: api, rejectWithValue}) => {
     try {
       const response = await api.delete(`/books/${bookId}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(createErrorValue(error));''
-    } finally {
-      cb();
     }
   }
 );
@@ -113,11 +110,15 @@ const booksSlice = createSlice({
   name: `books`,
   initialState,
   reducers: {
-    resetBooksStatus: (state) => {state.status = null},
+    resetBooksStatus: (state) => {
+      state.operation = null;
+      state.status = null;
+    },
   },
   extraReducers: {
     // load
     [loadBooks.pending.toString()]: (state) => {
+      state.operation = FetchOperation.LOAD;
       state.status = FetchStatus.LOADING;
       state.error = null;
     },
@@ -126,12 +127,13 @@ const booksSlice = createSlice({
       state.list = createBooks(action.payload);
     },
     [loadBooks.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
-      state.status = FetchStatus.FETCH_REJECTED;
+      state.status = FetchStatus.REJECTED;
       state.error = action.payload;
     },
     // addNewBook
     [addNewBook.pending.toString()]: (state) => {
-      state.status = FetchStatus.WAIT;
+      state.operation = FetchOperation.ADD_NEW;
+      state.status = FetchStatus.LOADING;
       state.error = null;
     },
     [addNewBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
@@ -139,16 +141,17 @@ const booksSlice = createSlice({
       state.error = action.payload;
     },
     [addNewBook.fulfilled.toString()]: (state, action: PayloadAction<BookType>) => {
-      state.status = FetchStatus.ADD_NEW_RESOLVED;
+      state.status = FetchStatus.RESOLVED;
       state.list.push(action.payload);
     },
     // deleteBook
     [deleteBook.pending.toString()]: (state) => {
-      state.status = FetchStatus.DELETE_WAIT; //WAIT;
+      state.operation = FetchOperation.DELETE;
+      state.status = FetchStatus.LOADING;
       state.error = null;
     },
     [deleteBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
-      state.status = FetchStatus.DELETE_REJECTED;
+      state.status = FetchStatus.REJECTED;
       state.error = action.payload;
     },
     [deleteBook.fulfilled.toString()]: (state, action: PayloadAction<string>) => {
@@ -158,7 +161,8 @@ const booksSlice = createSlice({
     },
     // updateBook
     [updateBook.pending.toString()]: (state) => {
-      state.status = FetchStatus.WAIT;
+      state.operation = FetchOperation.UPDATE;
+      state.status = FetchStatus.LOADING;
       state.error = null;
     },
     [updateBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {

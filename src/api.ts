@@ -3,14 +3,15 @@ import axios, {AxiosInstance} from "axios";
 
 export enum FetchStatus {
   LOADING = `LOADING`,
-  WAIT = `WAIT`,
   RESOLVED = `RESOLVED`,
   REJECTED = `REJECTED`,
-  FETCH_REJECTED = `FETCH_REJECTED`,
-  ADD_NEW_RESOLVED = `ADD_NEW_RESOLVED`,
-  DELETE_WAIT = `DELETE__WAIT`,
-  DELETE_REJECTED = `DELETE_REJECTED`,
-  UPDATE_RESOLVED = `UPDATE_RESOLVED`,
+}
+
+export enum FetchOperation {
+  LOAD = `LOAD`,
+  ADD_NEW = `ADD_NEW`,
+  UPDATE = `UPDATE`,
+  DELETE = `DELETE`,
 }
 
 

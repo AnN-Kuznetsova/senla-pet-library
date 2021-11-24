@@ -11,7 +11,6 @@ import type {BookType} from "../types";
 interface PropsType {
   books: BookType[],
   openModal: (children: React.ReactElement) => void,
-  closeModal: () => void,
 }
 
 
@@ -19,16 +18,12 @@ export const BooksList: React.FC<PropsType> = (props: PropsType) => {
   const {
     books,
     openModal,
-    closeModal,
   } = props;
 
   const dispatch = useDispatch();
 
   const handleDeleteBookButtonClick = (bookId: string) => {
-    dispatch(deleteBook({
-      bookId,
-      cb: closeModal,
-    }));
+    dispatch(deleteBook(bookId));
   };
 
   const handleMoreButtonClick = (book: BookType) => {

@@ -1,16 +1,10 @@
 import {RootStateType} from "../..";
-import type {ErrorType, ReaderType} from "../../types";
+import type {ReadersStateType} from "./readers";
 
 
-interface ReadersInfoType {
-  list: ReaderType[],
-  status: string | null,
-  error: ErrorType | null,
-}
-
-
-const getReadersInfo = (state: RootStateType): ReadersInfoType => ({
+const getReadersInfo = (state: RootStateType): ReadersStateType => ({
   list: state.readers.list,
+  operation: state.readers.operation,
   status: state.readers.status,
   error: state.readers.error,
 });

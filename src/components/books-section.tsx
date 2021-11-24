@@ -1,23 +1,28 @@
 import * as React from "react";
 import {Button, Stack} from "@mui/material";
-import {useSelector} from "react-redux";
-import {useState, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useCallback, useState, useEffect} from "react";
 
 import {BooksList} from "./books-list";
-import {FetchStatus} from "../api";
+import {FetchOperation, FetchStatus} from "../api";
 import {Info, InfoType} from "./info";
 import {Modal} from "./modal";
 import {NewBookModal} from "./new-book-modal";
+import {getBooks, getBooksError, getBooksOperation, getBooksStatus} from "../store/books/selectors";
+import {resetBooksStatus} from "../store/books/books";
 import {useWaitShow} from "../utils";
-import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
 
 
 export const BooksSection: React.FC = () => {
+  const dispatch = useDispatch();
   const books = useSelector(getBooks);
+  const booksOperation = useSelector(getBooksOperation);
   const booksStatus = useSelector(getBooksStatus);
   const booksError = useSelector(getBooksError);
-  const isBooksNotLoad = booksStatus === FetchStatus.FETCH_REJECTED;
   const isWaitShow = useWaitShow(booksStatus);
+
+  const isLoading = booksOperation === FetchOperation.LOAD && booksStatus === FetchStatus.LOADING
+  const isBooksNotLoad = booksOperation === FetchOperation.LOAD && booksStatus === FetchStatus.REJECTED;
 
   const [modalChildren, setModalChildren] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,9 +33,10 @@ export const BooksSection: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const onModalClose = () => {
+  const onModalClose = useCallback(() => {
     setIsModalOpen(false);
-  };
+    dispatch(resetBooksStatus());
+  }, [dispatch]);
 
   const handleShowBooksButtonClick = () => {
     changeIsBooksListShow((isBooksListShow) => !isBooksListShow);
@@ -41,41 +47,51 @@ export const BooksSection: React.FC = () => {
   };
 
   useEffect(() => {
-    switch (booksStatus) {
-      case FetchStatus.DELETE_WAIT:
-        if (isWaitShow) {
-          onModalOpen(<Info type={InfoType.WAIT} />);
-        }
-        break;
+    if (booksOperation === FetchOperation.DELETE) {
+      switch (booksStatus) {
+        case FetchStatus.LOADING:
+          if (isWaitShow) {
+            onModalOpen(<Info type={InfoType.WAIT} />);
+          }
+          break;
 
-      case FetchStatus.DELETE_REJECTED:
-        onModalOpen(<Info type={InfoType.ERROR} />);
-        break;
+        case FetchStatus.REJECTED:
+          onModalOpen(<Info type={InfoType.ERROR} />);
+          break;
+
+        case FetchStatus.RESOLVED:
+          onModalClose();
+          break;
+      }
     }
-  }, [booksStatus, isWaitShow]);
+  }, [booksOperation, booksStatus, isWaitShow, onModalClose]);
 
   useEffect(() => {
-    if (booksStatus === FetchStatus.ADD_NEW_RESOLVED) {
-      onModalClose();
+    if (booksOperation === FetchOperation.ADD_NEW) {
+      switch (booksStatus) {
+        case FetchStatus.RESOLVED:
+          onModalClose();
+        break;
+      }
     }
-  }, [booksStatus]);
+  }, [booksOperation, booksStatus, onModalClose]);
 
   return (
     <Stack className="section">
       <Button
         variant="contained"
-        disabled={isBooksNotLoad || !books.length}
+        disabled={isLoading || !books.length}
         onClick={handleShowBooksButtonClick}
       >
         {isBooksListShow && `Hide books list` || `Show books list`}
       </Button>
       <Button
         variant="contained"
-        disabled={isBooksNotLoad || booksStatus === FetchStatus.LOADING}
+        disabled={isLoading || isBooksNotLoad}
         onClick={handleAddNewBookButtonClick}
       >+</Button>
 
-      {booksStatus === FetchStatus.LOADING && <h2>Loading...</h2>}
+      {isLoading && <h2>Loading...</h2>}
 
       {isBooksNotLoad && <h2>Sorry! Books have not loaded!
         {booksError && booksError.status && <br/>}
@@ -86,7 +102,6 @@ export const BooksSection: React.FC = () => {
         <BooksList
           books={books}
           openModal={onModalOpen}
-          closeModal={onModalClose}
         />
       }
 
