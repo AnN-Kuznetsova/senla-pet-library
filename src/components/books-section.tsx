@@ -9,20 +9,21 @@ import {FetchStatus} from "../api";
 import {Modal} from "./modal";
 import {NewBookModal} from "./new-book-modal";
 import {resetBooksStatus} from "../store/books/books";
-import {getBooks, getBooksAddNewError, getBooksDeleteError, getBooksLoadError, getBooksStatus} from "../store/books/selectors";
+import {getBooks, /* getBooksAddNewError, getBooksDeleteError, getBooksLoadError */ getBooksError, getBooksStatus} from "../store/books/selectors";
 
 
 export const BooksSection: React.FC = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
+  /* useEffect(() => {
     dispatch(resetBooksStatus());
-  }, [dispatch]);
+  }, [dispatch]); */
 
   const books = useSelector(getBooks);
   const booksStatus = useSelector(getBooksStatus);
-  const booksLoadError = useSelector(getBooksLoadError);
+  /* const booksLoadError = useSelector(getBooksLoadError);
   const booksDeleteError = useSelector(getBooksDeleteError);
-  const booksAddNewError = useSelector(getBooksAddNewError);
+  const booksAddNewError = useSelector(getBooksAddNewError); */
+  const booksError = useSelector(getBooksError);
 
   const [modalChildren, setModalChildren] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -42,18 +43,27 @@ export const BooksSection: React.FC = () => {
   };
 
   const handleAddNewBookButtonClick = () => {
-    dispatch(resetBooksStatus());
+    //dispatch(resetBooksStatus());
     onModalOpen(<NewBookModal />);
   };
 
-  useEffect(() => {
+  const isBooksNotLoad = booksStatus === FetchStatus.FETCH_REJECTED;
+
+  console.log(isModalOpen);
+
+
+  /* useEffect(() => {
     if (booksDeleteError) {
       onModalOpen(<ErrorComponent />);
     }
-  }, [booksDeleteError]);
+  }, [booksDeleteError]); */
 
   useEffect(() => {
-    if (booksStatus === FetchStatus.RESOLVED && !booksAddNewError) {
+    /* if (booksStatus === FetchStatus.RESOLVED && !booksAddNewError) {
+      onModalClose();
+      dispatch(resetBooksStatus());
+    } */
+    if (booksStatus === FetchStatus.ADD_NEW_RESOLVED) {
       onModalClose();
       dispatch(resetBooksStatus());
     }
@@ -63,22 +73,22 @@ export const BooksSection: React.FC = () => {
     <Stack className="section">
       <Button
         variant="contained"
-        disabled={!!booksLoadError || !books.length}
+        disabled={isBooksNotLoad || !books.length}
         onClick={handleShowBooksButtonClick}
       >
         {isBooksListShow && `Hide books list` || `Show books list`}
       </Button>
       <Button
         variant="contained"
-        disabled={!!booksLoadError}
+        disabled={isBooksNotLoad || booksStatus === FetchStatus.LOADING}
         onClick={handleAddNewBookButtonClick}
       >+</Button>
 
       {booksStatus === FetchStatus.LOADING && <h2>Loading...</h2>}
 
-      {booksLoadError && <h2>Sorry! Books have not loaded!
-        {booksLoadError.status && <br/>}
-        {booksLoadError.status && booksLoadError.status}
+      {isBooksNotLoad && <h2>Sorry! Books have not loaded!
+        {booksError && booksError.status && <br/>}
+        {booksError && booksError.status && booksError.status}
       </h2>}
 
       {isBooksListShow &&

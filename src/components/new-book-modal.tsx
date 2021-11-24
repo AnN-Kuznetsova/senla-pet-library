@@ -6,18 +6,18 @@ import {BookInfoForm} from "./book-info-form";
 import {ErrorComponent} from "./error-component";
 import {FetchStatus} from "../api";
 import {Wait} from "./wait";
-import {resetAddNewBookError} from "../store/books/books";
-import {getBooksAddNewError, getBooksStatus} from "../store/books/selectors";
+//import {resetAddNewBookError} from "../store/books/books";
+import {getBooksError, getBooksStatus} from "../store/books/selectors";
 
 
 export const NewBookModal: React.FC = () => {
-  const dispatch = useDispatch();
+  /* const dispatch = useDispatch();
   const status = useSelector(getBooksStatus);
-  const error = useSelector(getBooksAddNewError);
+  const error = useSelector(getBooksError);
 
   const handleErrorComponentClick = () => {
-    dispatch(resetAddNewBookError());
-  };
+    //dispatch(resetAddNewBookError());
+  }; */
 
   return (
     <React.Fragment>
@@ -25,7 +25,7 @@ export const NewBookModal: React.FC = () => {
 
       <BookInfoForm />
 
-      {status === FetchStatus.WAIT &&
+      {/* {status === FetchStatus.WAIT &&
         <div className="absolute">
           <Wait />
         </div>
@@ -38,7 +38,7 @@ export const NewBookModal: React.FC = () => {
         >
           <ErrorComponent />
         </div>
-      }
+      } */}
     </React.Fragment>
   );
 };

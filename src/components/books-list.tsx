@@ -34,7 +34,7 @@ export const BooksList: React.FC<PropsType> = (props: PropsType) => {
   };
 
   const handleMoreButtonClick = (book: BookType) => {
-    openModal(<BookModal book={book} />);
+    openModal(<BookModal bookId={book.id} />);
   };
 
   return (

@@ -50,6 +50,11 @@ module.exports = {
         res.send(bookId);
       });
 
+      devServer.app.put('/books/:id', function (req, res) {
+        const bookData = req.body;
+        res.send(bookData);
+      });
+
       devServer.app.get('/readers', function (req, res) {
         let p = path.join(__dirname, `mocks/readers.json`);
         let a = require(p);

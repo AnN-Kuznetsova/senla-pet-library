@@ -50,11 +50,11 @@ const readersSlice = createSlice({
       state.error = null;
     },
     [loadReaders.fulfilled.toString()]: (state, action: PayloadAction<ReaderType[]>) => {
-      state.status = FetchStatus.RESOLVED;
+      state.status = FetchStatus.FETCH_RESOLVED;
       state.list = createReaders(action.payload);
     },
     [loadReaders.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
-      state.status = FetchStatus.REJECTED;
+      state.status = FetchStatus.FETCH_REJECTED;
       state.error = action.payload;
     },
   },

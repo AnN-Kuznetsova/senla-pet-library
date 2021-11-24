@@ -1,28 +1,32 @@
 import * as React from "react";
-import {useState} from "react";
 import {Typography} from "@mui/material";
+import {useState} from "react";
 
 import {BookInfoForm} from "./book-info-form";
 import {FormButtonControls, FormButtonControlsType} from "./form-button-controls";
+import {getBookById} from "../store/books/selectors";
+import {useSelector} from "react-redux";
 import type {BookType} from "../types";
 
 
 interface PropsType {
-  book: BookType,
+  bookId: string,
 }
 
 
 export const BookModal: React.FC<PropsType> = (props: PropsType) => {
-  const {book} = props;
+  const {bookId} = props;
+
+  const book: BookType = useSelector(getBookById(bookId));
 
   const [isChange, setIsChange] = useState(false);
 
-  const handleChangeButtonClick = () => {
-    setIsChange(true);
+  const closeChange = () => {
+    setIsChange(false);
   };
 
-  const handleCancelButtonClick = () => {
-    setIsChange(false);
+  const handleChangeButtonClick = () => {
+    setIsChange(true);
   };
 
   return (
@@ -35,7 +39,8 @@ export const BookModal: React.FC<PropsType> = (props: PropsType) => {
         {isChange &&
           <BookInfoForm
             book={book}
-            onCancelButtonClick={handleCancelButtonClick}
+            onCancelButtonClick={closeChange}
+            onSubmit={closeChange}
           />
           ||
           <React.Fragment>

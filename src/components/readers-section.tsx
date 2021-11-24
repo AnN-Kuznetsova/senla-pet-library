@@ -22,11 +22,13 @@ export const ReadersSection: React.FC = () => {
     changeIsReadersListShow((isReadersListShow) => !isReadersListShow);
   };
 
+  const isReadersNotLoad = readersStatus === FetchStatus.FETCH_REJECTED;
+
   return (
     <Stack className="section">
       <Button
         variant="contained"
-        disabled={!!readersError || !readers.length}
+        disabled={isReadersNotLoad || !readers.length}
         onClick={handleShowReadersButtonClick}
       >
         {isReadersListShow && `Hide readers list` || `Show readers list`}
@@ -34,9 +36,9 @@ export const ReadersSection: React.FC = () => {
 
       {readersStatus === FetchStatus.LOADING && <h2>Loading...</h2>}
 
-      {readersError && <h2>Sorry! Readers have not loaded!
-        {readersError.status && <br/>}
-        {readersError.status && readersError.status}
+      {isReadersNotLoad && <h2>Sorry! Readers have not loaded!
+        {readersError && readersError.status && <br/>}
+        {readersError && readersError.status && readersError.status}
       </h2>}
 
       {isReadersListShow &&

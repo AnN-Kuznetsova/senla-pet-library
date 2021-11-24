@@ -1,17 +1,22 @@
 import * as React from "react";
 import {FormControl, Input, InputLabel} from "@mui/material";
 import {useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
-import {addNewBook} from "../store/books/books";
+import {addNewBook, updateBook} from "../store/books/books";
 import {FormButtonControls, FormButtonControlsType} from "./form-button-controls";
 import type {BookType} from "../types";
 import type {ControlButtonType} from "./form-button-controls";
+import { getBooksError, getBooksStatus } from "../store/books/selectors";
+import { FetchStatus } from "../api";
+import { Wait } from "./wait";
+import { ErrorComponent } from "./error-component";
 
 
 interface PropsType {
   book?: BookType,
   onCancelButtonClick?: () => void,
+  onSubmit?: () => void,
 }
 
 
@@ -24,10 +29,11 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
   const {
     book,
     onCancelButtonClick,
+    onSubmit,
   } = props;
 
   const dispatch = useDispatch();
-  let isValidate = false;
+  //let isValidate = false;
 
   const [title, setTitle] = useState(book ? book.title : "");
   const handleInputTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,22 +48,30 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    const newBook = {
+    const newBookData = {
       title,
       autor,
       coverImgUrl: book ? book.coverImgUrl : "",
     };
 
-    dispatch(addNewBook(newBook));
+    if (book) {
+      dispatch(updateBook({
+        book: Object.assign({}, book, newBookData),
+        onSubmit,
+      }));
+    } else {
+      dispatch(addNewBook(newBookData));
+    }
   };
 
-  isValidate = getInputTextValidation(title) && getInputTextValidation(autor)
-    && (title !== book.title || autor !== book.autor);
+  const isValidate = getInputTextValidation(title) && getInputTextValidation(autor);
+  //const isNewData = book ? (title !== book.title || autor !== book.autor) : true;
+    //&& (title !== book.title || autor !== book.autor);
 
   const controlButtons: ControlButtonType[] = [];
   controlButtons.push({
     type: FormButtonControlsType.SAVE,
-    isDisabled: !isValidate,
+    isDisabled: !isValidate, // && isNewData,
     isSubmit: true,
     });
 
@@ -69,28 +83,53 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
   }
 
 
+  /////
+  const status = useSelector(getBooksStatus);
+  const error = useSelector(getBooksError);
+
+  const handleErrorComponentClick = () => {
+    //dispatch(resetAddNewBookError());
+  };
+
   return (
-    <form
-      className="form"
-      onSubmit={handleSubmit}
-    >
-      <FormControl
-        className="form__field-control"
-        error={!getInputTextValidation(title)}
+    <React.Fragment>
+      <form
+        className="form"
+        onSubmit={handleSubmit}
       >
-        <InputLabel htmlFor="book-title">Введите название</InputLabel>
-        <Input id="book-title" name="book-title" type="text" value={title} onChange={handleInputTitleChange} autoFocus={true} />
-      </FormControl>
+        <FormControl
+          className="form__field-control"
+          error={!getInputTextValidation(title)}
+        >
+          <InputLabel htmlFor="book-title">Введите название</InputLabel>
+          <Input id="book-title" name="book-title" type="text" value={title} onChange={handleInputTitleChange} autoFocus={true} />
+        </FormControl>
 
-      <FormControl
-        className="form__field-control"
-        error={!getInputTextValidation(autor)}
-      >
-        <InputLabel htmlFor="book-autor">Введите автора</InputLabel>
-        <Input id="book-autor" name="book-autor" type="text" value={autor} onChange={handleInputAutorChange} />
-      </FormControl>
+        <FormControl
+          className="form__field-control"
+          error={!getInputTextValidation(autor)}
+        >
+          <InputLabel htmlFor="book-autor">Введите автора</InputLabel>
+          <Input id="book-autor" name="book-autor" type="text" value={autor} onChange={handleInputAutorChange} />
+        </FormControl>
 
-      <FormButtonControls buttons={controlButtons} />
-    </form>
+        <FormButtonControls buttons={controlButtons} />
+      </form>
+
+      {status === FetchStatus.WAIT &&
+        <div className="absolute">
+          <Wait />
+        </div>
+      }
+
+      {error && status !== FetchStatus.WAIT &&
+        <div
+          className="absolute absolute--clickable"
+          onClick={handleErrorComponentClick}
+        >
+          <ErrorComponent />
+        </div>
+      }
+  </React.Fragment>
   );
 };
