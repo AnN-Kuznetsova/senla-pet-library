@@ -54,7 +54,7 @@ const addNewBook = createAsyncThunk<
       const booksCount: number = books.list.length;
       const lastBookId: string = booksCount ? books.list[booksCount - 1].id : null;
 
-      const response = await api.post(`/books1`, {
+      const response = await api.post(`/books`, {
         newBook,
         lastBookId,
       });
@@ -78,7 +78,7 @@ const deleteBook = createAsyncThunk<
   `books/deleteBook`,
   async ({bookId, cb}, {extra: api, rejectWithValue}) => {
     try {
-      const response = await api.delete(`/books1/${bookId}`);
+      const response = await api.delete(`/books/${bookId}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(createErrorValue(error));''
@@ -101,7 +101,7 @@ const updateBook = createAsyncThunk<
   `books/updateBook`,
   async ({book, onSubmit}, {extra: api, rejectWithValue}) => {
     try {
-      const response = await api.put(`/books1/${book.id}`, book);
+      const response = await api.put(`/books/${book.id}`, book);
       onSubmit();
       return response.data;
     } catch (error) {
@@ -124,7 +124,7 @@ const booksSlice = createSlice({
       state.error = null;
     },
     [loadBooks.fulfilled.toString()]: (state, action: PayloadAction<BookType[]>) => {
-      state.status = FetchStatus.FETCH_RESOLVED;
+      state.status = FetchStatus.RESOLVED;
       state.list = createBooks(action.payload);
     },
     [loadBooks.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
@@ -137,7 +137,7 @@ const booksSlice = createSlice({
       state.error = null;
     },
     [addNewBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
-      state.status = FetchStatus.REJECTED;//ADD_NEW_REJECTED;
+      state.status = FetchStatus.REJECTED;
       state.error = action.payload;
     },
     [addNewBook.fulfilled.toString()]: (state, action: PayloadAction<BookType>) => {
@@ -154,7 +154,7 @@ const booksSlice = createSlice({
       state.error = action.payload;
     },
     [deleteBook.fulfilled.toString()]: (state, action: PayloadAction<string>) => {
-      state.status = FetchStatus.DELETE_RESOLVED;
+      state.status = FetchStatus.RESOLVED;
       const bookId = action.payload;
       state.list = state.list.filter((book) => book.id !== bookId);
     },
@@ -164,11 +164,11 @@ const booksSlice = createSlice({
       state.error = null;
     },
     [updateBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
-      state.status = FetchStatus.REJECTED;//UPDATE_REJECTED;
+      state.status = FetchStatus.REJECTED;
       state.error = action.payload;
     },
     [updateBook.fulfilled.toString()]: (state, action: PayloadAction<BookType>) => {
-      state.status = FetchStatus.UPDATE_RESOLVED;
+      state.status = FetchStatus.RESOLVED;
       const newBookData = action.payload;
       const booksList = state.list;
       const updatedBookIndex = /* useSelector(getBooksIndexById(newBookData.id)); // */booksList.findIndex((book) => book.id === newBookData.id);
@@ -182,7 +182,6 @@ const {actions, reducer} = booksSlice;
 
 export const {
   resetBooksStatus,
-  //resetBooksError,
 } = actions;
 
 export {
