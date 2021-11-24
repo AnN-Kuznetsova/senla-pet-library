@@ -41,16 +41,14 @@ Promise<ReaderDataType[] | unknown>,
 const readersSlice = createSlice({
   name: `readers`,
   initialState,
-  reducers: {
-    //loadReaders: (state, action) => state = action.payload,
-  },
+  reducers: {},
   extraReducers: {
     [loadReaders.pending.toString()]: (state) => {
       state.status = FetchStatus.LOADING;
       state.error = null;
     },
     [loadReaders.fulfilled.toString()]: (state, action: PayloadAction<ReaderType[]>) => {
-      state.status = FetchStatus.RESOLVED; //FETCH_RESOLVED;
+      state.status = FetchStatus.RESOLVED;
       state.list = createReaders(action.payload);
     },
     [loadReaders.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
@@ -60,12 +58,8 @@ const readersSlice = createSlice({
   },
 });
 
-const {/* actions, */ reducer} = readersSlice;
+const {reducer} = readersSlice;
 
-
-/* export const {
-  loadReaders,
-} = actions; */
 
 export {
   reducer,

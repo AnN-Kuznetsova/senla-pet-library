@@ -4,8 +4,6 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {FetchStatus} from "../../api";
 import {createBooks} from "../../adapters/book";
 import {createErrorValue} from "../../utils";
-import {getBooksIndexById} from "./selectors";
-import {useSelector} from "react-redux";
 import type {BookType, ErrorType, NewBookType} from "../../types";
 
 
@@ -171,7 +169,7 @@ const booksSlice = createSlice({
       state.status = FetchStatus.RESOLVED;
       const newBookData = action.payload;
       const booksList = state.list;
-      const updatedBookIndex = /* useSelector(getBooksIndexById(newBookData.id)); // */booksList.findIndex((book) => book.id === newBookData.id);
+      const updatedBookIndex = booksList.findIndex((book) => book.id === newBookData.id);
       state.list = [...booksList.slice(0, updatedBookIndex), newBookData, ...booksList.slice(updatedBookIndex + 1)];
     },
   },

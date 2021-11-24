@@ -8,8 +8,8 @@ import {ErrorComponent} from "./error-component";
 import {FetchStatus} from "../api";
 import {Modal} from "./modal";
 import {NewBookModal} from "./new-book-modal";
-import {resetBooksStatus} from "../store/books/books";
 import {getBooks, getBooksError, getBooksStatus} from "../store/books/selectors";
+import {resetBooksStatus} from "../store/books/books";
 
 
 export const BooksSection: React.FC = () => {

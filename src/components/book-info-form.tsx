@@ -46,8 +46,7 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
   };
 
   const isValidate = getInputTextValidation(title) && getInputTextValidation(autor);
-  //const isNewData = book ? (title !== book.title || autor !== book.autor) : true;
-    //&& (title !== book.title || autor !== book.autor);
+  const isNewData = book ? (title !== book.title || autor !== book.autor) : true;
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -75,7 +74,7 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
   const controlButtons: ControlButtonType[] = [];
   controlButtons.push({
     type: FormButtonControlsType.SAVE,
-    isDisabled: !isValidate, // && isNewData,
+    isDisabled: !(isValidate && isNewData),
     isSubmit: true,
     });
 

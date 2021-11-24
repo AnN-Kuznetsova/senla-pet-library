@@ -13,16 +13,10 @@ const getBookById = (id: string | null) => (state: RootStateType): BookType | nu
   return book || null;
 };
 
-const getBooksIndexById = (id: string | null) => (state: RootStateType): number | null => {
-  const bookIndex: number = state.books.list.findIndex((book) => book.id === id);
-  return bookIndex >= 0 ? bookIndex : null;
-};
-
 
 export {
   getBooks,
   getBooksStatus,
   getBooksError,
   getBookById,
-  getBooksIndexById,
 };
