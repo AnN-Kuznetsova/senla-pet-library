@@ -1,8 +1,9 @@
 import * as React from "react";
 import {FormControl, Input, InputLabel} from "@mui/material";
 import {useDispatch} from "react-redux";
-import {useEffect, useState} from "react";
+import {useEffect, useCallback, useMemo, useState} from "react";
 
+import {debounced} from "../utils";
 import {setBooksFilter} from "../store/application/application";
 
 
@@ -19,12 +20,22 @@ export const BooksFilterForm: React.FC = () => {
     setAutor(event.target.value);
   };
 
-  useEffect(() => {
+  const setFilters = useCallback(() => {
     dispatch(setBooksFilter({
       title,
       autor,
     }));
-  });
+  }, [title, autor, dispatch]);
+
+  const debouncedSetFilters = useMemo(
+    () => debounced(setFilters),
+    [setFilters]
+  );
+
+  useEffect(() => {
+    debouncedSetFilters();
+    return debouncedSetFilters.cancel;
+  }, [title, autor, debouncedSetFilters]);
 
   return (
     <form className="form" >

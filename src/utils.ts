@@ -1,7 +1,10 @@
+import {debounce} from "lodash/fp";
 import {useEffect, useRef, useState} from "react";
 
-import {WAIT_SHOW_DELAY, FetchStatus} from "./const";
+import {DEBOUNCE_DELAY, WAIT_DELAY, FetchStatus} from "./const";
 
+
+const debounced = (func: ()=>unknown) => debounce(DEBOUNCE_DELAY, func);
 
 const createErrorValue = (error: unknown & {response?: object, request: XMLHttpRequest, message: string}) => {
   if (error.response) {
@@ -20,7 +23,7 @@ const useWaitShow = (status: string | null): boolean => {
   const createTimer = () => {
     waitTimerRef.current = setTimeout(() => {
       setIsWaitShow(true);
-    }, WAIT_SHOW_DELAY);
+    }, WAIT_DELAY);
   };
 
   const clearTimer = () => {
@@ -45,5 +48,6 @@ const useWaitShow = (status: string | null): boolean => {
 
 export {
   createErrorValue,
+  debounced,
   useWaitShow,
 };

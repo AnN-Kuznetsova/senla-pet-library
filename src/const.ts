@@ -1,7 +1,9 @@
 import {createTheme} from '@mui/material/styles';
 import {lime, lightGreen, red} from '@mui/material/colors';
 
-const WAIT_SHOW_DELAY = 300; // ms
+
+const DEBOUNCE_DELAY = 500; // ms
+const WAIT_DELAY = 300; // ms
 
 enum FetchStatus {
   LOADING = `LOADING`,
@@ -36,7 +38,8 @@ const THEME = createTheme({
 
 export {
   THEME,
-  WAIT_SHOW_DELAY,
+  DEBOUNCE_DELAY,
+  WAIT_DELAY,
   FetchOperation,
   FetchStatus,
 };
