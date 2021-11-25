@@ -3,19 +3,21 @@ import {Button, Stack} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useState, useEffect} from "react";
 
+import {BooksFilterForm} from "./books-filter-form";
 import {BooksList} from "./books-list";
 import {FetchOperation, FetchStatus} from "../const";
 import {Info, InfoType} from "./info";
 import {Modal} from "./modal";
 import {NewBookModal} from "./new-book-modal";
-import {getBooks, getBooksError, getBooksOperation, getBooksStatus} from "../store/books/selectors";
+import {getBooksError, getBooksOperation, getBooksStatus} from "../store/books/selectors";
+import {getFilteredBooks} from "../store/application/selectors";
 import {resetBooksStatus} from "../store/books/books";
 import {useWaitShow} from "../utils";
 
 
 export const BooksSection: React.FC = () => {
   const dispatch = useDispatch();
-  const books = useSelector(getBooks);
+  const books = useSelector(getFilteredBooks)
   const booksOperation = useSelector(getBooksOperation);
   const booksStatus = useSelector(getBooksStatus);
   const booksError = useSelector(getBooksError);
@@ -99,10 +101,13 @@ export const BooksSection: React.FC = () => {
       </h2>}
 
       {isBooksListShow &&
-        <BooksList
-          books={books}
-          openModal={onModalOpen}
-        />
+        <React.Fragment>
+          <BooksFilterForm />
+          <BooksList
+            books={books}
+            openModal={onModalOpen}
+          />
+        </React.Fragment>
       }
 
       {isModalOpen &&

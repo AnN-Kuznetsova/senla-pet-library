@@ -1,4 +1,4 @@
-import {RootStateType} from "../..";
+import type {RootStateType} from "../..";
 import type {BookType, ErrorType} from "../../types";
 
 
