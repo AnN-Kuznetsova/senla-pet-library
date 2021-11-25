@@ -2,26 +2,29 @@ import {createSelector} from "reselect";
 
 import {getBooks} from "../books/selectors";
 import type {BookType} from "../../types";
-import type {BooksFiltersType} from "./application";
+import type {FilterType} from "./application";
 import type {RootStateType} from "../..";
 
 
-const getBooksFilters = (state: RootStateType): BooksFiltersType => state.application.booksFilters;
+const getBooksFilters = (state: RootStateType): FilterType => state.application.booksFilters;
 
 const getFilteredBooks = createSelector(
   getBooks,
   getBooksFilters,
-  (books, booksFilters): BookType[] => {
-    let filteredBooks: BookType[] = [];
+  (books: BookType[], booksFilters: FilterType): BookType[] => {
+    let filteredBooks = books;
 
-    if (booksFilters.title) {
-      filteredBooks = books.filter((book) => book.title.toLowerCase().includes(booksFilters.title.toLowerCase()));
-    } else {
-      filteredBooks = books;
-    }
+    for (const filter in booksFilters) {
+      if (Object.prototype.hasOwnProperty.call(booksFilters, filter)) {
+        const filterValue = booksFilters[filter];
 
-    if (booksFilters.autor) {
-      filteredBooks = filteredBooks.filter((book) => book.autor.toLowerCase().includes(booksFilters.autor.toLowerCase()));
+        if (filterValue) {
+          filteredBooks = filteredBooks.filter((book): boolean => {
+            const bookFilterValue: string = <string>book[filter];
+            return bookFilterValue.toLowerCase().includes(filterValue.toLowerCase());
+          });
+        }
+      }
     }
 
     return filteredBooks;

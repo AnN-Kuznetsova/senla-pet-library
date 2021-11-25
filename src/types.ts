@@ -1,6 +1,7 @@
 type ErrorType = unknown & {status: string | number | null};
 
 interface NewBookType {
+  [key: string]: unknown,
   title: string,
   autor: string,
   coverImgUrl: string | null,
@@ -13,6 +14,7 @@ type BookType = NewBookType & {
 
 
 interface ReaderType {
+  [key: string]: unknown,
   id: string,
   name: string,
   age: string,

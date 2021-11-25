@@ -3,7 +3,7 @@ import {FormControl, Input, InputLabel} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {useEffect, useState} from "react";
 
-import {setBooksAutorFilter, setBooksTitleFilter} from "../store/application/application";
+import {setBooksFilter} from "../store/application/application";
 
 
 export const BooksFilterForm: React.FC = () => {
@@ -20,8 +20,10 @@ export const BooksFilterForm: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(setBooksTitleFilter(title));
-    dispatch(setBooksAutorFilter(autor));
+    dispatch(setBooksFilter({
+      title,
+      autor,
+    }));
   });
 
   return (

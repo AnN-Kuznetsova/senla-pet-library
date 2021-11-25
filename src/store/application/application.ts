@@ -1,21 +1,17 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 
-export interface BooksFiltersType {
-  title: string,
-  autor: string,
+export interface FilterType {
+  [key: string]: string,
 }
 
 interface ApplicationStateType {
-  booksFilters: BooksFiltersType,
+  booksFilters: FilterType,
 }
 
 
 const initialState = {
-  booksFilters: {
-    title: "",
-    autor: "",
-  },
+  booksFilters: {},
 } as ApplicationStateType;
 
 
@@ -23,8 +19,7 @@ const applicationSlice = createSlice({
   name: `application`,
   initialState,
   reducers: {
-    setBooksTitleFilter: (state, action: PayloadAction<string>) => {state.booksFilters.title = action.payload},
-    setBooksAutorFilter: (state, action: PayloadAction<string>) => {state.booksFilters.autor = action.payload},
+    setBooksFilter: (state, action: PayloadAction<FilterType>) => {state.booksFilters = Object.assign(state.booksFilters, action.payload)},
   },
 });
 
@@ -32,8 +27,7 @@ const {actions, reducer} = applicationSlice;
 
 
 export const {
-  setBooksAutorFilter,
-  setBooksTitleFilter,
+  setBooksFilter,
 } = actions;
 
 export {
