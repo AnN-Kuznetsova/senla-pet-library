@@ -4,6 +4,7 @@ import {lime, lightGreen, red} from '@mui/material/colors';
 
 const DEBOUNCE_DELAY = 500; // ms
 const WAIT_DELAY = 300; // ms
+const DEFOULT_COVER_IMGURL = `./assets/img/sass-logo.png`;
 
 enum FetchStatus {
   LOADING = `LOADING`,
@@ -16,6 +17,11 @@ enum FetchOperation {
   ADD_NEW = `ADD_NEW`,
   UPDATE = `UPDATE`,
   DELETE = `DELETE`,
+}
+
+enum FetchError {
+  PAYLOAD_TOO_LARGE = 413,
+  NOT_FOUND = 404,
 }
 
 const THEME = createTheme({
@@ -37,9 +43,11 @@ const THEME = createTheme({
 
 
 export {
-  THEME,
+  DEFOULT_COVER_IMGURL,
   DEBOUNCE_DELAY,
   WAIT_DELAY,
+  THEME,
+  FetchError,
   FetchOperation,
   FetchStatus,
 };

@@ -3,70 +3,70 @@
     "id": "b1",
     "title": "The Hound of the Baskervilles",
     "autor": "Arthur Conan Doyle",
-    "coverImgUrl": "hound.jpg",
+    "coverImgUrl": "./assets/img/hound.jpg",
     "isTaken": true
   },
   {
     "id": "b2",
     "title": "The Adventures of Sherlock Holmes",
     "autor": "Arthur Conan Doyle",
-    "coverImgUrl": "Adventures_of_sherlock_holmes.jpg",
+    "coverImgUrl": "./assets/img/Adventures_of_sherlock_holmes.jpg",
     "isTaken": false
   },
   {
     "id": "b3",
     "title": "The Old Man And The Sea",
     "autor": "Ernest Hemingway",
-    "coverImgUrl": "old_man_and_sea_book.jpg",
+    "coverImgUrl": "./assets/img/old_man_and_sea_book.jpg",
     "isTaken": false
   },
   {
     "id": "b4",
     "title": "Robinson Crusoe",
     "autor": "Daniel Defoe",
-    "coverImgUrl": "Robinson_Cruose_1719_1st_edition.jpg",
+    "coverImgUrl": "./assets/img/Robinson_Cruose_1719_1st_edition.jpg",
     "isTaken": false
   },
   {
     "id": "b5",
     "title": "Jane Eyre",
     "autor": "Charlotte Bronte",
-    "coverImgUrl": "Jane_Eyre.jpg",
+    "coverImgUrl": "./assets/img/Jane_Eyre.jpg",
     "isTaken": false
   },
   {
     "id": "b6",
     "title": "The Hound of the Baskervilles",
     "autor": "Arthur Conan Doyle",
-    "coverImgUrl": "hound.jpg",
+    "coverImgUrl": "./assets/img/hound.jpg",
     "isTaken": false
   },
   {
     "id": "b7",
     "title": "The Adventures of Sherlock Holmes",
     "autor": "Arthur Conan Doyle",
-    "coverImgUrl": "Adventures_of_sherlock_holmes.jpg",
+    "coverImgUrl": "./assets/img/Adventures_of_sherlock_holmes.jpg",
     "isTaken": false
   },
   {
     "id": "b8",
     "title": "The Old Man And The Sea",
     "autor": "Ernest Hemingway",
-    "coverImgUrl": "old_man_and_sea_book.jpg",
+    "coverImgUrl": "./assets/img/old_man_and_sea_book.jpg",
     "isTaken": false
   },
   {
     "id": "b9",
     "title": "Robinson Crusoe",
     "autor": "Daniel Defoe",
-    "coverImgUrl": "Robinson_Cruose_1719_1st_edition.jpg",
+    "coverImgUrl": "./assets/img/Robinson_Cruose_1719_1st_edition.jpg",
     "isTaken": false
   },
   {
     "id": "b10",
     "title": "Jane Eyre",
     "autor": "Charlotte Bronte",
-    "coverImgUrl": "Jane_Eyre.jpg",
+    "coverImgUrl": "./assets/img/Jane_Eyre.jpg",
     "isTaken": false
   }
 ]

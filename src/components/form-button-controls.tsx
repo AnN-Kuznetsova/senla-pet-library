@@ -2,43 +2,43 @@ import * as React from "react";
 import {Button} from "@mui/material";
 
 
-export enum FormButtonControlsType {
+export enum FormButtonControllsType {
   CHANGE = `CHANGE`,
   SAVE = `SAVE`,
   CANCEL = `CANCEL`,
 }
 
 
-export interface ControlButtonType {
-  type: FormButtonControlsType,
+export interface ControllButtonType {
+  type: FormButtonControllsType,
   isDisabled?: boolean,
   isSubmit?: boolean,
   onClick?: () => void,
 }
 
 interface PropsType {
-  buttons: ControlButtonType[],
+  buttons: ControllButtonType[],
 }
 
 
-export const FormButtonControls: React.FC<PropsType> = (props: PropsType) => {
+export const FormButtonControlls: React.FC<PropsType> = (props: PropsType) => {
   const {
     buttons,
   } = props;
 
   return (
-    <div className="control-buttons ">
+    <div className="controll-buttons">
       {buttons.map((button, index) => {
         let label = ``;
 
         switch (button.type) {
-          case FormButtonControlsType.CHANGE:
+          case FormButtonControllsType.CHANGE:
             label = `Change`;
             break;
-          case FormButtonControlsType.SAVE:
+          case FormButtonControllsType.SAVE:
             label = `Save`;
             break;
-          case FormButtonControlsType.CANCEL:
+          case FormButtonControllsType.CANCEL:
             label = `Cancel`;
             break;
         }
@@ -49,7 +49,7 @@ export const FormButtonControls: React.FC<PropsType> = (props: PropsType) => {
             variant="contained"
             disabled={button.isDisabled}
             type={`${button.isSubmit ? "submit" : "button"}`}
-            onClick={button.onClick} 
+            onClick={button.onClick}
           >
             {label}
           </Button>

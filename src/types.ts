@@ -4,7 +4,7 @@ interface NewBookType {
   [key: string]: unknown,
   title: string,
   autor: string,
-  coverImgUrl: string | null,
+  coverImgUrl: string | ArrayBuffer | null,
 }
 
 type BookType = NewBookType & {

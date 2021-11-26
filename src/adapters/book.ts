@@ -5,7 +5,7 @@ interface BookDataType {
   id: string,
   title: string,
   autor: string,
-  coverImgUrl: string,
+  coverImgUrl: string | ArrayBuffer,
   isTaken: boolean,
 }
 

@@ -3,8 +3,9 @@ import {Typography} from "@mui/material";
 import {useSelector} from "react-redux";
 import {useState} from "react";
 
+import {BookCover} from "./book-cover";
 import {BookInfoForm} from "./book-info-form";
-import {FormButtonControls, FormButtonControlsType} from "./form-button-controls";
+import {FormButtonControlls, FormButtonControllsType} from "./form-button-controls";
 import {getBookById} from "../store/books/selectors";
 
 
@@ -29,20 +30,18 @@ export const BookModal: React.FC<PropsType> = (props: PropsType) => {
   };
 
   return (
-    <div className="book-modal">
-      <div className="book-modal__img  img-wrapper">
-        <img src={book.coverImgUrl ? `./assets/img/${book.coverImgUrl}` : `./assets/img/sass-logo.png`} />
-      </div>
+    <>
+      {isChange &&
+        <BookInfoForm
+          book={book}
+          onCancelButtonClick={closeChangeWindow}
+          onSubmit={closeChangeWindow}
+        />
+        ||
+        <div className="book-modal">
+          <BookCover coverImgUrl={book.coverImgUrl} />
 
-      <div className="book-modal__info">
-        {isChange &&
-          <BookInfoForm
-            book={book}
-            onCancelButtonClick={closeChangeWindow}
-            onSubmit={closeChangeWindow}
-          />
-          ||
-          <React.Fragment>
+          <div className="book-modal__info">
             <Typography variant="h5">{book.title}</Typography>
             <p>{book.autor}
               <span
@@ -51,16 +50,15 @@ export const BookModal: React.FC<PropsType> = (props: PropsType) => {
               >{book.isTaken ? `Is taken` : `Free`}</span>
             </p>
 
-            <FormButtonControls
+            <FormButtonControlls
               buttons={[{
-                type: FormButtonControlsType.CHANGE,
+                type: FormButtonControllsType.CHANGE,
                 onClick: handleChangeButtonClick,
               }]}
             />
-          </React.Fragment>
-        }
-
-      </div>
-    </div>
+          </div>
+        </div>
+      }
+    </>
   );
 };

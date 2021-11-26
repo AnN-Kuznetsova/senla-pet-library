@@ -36,7 +36,10 @@ img {
   transform: translate(-50%, -50%);
 }
 
-.control-buttons button{
-  margin-top: 40px;
-  margin-right: 5px;
+.controll-buttons{
+  margin-top: auto;
+
+  button{
+    margin-right: 5px;
+  }
 }
