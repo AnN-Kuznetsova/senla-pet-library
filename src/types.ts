@@ -1,3 +1,5 @@
+import * as moment from "moment";
+
 type ErrorType = unknown & {status: string | number | null};
 
 interface NewBookType {
@@ -9,7 +11,10 @@ interface NewBookType {
 
 type BookType = NewBookType & {
   id: string,
-  isTaken: boolean,
+  options: {
+    isTaken: boolean,
+    dateOfTaking: moment.Moment,
+  },
 }
 
 

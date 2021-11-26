@@ -5,6 +5,7 @@ import {FetchOperation, FetchStatus} from "../../const";
 import {createBooks} from "../../adapters/book";
 import {createErrorValue} from "../../utils";
 import type {BookType, ErrorType, NewBookType} from "../../types";
+import type {BookDataType} from "../../adapters/book";
 
 
 interface BooksStateType {
@@ -122,7 +123,7 @@ const booksSlice = createSlice({
       state.status = FetchStatus.LOADING;
       state.error = null;
     },
-    [loadBooks.fulfilled.toString()]: (state, action: PayloadAction<BookType[]>) => {
+    [loadBooks.fulfilled.toString()]: (state, action: PayloadAction<BookDataType[]>) => {
       state.status = FetchStatus.RESOLVED;
       state.list = createBooks(action.payload);
     },

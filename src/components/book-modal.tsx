@@ -18,6 +18,8 @@ export const BookModal: React.FC<PropsType> = (props: PropsType) => {
   const {bookId} = props;
 
   const book = useSelector(getBookById(bookId));
+  const isBookTaken = book.options.isTaken;
+  const dateOfTaking = isBookTaken ? book.options.dateOfTaking.format(`Do MMMM YYYY`) : null;
 
   const [isChange, setIsChange] = useState(false);
 
@@ -46,8 +48,10 @@ export const BookModal: React.FC<PropsType> = (props: PropsType) => {
             <p>{book.autor}
               <span
                 className="book-modal__is-taken"
-                style={{color: book.isTaken ? `red` : `green`}}
-              >{book.isTaken ? `Is taken` : `Free`}</span>
+                style={{color: isBookTaken ? `red` : `green`}}
+              >{isBookTaken ? `Is taken` : `Free`}</span>
+
+              {dateOfTaking && <span>Date of taking: {dateOfTaking}</span>}
             </p>
 
             <FormButtonControlls

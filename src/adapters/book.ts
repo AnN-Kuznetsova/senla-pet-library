@@ -1,12 +1,17 @@
+import * as moment from "moment";
+
 import type {BookType} from "../types";
 
 
-interface BookDataType {
+export interface BookDataType {
   id: string,
   title: string,
   autor: string,
   coverImgUrl: string | ArrayBuffer,
-  isTaken: boolean,
+  options: {
+    isTaken: boolean,
+    dateOfTaking: string | null,
+  },
 }
 
 
@@ -16,7 +21,10 @@ const createBook = (bookData: BookDataType): BookType => {
     title: bookData.title,
     autor: bookData.autor,
     coverImgUrl: bookData.coverImgUrl,
-    isTaken: bookData.isTaken,
+    options: {
+      isTaken: bookData.options.isTaken,
+      dateOfTaking: bookData.options.dateOfTaking ? moment(bookData.options.dateOfTaking) : null,
+    },
   };
 };
 
