@@ -4,6 +4,7 @@ import {lime, lightGreen, red} from '@mui/material/colors';
 
 const DEBOUNCE_DELAY = 500; // ms
 const WAIT_DELAY = 300; // ms
+const TIME_TO_READ = 30; // days
 const DEFOULT_COVER_IMGURL = `./assets/img/sass-logo.png`;
 
 enum FetchStatus {
@@ -46,6 +47,7 @@ export {
   DEFOULT_COVER_IMGURL,
   DEBOUNCE_DELAY,
   WAIT_DELAY,
+  TIME_TO_READ,
   THEME,
   FetchError,
   FetchOperation,

@@ -15,8 +15,8 @@
     "autor": "Arthur Conan Doyle",
     "coverImgUrl": "./assets/img/Adventures_of_sherlock_holmes.jpg",
     "options":  {
-      "isTaken": false,
-      "dateOfTaking": null
+      "isTaken": true,
+      "dateOfTaking": "2021-09-20"
     }
   },
   {

@@ -1,10 +1,15 @@
+import * as moment from "moment";
 import {debounce} from "lodash/fp";
 import {useEffect, useRef, useState} from "react";
 
-import {DEBOUNCE_DELAY, WAIT_DELAY, FetchStatus} from "./const";
+import {DEBOUNCE_DELAY, WAIT_DELAY, FetchStatus, TIME_TO_READ} from "./const";
 
 
 const debounced = (func: ()=>unknown) => debounce(DEBOUNCE_DELAY, func);
+
+const getTimeToRead = (): moment.Duration => {
+  return moment.duration(TIME_TO_READ, `days`);
+};
 
 const createErrorValue = (error: unknown & {response?: object, request: XMLHttpRequest, message: string}) => {
   if (error.response) {
@@ -49,5 +54,6 @@ const useWaitShow = (status: string | null): boolean => {
 export {
   createErrorValue,
   debounced,
+  getTimeToRead,
   useWaitShow,
 };

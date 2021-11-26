@@ -9,7 +9,7 @@
     "id": "r2",
     "name": "Vladimir",
     "age": "39",
-    "booksIds": ["b1"]
+    "booksIds": ["b1", "b2"]
   },
   {
     "id": "r3",
