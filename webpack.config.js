@@ -40,7 +40,10 @@ module.exports = {
         const id = lastBookId ? `b${Number.parseInt(lastBookId.replace(`b`, ``), 10) + 1}` : `b0`;
         const newBook = Object.assign(newBookData, {
           id,
-          isTaken: false,
+          options: {
+            isTaken: false,
+            dateOfTaking: null,
+          },
         });
         res.send(newBook);
       });

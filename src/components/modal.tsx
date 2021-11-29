@@ -11,7 +11,7 @@ interface PropsType {
 }
 
 
-const modalElement = document.querySelector(`#modal`);
+const modalElement: HTMLElement = document.querySelector(`#modal`);
 
 
 export const Modal: React.FC<PropsType> = (props: PropsType) => {
@@ -32,7 +32,7 @@ export const Modal: React.FC<PropsType> = (props: PropsType) => {
     }
   };
 
-  return ReactDOM.createPortal(
+  return modalElement && ReactDOM.createPortal(
     <section
       className="modal__wrapper"
       onClick={handleCloseButtonClick}

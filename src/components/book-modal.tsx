@@ -28,7 +28,12 @@ export const BookModal: React.FC<PropsType> = (props: PropsType) => {
   const isBookTaken = book.options.isTaken;
   const dateOfTaking = book.options.dateOfTaking;
   const timeToRead = getTimeToRead();
-  const willBeReturnedAfter = dateOfTaking ? dateOfTaking.clone().add(timeToRead).diff(moment(), `days`) : null;
+  //const willBeReturnedAfter = dateOfTaking ? dateOfTaking.clone().add(timeToRead).diff(moment(), `days`) : null;
+  const willBeReturnedAfter: moment.Duration = dateOfTaking ? moment.duration(dateOfTaking.clone().add(timeToRead).diff(moment())) : null;
+  const willBeReturnedStr = willBeReturnedAfter
+    ? willBeReturnedAfter.days() >= 0 ? <>Will be returned after <b style={{color: "green"}}>{willBeReturnedAfter.humanize()}</b></>
+    : <>Delay return for <b style={{color: "red"}}>{willBeReturnedAfter.humanize()}</b></>
+    : null;
 
   const [isChange, setIsChange] = useState(false);
 
@@ -61,10 +66,13 @@ export const BookModal: React.FC<PropsType> = (props: PropsType) => {
               >{isBookTaken ? `Is taken` : `Free`}</span>
 
               {dateOfTaking && <span className="new-line">Date of taking: <b>{formatDate(dateOfTaking)}</b></span>}
-              {willBeReturnedAfter >= 0
-                && <span className="new-line">Will be returned after <b style={{color: `green`}}>{willBeReturnedAfter}</b> days</span>
-                || <span className="new-line">Delay return for <b style={{color: `red`}}>{-willBeReturnedAfter}</b> days</span>
-              }
+              {/* {willBeReturnedAfter && willBeReturnedAfter >= 0
+                && <span className="new-line">Will be returned after <b style={{color: `green`}}>{willBeReturnedAfter}</b> days</span>}
+              {willBeReturnedAfter && willBeReturnedAfter < 0 &&
+                <span className="new-line">Delay return for <b style={{color: `red`}}>{-willBeReturnedAfter}</b> days</span>} */}
+              {/* {willBeReturnedAfter &&
+                <span className="new-line">Delay return for <b style={{color: `red`}}>{willBeReturnedAfter.humanize()}</b> days</span>} */}
+              {willBeReturnedStr && <span className="new-line">{willBeReturnedStr}</span>}
             </p>
 
             <FormButtonControlls
