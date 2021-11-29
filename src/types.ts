@@ -11,7 +11,7 @@ interface NewBookType {
 
 type BookType = NewBookType & {
   id: string,
-  dateOfTaking: moment.Moment,
+  dateOfTaking: moment.Moment | null,
 }
 
 
