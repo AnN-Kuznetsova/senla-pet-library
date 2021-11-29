@@ -11,10 +11,7 @@ interface NewBookType {
 
 type BookType = NewBookType & {
   id: string,
-  options: {
-    isTaken: boolean,
-    dateOfTaking: moment.Moment,
-  },
+  dateOfTaking: moment.Moment,
 }
 
 

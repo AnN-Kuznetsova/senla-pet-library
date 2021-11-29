@@ -37,7 +37,7 @@ export const BooksList: React.FC<PropsType> = (props: PropsType) => {
           <ListItemText
             primary={book.title}
             secondary={book.autor}
-            style={{color: `${book.options.isTaken ? `red` : `black`}`}}
+            style={{color: `${book.dateOfTaking ? `red` : `black`}`}}
           />
           <ItemButton
             onClick={handleMoreButtonClick.bind(null, book)}
@@ -45,7 +45,7 @@ export const BooksList: React.FC<PropsType> = (props: PropsType) => {
           />
           <ItemButton
             onClick={handleDeleteBookButtonClick.bind(null, book.id)}
-            isDisabled={book.options.isTaken ? true : false}
+            isDisabled={book.dateOfTaking ? true : false}
             className="item-button--delete"
           />
         </ListItem>

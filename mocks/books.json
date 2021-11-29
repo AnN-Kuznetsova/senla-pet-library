@@ -4,99 +4,69 @@
     "title": "The Hound of the Baskervilles",
     "autor": "Arthur Conan Doyle",
     "coverImgUrl": "./assets/img/hound.jpg",
-    "options":  {
-      "isTaken": true,
-      "dateOfTaking": "2021-11-20"
-    }
+    "dateOfTaking": "2021-11-20"
   },
   {
     "id": "b2",
     "title": "The Adventures of Sherlock Holmes",
     "autor": "Arthur Conan Doyle",
     "coverImgUrl": "./assets/img/Adventures_of_sherlock_holmes.jpg",
-    "options":  {
-      "isTaken": true,
-      "dateOfTaking": "2021-09-20"
-    }
+    "dateOfTaking": "2021-09-20"
   },
   {
     "id": "b3",
     "title": "The Old Man And The Sea",
     "autor": "Ernest Hemingway",
     "coverImgUrl": "./assets/img/old_man_and_sea_book.jpg",
-    "options":  {
-      "isTaken": true,
-      "dateOfTaking": "2021-10-31"
-    }
+    "dateOfTaking": "2021-10-31"
   },
   {
     "id": "b4",
     "title": "Robinson Crusoe",
     "autor": "Daniel Defoe",
     "coverImgUrl": "./assets/img/Robinson_Cruose_1719_1st_edition.jpg",
-    "options":  {
-      "isTaken": false,
-      "dateOfTaking": null
-    }
+    "dateOfTaking": null
   },
   {
     "id": "b5",
     "title": "Jane Eyre",
     "autor": "Charlotte Bronte",
     "coverImgUrl": "./assets/img/Jane_Eyre.jpg",
-    "options":  {
-      "isTaken": false,
-      "dateOfTaking": null
-    }
+    "dateOfTaking": null
   },
   {
     "id": "b6",
     "title": "The Hound of the Baskervilles",
     "autor": "Arthur Conan Doyle",
     "coverImgUrl": "./assets/img/hound.jpg",
-    "options":  {
-      "isTaken": false,
-      "dateOfTaking": null
-    }
+    "dateOfTaking": null
   },
   {
     "id": "b7",
     "title": "The Adventures of Sherlock Holmes",
     "autor": "Arthur Conan Doyle",
     "coverImgUrl": "./assets/img/Adventures_of_sherlock_holmes.jpg",
-    "options":  {
-      "isTaken": false,
-      "dateOfTaking": null
-    }
+    "dateOfTaking": null
   },
   {
     "id": "b8",
     "title": "The Old Man And The Sea",
     "autor": "Ernest Hemingway",
     "coverImgUrl": "./assets/img/old_man_and_sea_book.jpg",
-    "options":  {
-      "isTaken": false,
-      "dateOfTaking": null
-    }
+    "dateOfTaking": null
   },
   {
     "id": "b9",
     "title": "Robinson Crusoe",
     "autor": "Daniel Defoe",
     "coverImgUrl": "./assets/img/Robinson_Cruose_1719_1st_edition.jpg",
-    "options":  {
-      "isTaken": false,
-      "dateOfTaking": null
-    }
+    "dateOfTaking": null
   },
   {
     "id": "b10",
     "title": "Jane Eyre",
     "autor": "Charlotte Bronte",
     "coverImgUrl": "./assets/img/Jane_Eyre.jpg",
-    "options":  {
-      "isTaken": false,
-      "dateOfTaking": null
-    }
+    "dateOfTaking": null
   }
 ]

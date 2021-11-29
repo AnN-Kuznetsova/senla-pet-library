@@ -8,10 +8,7 @@ export interface BookDataType {
   title: string,
   autor: string,
   coverImgUrl: string | ArrayBuffer,
-  options: {
-    isTaken: boolean,
-    dateOfTaking: string | null,
-  },
+  dateOfTaking: string | null,
 }
 
 
@@ -21,10 +18,7 @@ const createBook = (bookData: BookDataType): BookType => {
     title: bookData.title,
     autor: bookData.autor,
     coverImgUrl: bookData.coverImgUrl,
-    options: {
-      isTaken: bookData.options.isTaken,
-      dateOfTaking: bookData.options.dateOfTaking ? moment(bookData.options.dateOfTaking) : null,
-    },
+    dateOfTaking: bookData.dateOfTaking ? moment(bookData.dateOfTaking) : null,
   };
 };
 
