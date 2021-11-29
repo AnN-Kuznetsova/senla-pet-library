@@ -3,7 +3,6 @@ import {Typography} from "@mui/material";
 
 import {ErrorType} from "../types";
 import {FetchError} from "../const";
-import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 
 
 export enum InfoType {
@@ -23,7 +22,7 @@ export const Info: React.FC<PropsType> = (props: PropsType) => {
     error,
   } = props;
 
-  let message: ReactJSXElement;
+  let message: JSX.Element;
 
   switch (type) {
     case InfoType.WAIT:
@@ -31,7 +30,7 @@ export const Info: React.FC<PropsType> = (props: PropsType) => {
       break;
     case InfoType.ERROR:
       message = <>Sorry, something went wrong :(</>;
-        
+
       if (error) {
         switch (error.status) {
           case FetchError.PAYLOAD_TOO_LARGE:

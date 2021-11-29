@@ -26,11 +26,11 @@ export const BooksSection: React.FC = () => {
   const isLoading = booksOperation === FetchOperation.LOAD && booksStatus === FetchStatus.LOADING
   const isBooksNotLoad = booksOperation === FetchOperation.LOAD && booksStatus === FetchStatus.REJECTED;
 
-  const [modalChildren, setModalChildren] = useState(null);
+  const [modalChildren, setModalChildren] = useState<JSX.Element>(<></>);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBooksListShow, changeIsBooksListShow] = useState(false);
 
-  const onModalOpen = (children: React.ReactElement) => {
+  const onModalOpen = (children: React.ReactElement<JSX.Element>) => {
     setModalChildren(children);
     setIsModalOpen(true);
   };
