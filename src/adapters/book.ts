@@ -1,13 +1,16 @@
 import * as moment from "moment";
 
-import type {BookType} from "../types";
+import type {BookType, NewBookType} from "../types";
 
 
-export interface BookDataType {
-  id: string,
+interface NewBookDataType {
   title: string,
   autor: string,
   coverImgUrl: string | ArrayBuffer,
+}
+
+interface BookDataType extends NewBookDataType {
+  id: string,
   dateOfTaking: string | null,
 }
 
@@ -26,8 +29,27 @@ const createBooks = (booksData: BookDataType[]): BookType[] => {
   return booksData.map((bookData) => createBook(bookData));
 };
 
+const toRAWNewBook = (book: NewBookType): NewBookDataType => {
+  return {
+    "title": book.title,
+    "autor": book.autor,
+    "coverImgUrl": book.coverImgUrl,
+  };
+};
+
+const toRAWBook = (book: BookType): BookDataType => {
+  return Object.assign(toRAWNewBook(book), {
+    "id": book.id,
+    "dateOfTaking": book.dateOfTaking ? book.dateOfTaking.toString() : null,
+  });
+};
+
 
 export {
   createBook,
   createBooks,
+  toRAWNewBook,
+  toRAWBook,
+  BookDataType,
+  NewBookDataType,
 };

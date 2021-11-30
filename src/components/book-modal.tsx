@@ -16,7 +16,7 @@ interface PropsType {
 }
 
 
-const formatDate = (date: moment.Moment): string | null => {
+const formatDate = (date: moment.Moment | null): string | null => {
   return date ? date.format(`Do MMMM YYYY`) : null;
 };
 
