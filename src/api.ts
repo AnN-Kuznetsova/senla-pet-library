@@ -8,7 +8,7 @@ export const createAPI = (onFailRequest?: (error: Error) => void): AxiosInstance
     withCredentials: true,
   });
 
-  const onSuccess = <T>(response: T ) => {
+  const onSuccess = <T>(response: T ): T => {
     return response;
   };
 
