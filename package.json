@@ -7,7 +7,9 @@
     "eslint": "eslint --ext .tsx --ext .ts src/",
     "test": "npm run eslint",
     "build": "webpack --mode production",
-    "start": "webpack serve"
+    "start": "webpack serve",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "devDependencies": {
     "@babel/core": "7.16.0",
@@ -15,6 +17,12 @@
     "@babel/preset-env": "7.16.0",
     "@babel/preset-react": "7.16.0",
     "@babel/preset-typescript": "7.16.0",
+    "@storybook/addon-actions": "^6.4.4",
+    "@storybook/addon-docs": "6.4.4",
+    "@storybook/addon-essentials": "^6.4.4",
+    "@storybook/addon-links": "^6.4.4",
+    "@storybook/preset-scss": "1.0.3",
+    "@storybook/react": "^6.4.4",
     "@types/lodash": "4.14.177",
     "@types/lodash.debounce": "4.0.6",
     "@types/react": "17.0.34",
