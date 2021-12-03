@@ -18,14 +18,14 @@ const Template: ComponentStory<typeof ItemButton> = (args) => <ItemButton {...ar
 export const Primary = Template.bind({});
 Primary.args = {
   primary: true,
-  textValue: 'Item_Button',
+  textValue: 'Ok',
   //onClick: () => console.log(`itemButton click`),
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
   ...Primary.args,
-  textValue: 'Disabled Item_Button',
+  textValue: 'Ok',
   isDisabled: true,
 };
 
