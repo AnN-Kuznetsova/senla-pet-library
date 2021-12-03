@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-//import "../assets/styles/style.scss";
+import "../assets/styles/style.scss";
 
 import { ItemButton } from '../components/item-button';
 
