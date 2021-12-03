@@ -1,3 +1,5 @@
+@use "sass:math";
+
 button.item-button {
   width: 40px;
   height: 40px;
@@ -10,8 +12,8 @@ button.item-button {
 
   &--close {
     position: absolute;
-    top: $modal-padding / 2;
-    right: $modal-padding / 2;
+    top: math.div($modal-padding, 2);
+    right: math.div($modal-padding, 2);
 
     &:hover {
       background-color: white;
