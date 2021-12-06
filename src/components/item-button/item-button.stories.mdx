@@ -1,0 +1,52 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import { ItemButton } from "./item-button";
+
+
+<Meta title="MDX/ItemButton" component={ItemButton} />
+
+# ItemButton
+
+`ItemButton` - small context button:
+
+<Canvas>
+  <ItemButton
+    onClick={()=>{}}
+    textValue="Ok"
+  />
+</Canvas>
+
+`ItemButton` - disabled:
+
+<Canvas>
+  <ItemButton
+    textValue="Ok"
+    isDisabled={true}
+  />
+</Canvas>
+
+`ItemButton` - "more":
+
+<Canvas>
+  <ItemButton
+    className="item-button--more"
+    onClick={()=>{}}
+  />
+</Canvas>
+
+`ItemButton` - "delete":
+
+<Canvas>
+  <ItemButton
+    className="item-button--delete"
+    onClick={()=>{}}
+  />
+</Canvas>
+
+`ItemButton` - "close":
+
+<Canvas>
+  <ItemButton
+    className="item-button--close"
+    onClick={()=>{}}
+  />
+</Canvas>

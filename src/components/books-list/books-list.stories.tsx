@@ -17,7 +17,7 @@ export default {
 
 const Template: ComponentStory<typeof BooksList> = (args) => {
   const books = useSelector(getBooks);
-  const openModal = () => {};
+  const openModal = () => {/**/};
 
   return <BooksList {...args}
     books={books}
