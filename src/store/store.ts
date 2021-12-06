@@ -8,18 +8,18 @@ import {reducer as readersReducer} from "./readers/readers";
 
 export const createStore = (api: AxiosInstance) => {
   return configureStore({
-   reducer: {
-     books: booksReducer,
-     readers: readersReducer,
-     application: applicationReducer,
-  },
-   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-    immutableCheck: false,
-    serializableCheck: false,
-    thunk: {
-      extraArgument: api,
+    reducer: {
+      books: booksReducer,
+      readers: readersReducer,
+      application: applicationReducer,
     },
-  }),
-   devTools: process.env.NODE_ENV !== `production`,
- });
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+      immutableCheck: false,
+      serializableCheck: false,
+      thunk: {
+        extraArgument: api,
+      },
+    }),
+    devTools: process.env.NODE_ENV !== `production`,
+  });
 };
