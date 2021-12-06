@@ -1,4 +1,5 @@
 import * as React from "react";
+import styled from "@emotion/styled";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import { ItemButton } from '../components/item-button';
@@ -40,14 +41,24 @@ Delete.args = {
   className: `item-button--delete`,
 };
 
+
 export const Close = Template.bind({});
+
+const CloseButtonWrapper = styled.div`
+  position: relative;
+  top: -25px;
+  width: 100px;
+  height: 40px;
+`;
+
 Close.args = {
   className: `item-button--close`,
 };
+
 Close.decorators = [
   (Story: ComponentStory<React.FC>) => (
-    <div style={{position: "relative", top: "-25px", width: "100px", height: "40px"}}>
+    <CloseButtonWrapper>
       <Story />
-    </div>
+    </CloseButtonWrapper>
   ),
 ];
