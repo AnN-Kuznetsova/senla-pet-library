@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useState, useEffect} from "react";
 
 import {BooksFilterForm} from "./books-filter-form";
-import {BooksList} from "./books-list";
+import {BooksList} from "./books-list/books-list";
 import {FetchOperation, FetchStatus} from "../const";
 import {Info, InfoType} from "./info";
 import {Modal} from "./modal";

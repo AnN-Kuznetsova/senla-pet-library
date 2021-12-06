@@ -1,8 +1,9 @@
 import * as React from "react";
 import styled from "@emotion/styled";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
 
-import { ItemButton } from '../components/item-button';
+import { ItemButton } from "./item-button";
 
 
 export default {
@@ -19,24 +20,26 @@ const Template: ComponentStory<typeof ItemButton> = (args) => <ItemButton {...ar
 
 export const Default = Template.bind({});
 Default.args = {
-  textValue: 'Ok',
-  //onClick: () => console.log(`itemButton click`),
+  textValue: `Ok`,
+  onClick: action(`ItemButton clicked`),
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
-  textValue: 'Ok',
+  textValue: `Ok`,
   isDisabled: true,
 };
 
 export const More = Template.bind({});
 More.args = {
   className: `item-button--more`,
+  onClick: action(`ItemButton--more clicked`),
 };
 
 export const Delete = Template.bind({});
 Delete.args = {
   className: `item-button--delete`,
+  onClick: action(`ItemButton--delete clicked`),
 };
 
 
@@ -51,6 +54,7 @@ const CloseButtonWrapper = styled.div`
 
 Close.args = {
   className: `item-button--close`,
+  onClick: action(`ItemButton--close clicked`),
 };
 
 Close.decorators = [

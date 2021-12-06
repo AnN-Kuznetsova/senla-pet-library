@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import {InfoType } from "./info";
-import {ItemButton} from "./item-button";
+import {ItemButton} from "./item-button/item-button";
 
 
 interface PropsType {

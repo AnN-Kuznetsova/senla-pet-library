@@ -2,9 +2,9 @@ import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { useSelector } from "react-redux";
 
-import { BooksList } from "../components/books-list";
-import { getBooks } from "../store/books/selectors";
-import { withMockRedux } from "./decorators/with-mock-redux";
+import { BooksList } from "./books-list";
+import { getBooks } from "../../store/books/selectors";
+import { withMockRedux } from "../../stories/decorators/with-mock-redux";
 
 
 export default {
@@ -17,9 +17,11 @@ export default {
 
 const Template: ComponentStory<typeof BooksList> = (args) => {
   const books = useSelector(getBooks);
+  const openModal = () => {};
 
   return <BooksList {...args}
     books={books}
+    openModal={openModal}
   />
 };
 
