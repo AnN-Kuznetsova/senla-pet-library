@@ -34,3 +34,20 @@ export const More = Template.bind({});
 More.args = {
   className: `item-button--more`,
 };
+
+export const Delete = Template.bind({});
+Delete.args = {
+  className: `item-button--delete`,
+};
+
+export const Close = Template.bind({});
+Close.args = {
+  className: `item-button--close`,
+};
+Close.decorators = [
+  (Story: ComponentStory<React.FC>) => (
+    <div style={{position: "relative", top: "-25px", width: "100px", height: "40px"}}>
+      <Story />
+    </div>
+  ),
+];
