@@ -17,16 +17,14 @@ export default {
 const Template: ComponentStory<typeof ItemButton> = (args) => <ItemButton {...args} />;
 
 
-export const Primary = Template.bind({});
-Primary.args = {
-  primary: true,
+export const Default = Template.bind({});
+Default.args = {
   textValue: 'Ok',
   //onClick: () => console.log(`itemButton click`),
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
-  ...Primary.args,
   textValue: 'Ok',
   isDisabled: true,
 };

@@ -24,6 +24,4 @@ const Template: ComponentStory<typeof BooksList> = (args) => {
 };
 
 export const Default = Template.bind({});
-Default.args = {
-  primary: true,
-};
+Default.args = {};
