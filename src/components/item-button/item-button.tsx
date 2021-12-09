@@ -6,7 +6,7 @@ interface PropsType {
   textValue?: string,
   className?: string,
   isDisabled?: boolean,
-  onClick?: () => void,
+  onClick: () => void,
 }
 
 
