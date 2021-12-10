@@ -1,27 +1,34 @@
 import {AxiosInstance} from "axios";
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createEntityAdapter, createSlice, EntityId, PayloadAction} from "@reduxjs/toolkit";
 
 import {FetchOperation, FetchStatus} from "../../const";
 import {createBook, createBooks, toRAWBook, toRAWNewBook} from "../../adapters/book";
 import {createErrorValue} from "../../utils";
 import type {BookType, ErrorType, NewBookType} from "../../types";
 import type {BookDataType} from "../../adapters/book";
+import type {RootStateType} from "../..";
 
 
 interface BooksStateType {
-  list: BookType[],
+  ids: string[],
+  entities: {
+    [key: string]: BookType,
+  },
   operation: string | null,
   status: string | null,
   error: ErrorType | null,
 }
 
-
-const initialState = {
-  list: [],
+export const booksAdapter = createEntityAdapter();
+const initialState = booksAdapter.getInitialState({
   operation: null,
   status: null,
   error: null,
-} as BooksStateType;
+}) as BooksStateType;
+
+export const booksSelectors = booksAdapter.getSelectors(
+  (state: RootStateType) => state.books
+);
 
 
 const loadBooks = createAsyncThunk<
@@ -52,9 +59,10 @@ const addNewBook = createAsyncThunk<
   `books/addNewBook`,
   async (newBook, {extra: api, rejectWithValue, getState}) => {
     try {
-      const {books} = getState() as {books: BooksStateType};
-      const booksCount: number = books.list.length;
-      const lastBookId: string = booksCount ? books.list[booksCount - 1].id : null;
+      const state = getState() as RootStateType;
+      const bookIds: EntityId[] = booksSelectors.selectIds(state);
+      const booksCount: number = booksSelectors.selectTotal(state);
+      const lastBookId: EntityId = booksCount ? bookIds[booksCount - 1] : null;
       const rawNewBook = toRAWNewBook(newBook);
 
       const response = await api.post(`/books`, {
@@ -128,7 +136,7 @@ const booksSlice = createSlice({
     },
     [loadBooks.fulfilled.toString()]: (state, action: PayloadAction<BookDataType[]>) => {
       state.status = FetchStatus.RESOLVED;
-      state.list = createBooks(action.payload);
+      booksAdapter.setAll(state, createBooks(action.payload));
     },
     [loadBooks.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
       state.status = FetchStatus.REJECTED;
@@ -146,7 +154,7 @@ const booksSlice = createSlice({
     },
     [addNewBook.fulfilled.toString()]: (state, action: PayloadAction<BookDataType>) => {
       state.status = FetchStatus.RESOLVED;
-      state.list.push(createBook(action.payload));
+      booksAdapter.setOne(state, createBook(action.payload));
     },
     // deleteBook
     [deleteBook.pending.toString()]: (state) => {
@@ -161,7 +169,7 @@ const booksSlice = createSlice({
     [deleteBook.fulfilled.toString()]: (state, action: PayloadAction<string>) => {
       state.status = FetchStatus.RESOLVED;
       const bookId = action.payload;
-      state.list = state.list.filter((book) => book.id !== bookId);
+      booksAdapter.removeOne(state, bookId);
     },
     // updateBook
     [updateBook.pending.toString()]: (state) => {
@@ -175,10 +183,8 @@ const booksSlice = createSlice({
     },
     [updateBook.fulfilled.toString()]: (state, action: PayloadAction<BookDataType>) => {
       state.status = FetchStatus.RESOLVED;
-      const newBookData = createBook(action.payload);
-      const booksList = state.list;
-      const updatedBookIndex = booksList.findIndex((book) => book.id === newBookData.id);
-      state.list = [...booksList.slice(0, updatedBookIndex), newBookData, ...booksList.slice(updatedBookIndex + 1)];
+      const {id, ...newData} = createBook(action.payload);
+      booksAdapter.updateOne(state, {id, changes: newData});
     },
   },
 });
