@@ -1,16 +1,11 @@
 import * as React from "react";
-import {Button, List, ListItem, Stack, ListItemText} from "@mui/material";
+import {Button, Stack} from "@mui/material";
 import {useSelector} from "react-redux";
 import {useState} from "react";
 
 import {FetchOperation, FetchStatus} from "../const";
+import {ReadersList} from "./readers-list";
 import {getReadersInfo} from "../store/readers/selectors";
-
-
-const renderReaderStatus = (readerStatus: boolean) => (
-  <span style={{display: `block`, width: `15px`, height: `15px`, backgroundColor: readerStatus ? `green` : `red`, borderRadius: `50%`}}>
-  </span>
-);
 
 
 export const ReadersSection: React.FC = () => {
@@ -46,15 +41,9 @@ export const ReadersSection: React.FC = () => {
         {readersError && readersError.status && readersError.status}
       </h2>}
 
-      {isReadersListShow &&
-        <List>{
-          readers.map((reader, index) => (
-            <ListItem key={index + reader.id}>
-              <ListItemText primary={reader.name} secondary={renderReaderStatus(!reader.booksIds.length)} />
-            </ListItem>
-          ))
-        }</List>
-      }
+      {isReadersListShow && <ReadersList
+        readers={readers}
+      /> }
     </Stack>
   );
 };
