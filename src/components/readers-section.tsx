@@ -15,7 +15,7 @@ const renderReaderStatus = (readerStatus: boolean) => (
 
 export const ReadersSection: React.FC = () => {
   const {
-    list: readers,
+    readers,
     operation: readersOperation,
     status: readersStatus,
     error: readersError,
