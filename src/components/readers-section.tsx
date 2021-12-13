@@ -1,9 +1,10 @@
 import * as React from "react";
 import {Button, Stack} from "@mui/material";
-import {useSelector} from "react-redux";
-import {useState} from "react";
+import {useCallback, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 import {FetchOperation, FetchStatus} from "../const";
+import {Modal} from "./modal";
 import {ReadersList} from "./readers-list";
 import {getReadersInfo} from "../store/readers/selectors";
 
@@ -15,10 +16,24 @@ export const ReadersSection: React.FC = () => {
     status: readersStatus,
     error: readersError,
   } = useSelector(getReadersInfo);
+  
+  const dispatch = useDispatch();
 
   const isReadersNotLoad = readersOperation === FetchOperation.LOAD && readersStatus === FetchStatus.REJECTED;
 
   const [isReadersListShow, changeIsReadersListShow] = useState(false);
+  const [modalChildren, setModalChildren] = useState<JSX.Element>(<></>);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const onModalOpen = (children: React.ReactElement<JSX.Element>) => {
+    setModalChildren(children);
+    setIsModalOpen(true);
+  };
+
+  const onModalClose = useCallback(() => {
+    setIsModalOpen(false);
+    //dispatch(resetBooksStatus());
+  }, [setIsModalOpen/* , dispatch */]);
 
   const handleShowReadersButtonClick = () => {
     changeIsReadersListShow((isReadersListShow) => !isReadersListShow);
@@ -43,7 +58,16 @@ export const ReadersSection: React.FC = () => {
 
       {isReadersListShow && <ReadersList
         readers={readers}
+        openModal={onModalOpen}
       /> }
+
+      {isModalOpen &&
+        <Modal
+          onClose={onModalClose}
+        >
+          {modalChildren}
+        </Modal>
+      }
     </Stack>
   );
 };

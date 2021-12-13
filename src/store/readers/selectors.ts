@@ -10,7 +10,11 @@ const getReadersInfo = (state: RootStateType) => ({
   error: state.readers.error,
 });
 
+const getReaderById = (id: string | null) => (state: RootStateType): ReaderType | null =>
+  readersSelectors.selectById(state, id) as ReaderType || null;
+
 
 export {
   getReadersInfo,
+  getReaderById,
 };
