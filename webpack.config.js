@@ -61,6 +61,11 @@ module.exports = {
         let a = require(p);
         res.send(a);
       });
+
+      devServer.app.put('/readers/:id', function (req, res) {
+        const readerData = req.body;
+        res.send(readerData);
+      });
     },
   },
   module: {

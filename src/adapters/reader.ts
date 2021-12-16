@@ -1,7 +1,7 @@
 import type {ReaderType} from "../types";
 
 
-export interface ReaderDataType {
+interface ReaderDataType {
   id: string,
   name: string,
   age: string,
@@ -22,8 +22,19 @@ const createReaders = (readersData: ReaderDataType[]): ReaderType[] => {
   return readersData.map((readerData) => createReader(readerData));
 };
 
+const toRAWReader = (reader: ReaderType): ReaderDataType => {
+  return {
+    "id": reader.id,
+    "name": reader.name,
+    "age": reader.age,
+    "booksIds": reader.booksIds.map((id) => id),
+  };
+};
+
 
 export {
   createReader,
   createReaders,
+  toRAWReader,
+  ReaderDataType,
 };
