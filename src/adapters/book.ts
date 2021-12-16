@@ -15,13 +15,16 @@ interface BookDataType extends NewBookDataType {
 }
 
 
+const dateFormat = `YYYY-MM-DD`;
+
+
 const createBook = (bookData: BookDataType): BookType => {
   return {
     id: bookData.id,
     title: bookData.title,
     autor: bookData.autor,
     coverImgUrl: bookData.coverImgUrl,
-    dateOfTaking: bookData.dateOfTaking ? moment(bookData.dateOfTaking) : null,
+    dateOfTaking: bookData.dateOfTaking ? moment(bookData.dateOfTaking, dateFormat) : null,
   };
 };
 
@@ -40,7 +43,7 @@ const toRAWNewBook = (book: NewBookType): NewBookDataType => {
 const toRAWBook = (book: BookType): BookDataType => {
   return Object.assign(toRAWNewBook(book), {
     "id": book.id,
-    "dateOfTaking": book.dateOfTaking ? book.dateOfTaking.toString() : null,
+    "dateOfTaking": book.dateOfTaking ? book.dateOfTaking.format(dateFormat) : null,
   });
 };
 
