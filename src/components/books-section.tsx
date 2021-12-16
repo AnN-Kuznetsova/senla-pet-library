@@ -7,11 +7,11 @@ import {BooksFilterForm} from "./books-filter-form";
 import {BooksList} from "./books-list/books-list";
 import {FetchOperation, FetchStatus} from "../const";
 import {Info, InfoType} from "./info";
-import {Modal} from "./modal";
 import {NewBookModal} from "./new-book-modal";
 import {getBooksError, getBooksOperation, getBooksStatus} from "../store/books/selectors";
 import {getFilteredBooks} from "../store/application/selectors";
 import {resetBooksStatus} from "../store/books/books";
+import {useModal} from "./modal";
 import {useWaitShow} from "../utils";
 
 
@@ -26,26 +26,23 @@ export const BooksSection: React.FC = () => {
   const isLoading = booksOperation === FetchOperation.LOAD && booksStatus === FetchStatus.LOADING
   const isBooksNotLoad = booksOperation === FetchOperation.LOAD && booksStatus === FetchStatus.REJECTED;
 
-  const [modalChildren, setModalChildren] = useState<JSX.Element>(<></>);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBooksListShow, changeIsBooksListShow] = useState(false);
-
-  const onModalOpen = (children: React.ReactElement<JSX.Element>) => {
-    setModalChildren(children);
-    setIsModalOpen(true);
-  };
-
-  const onModalClose = useCallback(() => {
-    setIsModalOpen(false);
-    dispatch(resetBooksStatus());
-  }, [dispatch]);
-
   const handleShowBooksButtonClick = () => {
     changeIsBooksListShow((isBooksListShow) => !isBooksListShow);
   };
 
+  const onModalClose = useCallback(() => {
+    dispatch(resetBooksStatus());
+  }, [dispatch]);
+
+  const {
+    renderModal,
+    openModal,
+    closeModal,
+  } = useModal(onModalClose);
+
   const handleAddNewBookButtonClick = () => {
-    onModalOpen(<NewBookModal />);
+    openModal(<NewBookModal />);
   };
 
   useEffect(() => {
@@ -53,30 +50,30 @@ export const BooksSection: React.FC = () => {
       switch (booksStatus) {
         case FetchStatus.LOADING:
           if (isWaitShow) {
-            onModalOpen(<Info type={InfoType.WAIT} />);
+            openModal(<Info type={InfoType.WAIT} />);
           }
           break;
 
         case FetchStatus.REJECTED:
-          onModalOpen(<Info type={InfoType.ERROR} />);
+          openModal(<Info type={InfoType.ERROR} />);
           break;
 
         case FetchStatus.RESOLVED:
-          onModalClose();
+          closeModal();
           break;
       }
     }
-  }, [booksOperation, booksStatus, isWaitShow, onModalClose]);
+  }, [booksOperation, booksStatus, isWaitShow, closeModal, openModal]);
 
   useEffect(() => {
     if (booksOperation === FetchOperation.ADD_NEW) {
       switch (booksStatus) {
         case FetchStatus.RESOLVED:
-          onModalClose();
+          closeModal();
         break;
       }
     }
-  }, [booksOperation, booksStatus, onModalClose]);
+  }, [booksOperation, booksStatus, closeModal]);
 
   return (
     <Stack className="section">
@@ -105,18 +102,12 @@ export const BooksSection: React.FC = () => {
           <BooksFilterForm />
           <BooksList
             books={books}
-            openModal={onModalOpen}
+            openModal={openModal}
           />
         </React.Fragment>
       }
 
-      {isModalOpen &&
-        <Modal
-          onClose={onModalClose}
-        >
-          {modalChildren}
-        </Modal>
-      }
+      {renderModal()}
     </Stack>
   );
 };

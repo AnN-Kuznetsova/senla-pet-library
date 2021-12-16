@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import {useCallback, useState} from "react";
 
 import {InfoType } from "./info";
 import {ItemButton} from "./item-button/item-button";
@@ -7,17 +8,17 @@ import {ItemButton} from "./item-button/item-button";
 
 interface PropsType {
   children: React.ReactElement,
-  onClose?: () => void,
+  close: () => void,
 }
 
 
 const modalElement: HTMLElement = document.querySelector(`#modal`);
 
 
-export const Modal: React.FC<PropsType> = (props: PropsType) => {
+const Modal: React.FC<PropsType> = (props: PropsType) => {
   const {
-    onClose,
     children,
+    close,
   } = props;
 
   const isCloseButton = (children.props.type === InfoType.WAIT) ? false : true;
@@ -27,9 +28,7 @@ export const Modal: React.FC<PropsType> = (props: PropsType) => {
   };
 
   const handleCloseButtonClick = () => {
-    if (onClose) {
-      onClose();
-    }
+    close();
   };
 
   return modalElement && ReactDOM.createPortal(
@@ -53,3 +52,46 @@ export const Modal: React.FC<PropsType> = (props: PropsType) => {
     modalElement
   );
 };
+
+
+const useModal = (onClose?: () => void) => {
+  const [modalChildren, setModalChildren] = useState<JSX.Element>(<></>);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = useCallback((children: React.ReactElement<JSX.Element>) => {
+    setModalChildren(children);
+    setIsModalOpen(true);
+  }, [setIsModalOpen, setModalChildren]);
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false);
+
+    if (onClose) {
+      onClose();
+    }
+  }, [setIsModalOpen, onClose]);
+
+  const renderModal = () => (
+    <>
+      {isModalOpen &&
+        <Modal
+          close={closeModal}
+        >
+          {modalChildren}
+        </Modal>
+      }
+    </>
+  );
+
+  return {
+    renderModal,
+    openModal,
+    closeModal,
+  };
+};
+
+
+export {
+  Modal,
+  useModal,
+}

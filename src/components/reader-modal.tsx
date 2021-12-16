@@ -45,7 +45,7 @@ export const ReaderModal: React.FC<PropsType> = (props: PropsType) => {
         <div className="reader-modal">
           <div className="reader-modal__info">
             <Typography variant="h5">{reader.name}</Typography>
-            <p>{reader.age}</p>
+            <p>age: {reader.age}</p>
 
             <Typography variant="h6">Taken Books: {takenBooksCount}</Typography>
             {takenBooks &&
