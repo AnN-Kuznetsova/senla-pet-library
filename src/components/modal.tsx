@@ -21,14 +21,17 @@ const Modal: React.FC<PropsType> = (props: PropsType) => {
     close,
   } = props;
 
-  const isCloseButton = (children.props.type === InfoType.WAIT) ? false : true;
+  const isInfoWaitModal = children.props.type === InfoType.WAIT;
+  const isCloseButton = isInfoWaitModal ? false : true;
 
   const handleModalInnerClick = (event: React.MouseEvent): void => {
     event.stopPropagation();
   };
 
   const handleCloseButtonClick = () => {
-    close();
+    if (!isInfoWaitModal) {
+      close();
+    }
   };
 
   return modalElement && ReactDOM.createPortal(
