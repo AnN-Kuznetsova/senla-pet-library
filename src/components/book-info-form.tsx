@@ -68,6 +68,7 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
     event.preventDefault();
 
     const newBookData = {
+      id: book ? book.id : ``,
       title,
       autor,
       coverImgUrl,
@@ -75,7 +76,7 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
 
     if (book) {
       dispatch(updateBook({
-        book: Object.assign({}, book, newBookData),
+        book: newBookData,
         onSubmit,
       }));
     } else {

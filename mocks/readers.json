@@ -3,18 +3,31 @@
     "id": "r1",
     "name": "Ivan",
     "age": "25",
-    "booksIds": []
+    "books": []
   },
   {
     "id": "r2",
     "name": "Vladimir",
     "age": "39",
-    "booksIds": ["b1", "b2", "b3"]
+    "books": [
+      {
+        "id": "b1",
+        "dateOfTaking": "2021-11-20"
+      },
+      {
+        "id": "b2",
+        "dateOfTaking": "2021-09-20"
+      },
+      {
+        "id": "b3",
+        "dateOfTaking": "2021-10-31"
+      }
+    ]
   },
   {
     "id": "r3",
     "name": "Nikolay",
     "age": "18",
-    "booksIds": []
+    "books": []
   }
 ]

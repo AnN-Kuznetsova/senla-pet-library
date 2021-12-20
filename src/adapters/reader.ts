@@ -1,11 +1,19 @@
+import * as moment from "moment";
+
 import type {ReaderType} from "../types";
+
+
+const DATE_FORMAT = `YYYY-MM-DD`;
 
 
 interface ReaderDataType {
   id: string,
   name: string,
   age: string,
-  booksIds: string[],
+  books: {
+    id: string,
+    dateOfTaking: string | null,
+  }[],
 }
 
 
@@ -14,7 +22,10 @@ const createReader = (readerData: ReaderDataType): ReaderType => {
     id: readerData.id,
     name: readerData.name,
     age: readerData.age,
-    booksIds: readerData.booksIds.map((bookId) => bookId),
+    books: readerData.books.map((book) => ({
+      id: book.id,
+      dateOfTaking: book.dateOfTaking ? moment(book.dateOfTaking, DATE_FORMAT) : null,
+    })),
   };
 };
 
@@ -27,7 +38,10 @@ const toRAWReader = (reader: ReaderType): ReaderDataType => {
     "id": reader.id,
     "name": reader.name,
     "age": reader.age,
-    "booksIds": reader.booksIds.map((id) => id),
+    "books": reader.books.map((book) => ({
+      "id": book.id,
+      "dateOfTaking": book.dateOfTaking ? book.dateOfTaking.format(DATE_FORMAT) : null,
+    })),
   };
 };
 

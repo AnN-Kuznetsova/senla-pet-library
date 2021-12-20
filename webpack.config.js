@@ -41,7 +41,6 @@ module.exports = {
 
         const newBook = Object.assign(newBookData, {
           id,
-          dateOfTaking: null,
         });
         res.send(newBook);
       });

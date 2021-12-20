@@ -1,7 +1,9 @@
+import {createSelector} from "reselect";
+
 import {booksSelectors} from "./books";
+import {getReaders} from "../readers/selectors";
 import type {RootStateType} from "../..";
-import type {BookType, ErrorType} from "../../types";
-import { createSelector } from "reselect";
+import type {BookTakenStatusType, BookType, ErrorType} from "../../types";
 
 
 const getBooks = (state: RootStateType): BookType[] => booksSelectors.selectAll(state) as BookType[];
@@ -15,14 +17,24 @@ const getBooksError = (state: RootStateType): ErrorType | null => state.books.er
 const getBookById = (id: string | null) => (state: RootStateType): BookType | null =>
   booksSelectors.selectById(state, id) as BookType || null;
 
-const getBooksByIds = createSelector(
+const getTakenStatusById = createSelector(
   [
-    getBooks,
-    (state, ids: string[]) => ids,
+    getReaders,
+    (state, id: string) => id,
   ],
-  (books, ids): BookType[] | null => ids.length ? books.filter((book) => ids.includes(book.id)) : null
-);
+  (readers, id) => {
+    let takenStatus: BookTakenStatusType = null;
 
+    readers.find((reader) => reader.books.find((book) => {
+      if (book.id === id) {
+        takenStatus = book;
+      }
+    }
+    ));
+
+    return takenStatus;
+  }
+);
 
 export {
   getBooks,
@@ -30,5 +42,5 @@ export {
   getBooksStatus,
   getBooksError,
   getBookById,
-  getBooksByIds,
+  getTakenStatusById,
 };

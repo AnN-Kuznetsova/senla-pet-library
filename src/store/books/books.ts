@@ -2,14 +2,14 @@ import {AxiosInstance} from "axios";
 import {createAsyncThunk, createEntityAdapter, createSlice, EntityId, PayloadAction} from "@reduxjs/toolkit";
 
 import {FetchOperation, FetchStatus} from "../../const";
-import {createBook, createBooks, toRAWBook, toRAWNewBook} from "../../adapters/book";
+import {createBook, createBooks, toRAWBook} from "../../adapters/book";
 import {createErrorValue} from "../../utils";
-import type {BookType, ErrorType, NewBookType} from "../../types";
+import type {BookType, ErrorType} from "../../types";
 import type {BookDataType} from "../../adapters/book";
 import type {RootStateType} from "../..";
 
 
-interface BooksStateType {
+export interface BooksStateType {
   ids: string[],
   entities: {
     [key: string]: BookType,
@@ -51,7 +51,7 @@ const loadBooks = createAsyncThunk<
 
 const addNewBook = createAsyncThunk<
   Promise<BookType | unknown>,
-  NewBookType,
+  BookType,
   {
     extra: AxiosInstance,
   }
@@ -63,7 +63,7 @@ const addNewBook = createAsyncThunk<
       const bookIds: EntityId[] = booksSelectors.selectIds(state);
       const booksCount: number = booksSelectors.selectTotal(state);
       const lastBookId: EntityId = booksCount ? bookIds[booksCount - 1] : null;
-      const rawNewBook = toRAWNewBook(newBook);
+      const rawNewBook = toRAWBook(newBook);
 
       const response = await api.post(`/books`, {
         rawNewBook,

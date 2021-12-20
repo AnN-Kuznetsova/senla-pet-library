@@ -5,7 +5,7 @@ import {FetchOperation, FetchStatus} from "../../const";
 import {createReader, createReaders, ReaderDataType, toRAWReader} from "../../adapters/reader";
 import {createErrorValue} from "../../utils";
 import type {ErrorType, ReaderType} from "../../types";
-import type { RootStateType } from "../..";
+import type {RootStateType} from "../..";
 
 
 export interface ReadersStateType {
@@ -78,7 +78,7 @@ const readersSlice = createSlice({
       state.status = FetchStatus.LOADING;
       state.error = null;
     },
-    [loadReaders.fulfilled.toString()]: (state, action: PayloadAction<ReaderType[]>) => {
+    [loadReaders.fulfilled.toString()]: (state, action: PayloadAction<ReaderDataType[]>) => {
       state.status = FetchStatus.RESOLVED;
       readersAdapter.setAll(state, createReaders(action.payload));
     },

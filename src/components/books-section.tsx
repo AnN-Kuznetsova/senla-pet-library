@@ -1,9 +1,8 @@
 import * as React from "react";
-import {Button, Stack} from "@mui/material";
+import {Button,Stack} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useState, useEffect} from "react";
 
-import {BooksFilterForm} from "./books-filter-form";
 import {BooksList} from "./books-list/books-list";
 import {FetchOperation, FetchStatus} from "../const";
 import {Info, InfoType} from "./info";
@@ -98,14 +97,10 @@ export const BooksSection: React.FC = () => {
       </h2>}
 
       {isBooksListShow &&
-        <React.Fragment>
-          <BooksFilterForm />
-          <BooksList
-            books={books}
-            openModal={openModal}
-          />
-        </React.Fragment>
-      }
+        <BooksList
+          books={books}
+          openModal={openModal}
+        />}
 
       {renderModal()}
     </Stack>

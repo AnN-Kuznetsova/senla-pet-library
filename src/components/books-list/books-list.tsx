@@ -1,10 +1,8 @@
 import * as React from "react";
-import {List, ListItem, ListItemText} from "@mui/material";
-import {useDispatch} from "react-redux";
+import {List, ListItem} from "@mui/material";
 
-import {BookModal} from "../book-modal";
-import {ItemButton} from "../item-button/item-button";
-import {deleteBook} from "../../store/books/books";
+import {BooksListItem} from "../books-list-item";
+import {BooksFilterForm} from "../books-filter-form";
 import type {BookType} from "../../types";
 
 
@@ -20,36 +18,21 @@ export const BooksList: React.FC<PropsType> = (props: PropsType) => {
     openModal,
   } = props;
 
-  const dispatch = useDispatch();
-
-  const handleDeleteBookButtonClick = (bookId: string) => {
-    dispatch(deleteBook(bookId));
-  };
-
-  const handleMoreButtonClick = (book: BookType) => {
-    openModal(<BookModal bookId={book.id} />);
-  };
-
   return (
-    <List>{
-      books.map((book, index) => (
-        <ListItem key={index + book.id}>
-          <ListItemText
-            primary={book.title}
-            secondary={book.autor}
-            style={{color: `${book.dateOfTaking ? `red` : `black`}`}}
-          />
-          <ItemButton
-            onClick={handleMoreButtonClick.bind(null, book)}
-            className="item-button--more"
-          />
-          <ItemButton
-            onClick={handleDeleteBookButtonClick.bind(null, book.id)}
-            isDisabled={book.dateOfTaking ? true : false}
-            className="item-button--delete"
-          />
-        </ListItem>
-      ))
-    }</List>
+    <>
+      <BooksFilterForm />
+      <List>{
+        books.map((book, index) => {
+          return (
+            <ListItem key={index + book.id}>
+              <BooksListItem
+                book={book}
+                openModal={openModal}
+              />
+            </ListItem>
+          )
+        })
+      }</List>
+    </>
   );
 };

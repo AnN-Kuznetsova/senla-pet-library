@@ -1,19 +1,11 @@
 import * as React from "react";
-import {List, ListItem, Typography} from "@mui/material";
+import {List, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
 
-import {BookCover} from "./book-cover";
-import {BookInfoForm} from "./book-info-form";
-import {FormButtonControlls, FormButtonControllsType} from "./form-button-controls";
-import {getBookById, getBooksByIds} from "../store/books/selectors";
-import {getTimeToRead} from "../utils";
-import moment = require("moment");
-import { getReaderById } from "../store/readers/selectors";
-import { BookType } from "../types";
-import { RootStateType } from "..";
-import { ItemButton } from "./item-button/item-button";
-import { updateReader } from "../store/readers/readers";
+import {ReaderModalBookItem} from "./reader-modal-book-item";
+import {getReaderById} from "../store/readers/selectors";
+import {updateReader} from "../store/readers/readers";
+import type {ReaderType} from "../types";
 
 
 interface PropsType {
@@ -21,9 +13,9 @@ interface PropsType {
 }
 
 
-const formatDate = (date: moment.Moment | null): string | null => {
-  return date ? date.format(`Do MMMM YYYY`) : null;
-};
+/* const formatDate = (date: moment.Moment | null): string | null => {
+  return date ? date.format(`DD MMMM YYYY`) : null;
+}; */
 
 
 export const ReaderModal: React.FC<PropsType> = (props: PropsType) => {
@@ -31,16 +23,13 @@ export const ReaderModal: React.FC<PropsType> = (props: PropsType) => {
 
   const dispatch = useDispatch();
 
-  const reader = useSelector(getReaderById(readerId));
-  const takenBooksCount = reader.booksIds.length;
-  const takenBooks: BookType[] | null = useSelector((state: RootStateType) => getBooksByIds(state, reader.booksIds));
-
-  //const [isChange, setIsChange] = useState(false);
+  const reader: ReaderType = useSelector(getReaderById(readerId));
+  const takenBooksCount = reader.books.length;
 
   const handleReturnBookButtonClick = (bookId: string) => {
-    const newBooksIds = reader.booksIds.filter((id) => id !== bookId);
+    const newBooks = reader.books.filter((book) => book.id !== bookId);
 
-    dispatch(updateReader(Object.assign({}, reader, {booksIds: newBooksIds})));
+    dispatch(updateReader(Object.assign({}, reader, {books: newBooks})));
   };
 
   return (
@@ -58,17 +47,14 @@ export const ReaderModal: React.FC<PropsType> = (props: PropsType) => {
             <p>age: {reader.age}</p>
 
             <Typography variant="h6">Taken Books: {takenBooksCount}</Typography>
-            {takenBooks &&
+            {!!takenBooksCount &&
               <List>
-                {takenBooks.map((book, index) => (
-                  <ListItem key={book.id + index}>
-                    {book.title}
-
-                    <ItemButton
-                      textValue="Return"
-                      onClick={handleReturnBookButtonClick.bind(null, book.id)}
-                    />
-                  </ListItem>
+                {reader.books.map((book, index) => (
+                  <ReaderModalBookItem
+                    key={book.id + index}
+                    bookStatus={book}
+                    onReturnBookButtonClick={handleReturnBookButtonClick.bind(null, book.id)}
+                  />
                 ))}
               </List>
             }

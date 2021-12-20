@@ -1,17 +1,19 @@
 import * as moment from "moment";
 
+
 type ErrorType = unknown & {status: string | number | null};
 
-interface NewBookType {
+interface BookTakenStatusType {
+  id: string,
+  dateOfTaking: moment.Moment | null,
+}
+
+interface BookType {
   [key: string]: unknown,
+  id: string,
   title: string,
   autor: string,
   coverImgUrl: string | ArrayBuffer | null,
-}
-
-type BookType = NewBookType & {
-  id: string,
-  dateOfTaking: moment.Moment | null,
 }
 
 
@@ -20,13 +22,13 @@ interface ReaderType {
   id: string,
   name: string,
   age: string,
-  booksIds: string[],
+  books: BookTakenStatusType[],
 }
 
 
 export {
-  NewBookType,
   BookType,
   ErrorType,
   ReaderType,
+  BookTakenStatusType,
 };

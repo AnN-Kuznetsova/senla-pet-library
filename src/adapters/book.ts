@@ -1,21 +1,12 @@
-import * as moment from "moment";
-
-import type {BookType, NewBookType} from "../types";
+import type {BookType} from "../types";
 
 
-interface NewBookDataType {
+interface BookDataType {
+  id: string,
   title: string,
   autor: string,
   coverImgUrl: string | ArrayBuffer,
 }
-
-interface BookDataType extends NewBookDataType {
-  id: string,
-  dateOfTaking: string | null,
-}
-
-
-const dateFormat = `YYYY-MM-DD`;
 
 
 const createBook = (bookData: BookDataType): BookType => {
@@ -23,8 +14,7 @@ const createBook = (bookData: BookDataType): BookType => {
     id: bookData.id,
     title: bookData.title,
     autor: bookData.autor,
-    coverImgUrl: bookData.coverImgUrl,
-    dateOfTaking: bookData.dateOfTaking ? moment(bookData.dateOfTaking, dateFormat) : null,
+    coverImgUrl: bookData.coverImgUrl
   };
 };
 
@@ -32,27 +22,19 @@ const createBooks = (booksData: BookDataType[]): BookType[] => {
   return booksData.map((bookData) => createBook(bookData));
 };
 
-const toRAWNewBook = (book: NewBookType): NewBookDataType => {
+const toRAWBook = (book: BookType): BookDataType => {
   return {
+    "id": book.id ? book.id : ``,
     "title": book.title,
     "autor": book.autor,
     "coverImgUrl": book.coverImgUrl,
   };
 };
 
-const toRAWBook = (book: BookType): BookDataType => {
-  return Object.assign(toRAWNewBook(book), {
-    "id": book.id,
-    "dateOfTaking": book.dateOfTaking ? book.dateOfTaking.format(dateFormat) : null,
-  });
-};
-
 
 export {
   createBook,
   createBooks,
-  toRAWNewBook,
   toRAWBook,
   BookDataType,
-  NewBookDataType,
 };

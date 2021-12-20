@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as moment from "moment";
 import {Typography} from "@mui/material";
 import {useSelector} from "react-redux";
 import {useState} from "react";
@@ -6,9 +7,9 @@ import {useState} from "react";
 import {BookCover} from "./book-cover";
 import {BookInfoForm} from "./book-info-form";
 import {FormButtonControlls, FormButtonControllsType} from "./form-button-controls";
-import {getBookById} from "../store/books/selectors";
+import {getBookById, getTakenStatusById} from "../store/books/selectors";
 import {getTimeToRead} from "../utils";
-import moment = require("moment");
+import type {RootStateType} from "..";
 
 
 interface PropsType {
@@ -17,7 +18,7 @@ interface PropsType {
 
 
 const formatDate = (date: moment.Moment | null): string | null => {
-  return date ? date.format(`Do MMMM YYYY`) : null;
+  return date ? date.format(`DD MMMM YYYY`) : null;
 };
 
 
@@ -25,7 +26,8 @@ export const BookModal: React.FC<PropsType> = (props: PropsType) => {
   const {bookId} = props;
 
   const book = useSelector(getBookById(bookId));
-  const dateOfTaking = book.dateOfTaking;
+  const bookStatus = useSelector((state: RootStateType) => getTakenStatusById(state, bookId));
+  const dateOfTaking = bookStatus ? bookStatus.dateOfTaking : null;
   const timeToRead = getTimeToRead();
   const willBeReturnedAfter: moment.Duration = dateOfTaking ? moment.duration(dateOfTaking.clone().add(timeToRead).diff(moment())) : null;
   const willBeReturnedStr = willBeReturnedAfter ?

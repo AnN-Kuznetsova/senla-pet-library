@@ -32,7 +32,7 @@ export const ReadersList: React.FC<PropsType> = (props: PropsType) => {
     <List>{
       readers.map((reader, index) => (
         <ListItem key={index + reader.id}>
-          <ListItemText primary={reader.name} secondary={renderReaderStatus(!reader.booksIds.length)} />
+          <ListItemText primary={reader.name} secondary={renderReaderStatus(!reader.books.length)} />
           <ItemButton
           onClick={handleMoreButtonClick.bind(null, reader)}
           className="item-button--more"
