@@ -8,6 +8,7 @@ export enum ItemButtonMode {
   DELETE = `item-button--delete`,
   MORE = `item-button--more`,
   ON_RIGHT = `item-button--on-right`,
+  WARNING = `item-button--warning`,
 }
 
 
@@ -27,7 +28,16 @@ export const ItemButton: React.FC<PropsType> = (props: PropsType) => {
     onClick,
   } = props;
 
-  const buttonColor = className === ItemButtonMode.MORE ? ThemeMode.INFO : ThemeMode.SECONDARY;
+  let buttonColor = ThemeMode.SECONDARY;
+
+  switch (true) {
+    case className.includes(ItemButtonMode.MORE):
+      buttonColor = ThemeMode.INFO;
+      break;
+    case className.includes(ItemButtonMode.WARNING):
+      buttonColor = ThemeMode.WARNING;
+      break;
+  }
 
   return (
     <Button

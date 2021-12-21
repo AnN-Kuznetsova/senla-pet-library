@@ -1,5 +1,5 @@
 import {createTheme} from '@mui/material/styles';
-import {lime, lightGreen, red} from '@mui/material/colors';
+import {lime, lightGreen, red, deepOrange} from '@mui/material/colors';
 
 
 const DEBOUNCE_DELAY = 500; // ms
@@ -29,6 +29,7 @@ enum ThemeMode {
   PRIMARY = `primary`,
   SECONDARY = `secondary`,
   INFO = `info`,
+  WARNING = `warning`,
 }
 
 const THEME = createTheme({
@@ -49,6 +50,12 @@ const THEME = createTheme({
       light: lightGreen[600],
       main: lightGreen[800],
       dark: lightGreen[900],
+      contrastText: lime[100],
+    },
+    [ThemeMode.WARNING]: {
+      light: deepOrange[600],
+      main: deepOrange[800],
+      dark: deepOrange[900],
       contrastText: lime[100],
     },
   },

@@ -26,7 +26,7 @@ export const ReaderModalBookItem: React.FC<PropsType> = (props: PropsType) => {
       {book.title}
 
       <ItemButton
-        className={ItemButtonMode.ON_RIGHT}
+        className={`${ItemButtonMode.ON_RIGHT} ${ItemButtonMode.WARNING}`}
         textValue="Return"
         onClick={onReturnBookButtonClick}
       />
