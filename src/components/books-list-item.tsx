@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 import {useSelector} from "react-redux";
 
 import {BookModal} from "./book-modal";
-import {ItemButton} from "./item-button/item-button";
+import {ItemButton, ItemButtonMode} from "./item-button/item-button";
 import {deleteBook} from "../store/books/books";
 import {getTakenStatusById} from "../store/books/selectors";
 import type {BookType} from "../types";
@@ -43,12 +43,12 @@ export const BooksListItem: React.FC<PropsType> = (props: PropsType) => {
       />
       <ItemButton
         onClick={handleMoreButtonClick.bind(null, book)}
-        className="item-button--more"
+        className={ItemButtonMode.MORE}
       />
       <ItemButton
         onClick={handleDeleteBookButtonClick.bind(null, book.id)}
         isDisabled={!!bookStatus}
-        className="item-button--delete"
+        className={ItemButtonMode.DELETE}
       />
     </>
   );

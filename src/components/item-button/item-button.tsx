@@ -1,5 +1,14 @@
 import * as React from "react";
 import {Button} from "@mui/material";
+import { ThemeMode } from "../../const";
+
+
+export enum ItemButtonMode {
+  CLOSE = `item-button--close`,
+  DELETE = `item-button--delete`,
+  MORE = `item-button--more`,
+  ON_RIGHT = `item-button--on-right`,
+}
 
 
 interface PropsType {
@@ -18,11 +27,13 @@ export const ItemButton: React.FC<PropsType> = (props: PropsType) => {
     onClick,
   } = props;
 
+  const buttonColor = className === ItemButtonMode.MORE ? ThemeMode.INFO : ThemeMode.SECONDARY;
+
   return (
     <Button
       variant="outlined"
       className={`item-button ${className}`}
-      color="secondary"
+      color={buttonColor}
       disabled={isDisabled}
       onClick={onClick}
     >

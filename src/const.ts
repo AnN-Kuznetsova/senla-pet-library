@@ -25,19 +25,31 @@ enum FetchError {
   NOT_FOUND = 404,
 }
 
+enum ThemeMode {
+  PRIMARY = `primary`,
+  SECONDARY = `secondary`,
+  INFO = `info`,
+}
+
 const THEME = createTheme({
   palette: {
-    primary: {
+    [ThemeMode.PRIMARY]: {
       light: lime[100],
       main: lime[300],
       dark: lime[600],
       contrastText: lightGreen[800],
     },
-    secondary: {
+    [ThemeMode.SECONDARY]: {
       light: red[400],
       main: red[700],
       dark: red[800],
       contrastText: "#ffffff",
+    },
+    [ThemeMode.INFO]: {
+      light: lightGreen[600],
+      main: lightGreen[800],
+      dark: lightGreen[900],
+      contrastText: lime[100],
     },
   },
 });
@@ -49,6 +61,7 @@ export {
   WAIT_DELAY,
   TIME_TO_READ,
   THEME,
+  ThemeMode,
   FetchError,
   FetchOperation,
   FetchStatus,

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {List, ListItem, ListItemText} from "@mui/material";
 
-import {ItemButton} from "./item-button/item-button";
+import {ItemButton, ItemButtonMode} from "./item-button/item-button";
 import {ReaderModal} from "./reader-modal";
 import type {ReaderType} from "../types";
 
@@ -35,7 +35,7 @@ export const ReadersList: React.FC<PropsType> = (props: PropsType) => {
           <ListItemText primary={reader.name} secondary={renderReaderStatus(!reader.books.length)} />
           <ItemButton
           onClick={handleMoreButtonClick.bind(null, reader)}
-          className="item-button--more"
+          className={ItemButtonMode.MORE}
           />
         </ListItem>
       ))

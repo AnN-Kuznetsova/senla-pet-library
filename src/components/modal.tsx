@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import {useCallback, useState} from "react";
 
 import {InfoType } from "./info";
-import {ItemButton} from "./item-button/item-button";
+import {ItemButton, ItemButtonMode} from "./item-button/item-button";
 
 
 interface PropsType {
@@ -46,7 +46,7 @@ const Modal: React.FC<PropsType> = (props: PropsType) => {
         {isCloseButton &&
           <ItemButton
             onClick={handleCloseButtonClick}
-            className="item-button--close"
+            className={ItemButtonMode.CLOSE}
           />
         }
         {children}

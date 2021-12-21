@@ -92,12 +92,16 @@ button.item-button {
       left: 50%;
       width: 2px;
       height: 2px;
-      background-color: $red;
+      background-color: $green;
       border-radius: 50%;
       transform: translate(-50%, -50%);
       box-shadow:
-        4px 0 0 0 $red,
-        -4px 0 0 0 $red;
+        4px 0 0 0 $green,
+        -4px 0 0 0 $green;
     }
+  }
+
+  &--on-right {
+    margin-left: auto;
   }
 }

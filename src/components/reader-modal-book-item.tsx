@@ -2,7 +2,7 @@ import * as React from "react";
 import {ListItem} from "@mui/material";
 import {useSelector} from "react-redux";
 
-import {ItemButton} from "./item-button/item-button";
+import {ItemButton, ItemButtonMode} from "./item-button/item-button";
 import {getBookById} from "../store/books/selectors";
 import type {BookTakenStatusType} from "../types";
 
@@ -26,6 +26,7 @@ export const ReaderModalBookItem: React.FC<PropsType> = (props: PropsType) => {
       {book.title}
 
       <ItemButton
+        className={ItemButtonMode.ON_RIGHT}
         textValue="Return"
         onClick={onReturnBookButtonClick}
       />
