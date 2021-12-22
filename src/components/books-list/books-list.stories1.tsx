@@ -1,4 +1,4 @@
-import * as React from "react";
+/* import * as React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { useSelector } from "react-redux";
 
@@ -17,7 +17,7 @@ export default {
 
 const Template: ComponentStory<typeof BooksList> = (args) => {
   const books = useSelector(getBooks);
-  const openModal = () => {/**/};
+  const openModal = () => {/**//*};
 
   return <BooksList {...args}
     books={books}
@@ -27,3 +27,4 @@ const Template: ComponentStory<typeof BooksList> = (args) => {
 
 export const Default = Template.bind({});
 Default.args = {};
+ */

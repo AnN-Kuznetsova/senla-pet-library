@@ -3,7 +3,7 @@ import {Button,Stack} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useState, useEffect} from "react";
 
-import {BooksList} from "./books-list/books-list";
+import {BooksList, BooksListMode} from "./books-list/books-list";
 import {FetchOperation, FetchStatus} from "../const";
 import {Info, InfoType} from "./info";
 import {NewBookModal} from "./new-book-modal";
@@ -99,7 +99,8 @@ export const BooksSection: React.FC = () => {
       {isBooksListShow &&
         <BooksList
           books={books}
-          openModal={openModal}
+          mode={BooksListMode.DEFAULT}
+          onBookButtonClick={openModal}
         />}
 
       {renderModal()}

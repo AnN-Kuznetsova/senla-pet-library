@@ -8,26 +8,39 @@ import type {BookType} from "../../types";
 
 interface PropsType {
   books: BookType[],
-  openModal: (children: React.ReactElement) => void,
+  mode: BooksListMode,
+  onBookButtonClick: (prop: unknown) => void,
+}
+
+
+export enum BooksListMode {
+  DEFAULT = `DEFAULT`,
+  BOOK_CHOICE = `BOOK_CHOICE`,
+  TAKED_BOOKS = `TAKED_BOOK`,
 }
 
 
 export const BooksList: React.FC<PropsType> = (props: PropsType) => {
   const {
     books,
-    openModal,
+    mode,
+    onBookButtonClick,
   } = props;
+
+  const isFilters = mode === BooksListMode.DEFAULT || mode === BooksListMode.BOOK_CHOICE;
 
   return (
     <>
-      <BooksFilterForm />
+      {isFilters && <BooksFilterForm />}
+
       <List>{
         books.map((book, index) => {
           return (
             <ListItem key={index + book.id}>
               <BooksListItem
                 book={book}
-                openModal={openModal}
+                mode={mode}
+                onBookButtonClick={onBookButtonClick}
               />
             </ListItem>
           )

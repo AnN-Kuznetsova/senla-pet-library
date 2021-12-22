@@ -14,7 +14,7 @@ export enum ItemButtonMode {
 
 interface PropsType {
   textValue?: string,
-  className?: string,
+  className?: ItemButtonMode | `${ItemButtonMode} ${ItemButtonMode}`,
   isDisabled?: boolean,
   onClick: () => void,
 }
@@ -28,11 +28,12 @@ export const ItemButton: React.FC<PropsType> = (props: PropsType) => {
     onClick,
   } = props;
 
-  let buttonColor = ThemeMode.SECONDARY;
+  let buttonColor = ThemeMode.INFO;
 
   switch (true) {
-    case className.includes(ItemButtonMode.MORE):
-      buttonColor = ThemeMode.INFO;
+    case className.includes(ItemButtonMode.CLOSE):
+    case className.includes(ItemButtonMode.DELETE):
+      buttonColor = ThemeMode.SECONDARY;
       break;
     case className.includes(ItemButtonMode.WARNING):
       buttonColor = ThemeMode.WARNING;

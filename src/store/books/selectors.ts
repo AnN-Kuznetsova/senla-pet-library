@@ -17,6 +17,9 @@ const getBooksError = (state: RootStateType): ErrorType | null => state.books.er
 const getBookById = (id: string | null) => (state: RootStateType): BookType | null =>
   booksSelectors.selectById(state, id) as BookType || null;
 
+const getBooksByIds = (ids: string[]) => (state: RootStateType): BookType[] =>
+  ids.map((id) => getBookById(id)(state));
+
 const getTakenStatusById = createSelector(
   [
     getReaders,
@@ -42,5 +45,6 @@ export {
   getBooksStatus,
   getBooksError,
   getBookById,
+  getBooksByIds,
   getTakenStatusById,
 };
