@@ -39,6 +39,16 @@ const getTakenStatusById = createSelector(
   }
 );
 
+const getFreeBooks = createSelector(
+  getBooks,
+  getReaders,
+  (books, readers) => {
+    const takenBooksIds: string[] = readers.reduce((accum, reader) => accum.concat(reader.books.map((book) => book.id)), []);
+    return books.filter((book) => !takenBooksIds.includes(book.id));
+  }
+);
+
+
 export {
   getBooks,
   getBooksOperation,
@@ -46,5 +56,6 @@ export {
   getBooksError,
   getBookById,
   getBooksByIds,
+  getFreeBooks,
   getTakenStatusById,
 };

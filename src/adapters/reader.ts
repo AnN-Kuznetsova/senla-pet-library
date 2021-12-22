@@ -3,7 +3,7 @@ import * as moment from "moment";
 import type {ReaderType} from "../types";
 
 
-const DATE_FORMAT = `YYYY-MM-DD`;
+export const DATE_FORMAT = `YYYY-MM-DD`;
 
 
 interface ReaderDataType {
