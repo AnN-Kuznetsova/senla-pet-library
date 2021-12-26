@@ -16,7 +16,6 @@ interface BookType {
   coverImgUrl: string | ArrayBuffer | null,
 }
 
-
 interface ReaderType {
   [key: string]: unknown,
   id: string,
@@ -25,10 +24,15 @@ interface ReaderType {
   books: BookTakenStatusType[],
 }
 
+interface FilterType {
+  [key: string]: string,
+}
+
 
 export {
   BookType,
   ErrorType,
+  FilterType,
   ReaderType,
   BookTakenStatusType,
 };

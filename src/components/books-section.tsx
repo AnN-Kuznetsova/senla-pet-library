@@ -7,8 +7,7 @@ import {BooksList, BooksListMode} from "./books-list/books-list";
 import {FetchOperation, FetchStatus} from "../const";
 import {Info, InfoType} from "./info";
 import {NewBookModal} from "./new-book-modal";
-import {getBooksError, getBooksOperation, getBooksStatus} from "../store/books/selectors";
-import {getFilteredBooks} from "../store/application/selectors";
+import {getBooks, getBooksError, getBooksOperation, getBooksStatus} from "../store/books/selectors";
 import {resetBooksStatus} from "../store/books/books";
 import {useModal} from "./modal";
 import {useWaitShow} from "../utils";
@@ -16,7 +15,7 @@ import {useWaitShow} from "../utils";
 
 export const BooksSection: React.FC = () => {
   const dispatch = useDispatch();
-  const books = useSelector(getFilteredBooks)
+  const books = useSelector(getBooks);
   const booksOperation = useSelector(getBooksOperation);
   const booksStatus = useSelector(getBooksStatus);
   const booksError = useSelector(getBooksError);

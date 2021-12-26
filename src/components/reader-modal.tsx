@@ -29,7 +29,7 @@ export const ReaderModal: React.FC<PropsType> = (props: PropsType) => {
 
   const reader = useSelector(getReaderById(readerId));
   const freeBooks = useSelector(getFreeBooks);
-  const takenBooksCount = reader.books.length;
+  const takedBooksCount = reader.books.length;
   const takedBooks = useSelector(getBooksByIds(reader.books.map((book) => book.id)));
 
   const [isBookChoice, setIsBookChoice] = useState(false);
@@ -71,6 +71,8 @@ export const ReaderModal: React.FC<PropsType> = (props: PropsType) => {
             >{takeButtonTitle}</Button>
           </div>
 
+          <Typography variant="h6">Taken Books: {takedBooksCount}</Typography>
+
           {isBookChoice &&
             <BooksList
               books={freeBooks}
@@ -78,8 +80,7 @@ export const ReaderModal: React.FC<PropsType> = (props: PropsType) => {
               onBookButtonClick={handleTakeBookButtonClick}
           />}
 
-          {!isBookChoice && <Typography variant="h6">Taken Books: {takenBooksCount}</Typography>}
-          {!isBookChoice && !!takenBooksCount &&
+          {!isBookChoice && !!takedBooksCount &&
             <BooksList
               books={takedBooks}
               mode={BooksListMode.TAKED_BOOKS}

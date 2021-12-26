@@ -1,14 +1,18 @@
 import * as React from "react";
 import {FormControl, Input, InputLabel} from "@mui/material";
-import {useDispatch} from "react-redux";
 import {useEffect, useCallback, useMemo, useState} from "react";
 
 import {debounced} from "../utils";
-import {setBooksFilter} from "../store/application/application";
+import { FilterType } from "../types";
 
 
-export const BooksFilterForm: React.FC = () => {
-  const dispatch = useDispatch();
+interface PropsType {
+  setBooksFilter: (payload: FilterType) => void,
+}
+
+
+const BooksFilterForm: React.FC<PropsType> = (props: PropsType) => {
+  const {setBooksFilter} = props;
   const [title, setTitle] = useState("");
   const [autor, setAutor] = useState("");
 
@@ -21,11 +25,11 @@ export const BooksFilterForm: React.FC = () => {
   };
 
   const setFilters = useCallback(() => {
-    dispatch(setBooksFilter({
+    setBooksFilter({
       title,
       autor,
-    }));
-  }, [title, autor, dispatch]);
+    });
+  }, [title, autor, setBooksFilter]);
 
   const debouncedSetFilters = useMemo(
     () => debounced(setFilters),
@@ -49,4 +53,26 @@ export const BooksFilterForm: React.FC = () => {
       </FormControl>
     </form>
   );
+};
+
+
+const useBooksFilter = () => {
+  const [booksFilters, setBooksFilter]: [FilterType, (filter: FilterType) => void] = useState({});
+
+  const getBooksFilter = () => booksFilters;
+
+  const renderBooksFilter = () => (
+    <BooksFilterForm setBooksFilter={setBooksFilter} />
+  );
+
+  return {
+    renderBooksFilter,
+    getBooksFilter,
+  };
+};
+
+
+export {
+  BooksFilterForm,
+  useBooksFilter,
 };

@@ -3,6 +3,7 @@ import {debounce} from "lodash/fp";
 import {useEffect, useRef, useState} from "react";
 
 import {DEBOUNCE_DELAY, WAIT_DELAY, FetchStatus, TIME_TO_READ} from "./const";
+import { BookType, FilterType } from "./types";
 
 
 const debounced = (func: ()=>unknown) => debounce(DEBOUNCE_DELAY, func);
@@ -50,10 +51,50 @@ const useWaitShow = (status: string | null): boolean => {
   return isWaitShow;
 };
 
+const getFilteredEntities = <Type extends FilterType>(entities: Type[], filters: FilterType): Type[]  => {
+  let filteredEntities = entities.slice();
+
+  /* for (const filter in filters) {
+    if (Object.prototype.hasOwnProperty.call(filters, filter)) {
+      const filterValue = filters[filter];
+
+      if (filterValue) {
+        filteredEntities = filteredEntities.filter((entitie): boolean => {
+          const filterValue: string = <string>entitie[filter];
+          return filterValue.toLowerCase().includes(filterValue.toLowerCase());
+        });
+      }
+    }
+  } */
+
+  return filteredEntities;
+};
+
+const getFilteredBooks = (books: BookType[], filters: FilterType): BookType[] => {
+  let filteredBooks = books.slice();
+
+  for (const filter in filters) {
+    if (Object.prototype.hasOwnProperty.call(filters, filter)) {
+      const filterValue = filters[filter];
+
+      if (filterValue) {
+        filteredBooks = filteredBooks.filter((book): boolean => {
+          const bookFilterValue: string = <string>book[filter];
+          return bookFilterValue.toLowerCase().includes(filterValue.toLowerCase());
+        });
+      }
+    }
+  }
+
+  return filteredBooks;
+};
+
 
 export {
   createErrorValue,
   debounced,
+  getFilteredBooks,
+  getFilteredEntities,
   getTimeToRead,
   useWaitShow,
 };
