@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
-import { ItemButton } from "./item-button";
+import { ItemButton, ItemButtonMode } from "./item-button";
 
 
 export default {
@@ -32,13 +32,20 @@ Disabled.args = {
 
 export const More = Template.bind({});
 More.args = {
-  className: `item-button--more`,
+  className: ItemButtonMode.MORE,
   onClick: action(`ItemButton--more clicked`),
+};
+
+export const Warning = Template.bind({});
+Warning.args = {
+  className: ItemButtonMode.WARNING,
+  textValue: `Return`,
+  onClick: action(`ItemButton--warning clicked`),
 };
 
 export const Delete = Template.bind({});
 Delete.args = {
-  className: `item-button--delete`,
+  className: ItemButtonMode.DELETE,
   onClick: action(`ItemButton--delete clicked`),
 };
 
@@ -53,7 +60,7 @@ const CloseButtonWrapper = styled.div`
 `;
 
 Close.args = {
-  className: `item-button--close`,
+  className: ItemButtonMode.CLOSE,
   onClick: action(`ItemButton--close clicked`),
 };
 

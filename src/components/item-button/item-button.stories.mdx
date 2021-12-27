@@ -1,8 +1,26 @@
-import { Meta, Story, Canvas } from '@storybook/addon-docs';
-import { ItemButton } from "./item-button";
+import { Meta, DocsContainer, Story, Canvas } from '@storybook/addon-docs';
+import { ThemeProvider } from '@mui/material/styles';
+import { muiTheme } from 'storybook-addon-material-ui5';
+
+import { THEME } from "../../const";
+import { ItemButton, ItemButtonMode } from "./item-button";
 
 
-<Meta title="MDX/ItemButton" component={ItemButton} />
+<Meta
+  title="MDX/ItemButton"
+  component={ItemButton}
+  parameters={{
+    docs: {
+      container: ({ children, context }) => (
+        <DocsContainer context={context}>
+          <ThemeProvider theme={THEME}>
+            {children}
+          </ThemeProvider>
+        </DocsContainer>
+      ),
+    },
+  }}
+/>
 
 # ItemButton
 
@@ -28,7 +46,17 @@ import { ItemButton } from "./item-button";
 
 <Canvas>
   <ItemButton
-    className="item-button--more"
+    className={ItemButtonMode.MORE}
+    onClick={()=>{}}
+  />
+</Canvas>
+
+`ItemButton` - "warning":
+
+<Canvas>
+  <ItemButton
+    className={ItemButtonMode.WARNING}
+    textValue="Return"
     onClick={()=>{}}
   />
 </Canvas>
@@ -37,7 +65,7 @@ import { ItemButton } from "./item-button";
 
 <Canvas>
   <ItemButton
-    className="item-button--delete"
+    className={ItemButtonMode.DELETE}
     onClick={()=>{}}
   />
 </Canvas>
@@ -45,8 +73,15 @@ import { ItemButton } from "./item-button";
 `ItemButton` - "close":
 
 <Canvas>
-  <ItemButton
-    className="item-button--close"
-    onClick={()=>{}}
-  />
+  <div style={{
+    position: "relative",
+    top: "-25px",
+    width: "100px",
+    height: "40px",
+  }}>
+    <ItemButton
+      className={ItemButtonMode.CLOSE}
+      onClick={()=>{}}
+    />
+  </div>
 </Canvas>
