@@ -3,11 +3,11 @@ import {FormControl, Input, InputLabel} from "@mui/material";
 import {useEffect, useCallback, useMemo, useState} from "react";
 
 import {debounced} from "../utils";
-import { FilterType } from "../types";
+import type {BookFilterType} from "../types";
 
 
 interface PropsType {
-  setBooksFilter: (payload: FilterType) => void,
+  setBooksFilter: (payload: BookFilterType) => void,
 }
 
 
@@ -24,22 +24,22 @@ const BooksFilterForm: React.FC<PropsType> = (props: PropsType) => {
     setAutor(event.target.value);
   };
 
-  const setFilters = useCallback(() => {
+  const setFilter = useCallback(() => {
     setBooksFilter({
       title,
       autor,
     });
   }, [title, autor, setBooksFilter]);
 
-  const debouncedSetFilters = useMemo(
-    () => debounced(setFilters),
-    [setFilters]
+  const debouncedSetFilter = useMemo(
+    () => debounced(setFilter),
+    [setFilter]
   );
 
   useEffect(() => {
-    debouncedSetFilters();
-    return debouncedSetFilters.cancel;
-  }, [title, autor, debouncedSetFilters]);
+    debouncedSetFilter();
+    return debouncedSetFilter.cancel;
+  }, [title, autor, debouncedSetFilter]);
 
   return (
     <form className="form" >
@@ -57,9 +57,9 @@ const BooksFilterForm: React.FC<PropsType> = (props: PropsType) => {
 
 
 const useBooksFilter = () => {
-  const [booksFilters, setBooksFilter]: [FilterType, (filter: FilterType) => void] = useState({});
+  const [booksFilter, setBooksFilter]: [BookFilterType, (filter: BookFilterType) => void] = useState({});
 
-  const getBooksFilter = () => booksFilters;
+  const getBooksFilter = () => booksFilter;
 
   const renderBooksFilter = () => (
     <BooksFilterForm setBooksFilter={setBooksFilter} />

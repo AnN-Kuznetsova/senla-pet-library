@@ -17,22 +17,24 @@ interface BookType {
 }
 
 interface ReaderType {
-  [key: string]: unknown,
+  //[key: string]: unknown,
   id: string,
   name: string,
   age: string,
   books: BookTakenStatusType[],
 }
 
-interface FilterType {
-  [key: string]: string,
+type CreateFilter<Type> = {
+  [Property in keyof Type]?: Type[Property]
 }
+
+type BookFilterType = CreateFilter<BookType>
 
 
 export {
   BookType,
+  BookFilterType,
   ErrorType,
-  FilterType,
   ReaderType,
   BookTakenStatusType,
 };
