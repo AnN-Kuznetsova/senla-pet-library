@@ -1,5 +1,5 @@
 import * as React from "react";
-import {List, ListItem} from "@mui/material";
+import {List, ListItem, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 
 import {BooksListItem} from "../books-list-item";
@@ -8,17 +8,17 @@ import {useBooksFilter} from "../books-filter-form";
 import type {BookType} from "../../types";
 
 
-interface PropsType {
-  books: BookType[],
-  mode: BooksListMode,
-  onBookButtonClick: (prop: unknown) => void,
-}
-
-
 export enum BooksListMode {
   DEFAULT = `DEFAULT`,
   BOOK_CHOICE = `BOOK_CHOICE`,
   TAKED_BOOKS = `TAKED_BOOK`,
+}
+
+
+interface PropsType {
+  books: BookType[],
+  mode: BooksListMode,
+  onBookButtonClick: (prop: unknown) => void,
 }
 
 
@@ -57,21 +57,27 @@ export const BooksList: React.FC<PropsType> = (props: PropsType) => {
 
   return (
     <>
-      {isFilter && renderBooksFilter()}
+      {!filteredBooks.length && <Typography variant="h4">
+        There are no books on the list.
+      </Typography>}
 
-      <List>{
-        filteredBooks.map((book, index) => {
-          return (
-            <ListItem key={index + book.id}>
-              <BooksListItem
-                book={book}
-                mode={mode}
-                onBookButtonClick={onBookButtonClick}
-              />
-            </ListItem>
-          )
-        })
-      }</List>
+      {!!filteredBooks.length && isFilter && renderBooksFilter()}
+
+      {!!filteredBooks.length &&
+        <List>{
+          filteredBooks.map((book, index) => {
+            return (
+              <ListItem key={index + book.id}>
+                <BooksListItem
+                  book={book}
+                  mode={mode}
+                  onBookButtonClick={onBookButtonClick}
+                />
+              </ListItem>
+            )
+          })
+        }</List>
+      }
     </>
   );
 };
