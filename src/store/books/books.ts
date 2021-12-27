@@ -1,5 +1,5 @@
 import {AxiosInstance} from "axios";
-import {createAsyncThunk, createEntityAdapter, createSlice, EntityId, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createEntityAdapter, createSlice, EntityId, isRejected, PayloadAction} from "@reduxjs/toolkit";
 
 import {FetchOperation, FetchStatus} from "../../const";
 import {createBook, createBooks, toRAWBook} from "../../adapters/book";
@@ -18,6 +18,7 @@ export interface BooksStateType {
   status: string | null,
   error: ErrorType | null,
 }
+
 
 export const booksAdapter = createEntityAdapter();
 const initialState = booksAdapter.getInitialState({
@@ -118,6 +119,9 @@ const updateBook = createAsyncThunk<
 );
 
 
+const isRejectedAction = isRejected(loadBooks, addNewBook, deleteBook, updateBook);
+
+
 const booksSlice = createSlice({
   name: `books`,
   initialState,
@@ -145,13 +149,6 @@ const booksSlice = createSlice({
           booksAdapter.setAll(state, createBooks(action.payload));
         }
       )
-      .addCase(
-        loadBooks.rejected.toString(),
-        (state, action: PayloadAction<ErrorType>) => {
-          state.status = FetchStatus.REJECTED;
-          state.error = action.payload;
-        },
-      )
       // addNewBook
       .addCase(
         addNewBook.pending.toString(),
@@ -159,13 +156,6 @@ const booksSlice = createSlice({
           state.operation = FetchOperation.ADD_NEW;
           state.status = FetchStatus.LOADING;
           state.error = null;
-        }
-      )
-      .addCase(
-        addNewBook.rejected.toString(),
-        (state, action: PayloadAction<ErrorType>) => {
-          state.status = FetchStatus.REJECTED;
-          state.error = action.payload;
         }
       )
       .addCase(
@@ -182,13 +172,6 @@ const booksSlice = createSlice({
           state.operation = FetchOperation.DELETE;
           state.status = FetchStatus.LOADING;
           state.error = null;
-        }
-      )
-      .addCase(
-        deleteBook.rejected.toString(),
-        (state, action: PayloadAction<ErrorType>) => {
-          state.status = FetchStatus.REJECTED;
-          state.error = action.payload;
         }
       )
       .addCase(
@@ -209,18 +192,19 @@ const booksSlice = createSlice({
         }
       )
       .addCase(
-        updateBook.rejected.toString(),
-        (state, action: PayloadAction<ErrorType>) => {
-          state.status = FetchStatus.REJECTED;
-          state.error = action.payload;
-        }
-      )
-      .addCase(
         updateBook.fulfilled.toString(),
         (state, action: PayloadAction<BookDataType>) => {
           state.status = FetchStatus.RESOLVED;
           const {id, ...newData} = createBook(action.payload);
           booksAdapter.updateOne(state, {id, changes: newData});
+        }
+      )
+      // RejectedAction
+      .addMatcher(
+        isRejectedAction,
+        (state, action) => {
+          state.status = FetchStatus.REJECTED;
+          state.error = Object.assign({status: null}, action.payload);
         }
       );
   },

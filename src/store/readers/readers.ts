@@ -1,5 +1,5 @@
 import {AxiosInstance} from "axios";
-import {createAsyncThunk, createEntityAdapter, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createEntityAdapter, createSlice, isRejected, PayloadAction} from "@reduxjs/toolkit";
 
 import {FetchOperation, FetchStatus} from "../../const";
 import {createReader, createReaders, ReaderDataType, toRAWReader} from "../../adapters/reader";
@@ -17,6 +17,7 @@ export interface ReadersStateType {
   status: string | null,
   error: ErrorType | null,
 }
+
 
 export const readersAdapter = createEntityAdapter();
 const initialState = readersAdapter.getInitialState({
@@ -58,13 +59,16 @@ const updateReader = createAsyncThunk<
   `readers/updateReader`,
   async (reader, {extra: api, rejectWithValue}) => {
     try {
-      const responce = await api.put(`/readers/${reader.id}`, toRAWReader(reader));
+      const responce = await api.put(`/readers1/${reader.id}`, toRAWReader(reader));
       return responce.data;
     } catch (error) {
       return rejectWithValue(createErrorValue(error));
     }
   }
 );
+
+
+const isRejectedAction = isRejected(loadReaders, updateReader);
 
 
 const readersSlice = createSlice({
@@ -89,13 +93,6 @@ const readersSlice = createSlice({
           readersAdapter.setAll(state, createReaders(action.payload));
         }
       )
-      .addCase(
-        loadReaders.rejected.toString(),
-        (state, action: PayloadAction<ErrorType>) => {
-          state.status = FetchStatus.REJECTED;
-          state.error = action.payload;
-        }
-      )
       // updateReader
       .addCase(
         updateReader.pending.toString(),
@@ -106,18 +103,19 @@ const readersSlice = createSlice({
         }
       )
       .addCase(
-        updateReader.rejected.toString(),
-        (state, action: PayloadAction<ErrorType>) => {
-          state.status = FetchStatus.REJECTED;
-          state.error = action.payload;
-        }
-      )
-      .addCase(
         updateReader.fulfilled.toString(),
         (state, action: PayloadAction<ReaderDataType>) => {
           state.status = FetchStatus.RESOLVED;
           const {id, ...newData} = createReader(action.payload);
           readersAdapter.updateOne(state, {id, changes: newData});
+        }
+      )
+      // RejectedAction
+      .addMatcher(
+        isRejectedAction,
+        (state, action) => {
+          state.status = FetchStatus.REJECTED;
+          state.error = Object.assign({status: null}, action.payload);
         }
       );
   },
