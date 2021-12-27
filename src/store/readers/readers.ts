@@ -1,5 +1,5 @@
 import {AxiosInstance} from "axios";
-import {createAsyncThunk, createEntityAdapter, createSlice, isRejected, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createEntityAdapter, createSlice, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
 
 import {FetchOperation, FetchStatus} from "../../const";
 import {createReader, createReaders, ReaderDataType, toRAWReader} from "../../adapters/reader";
@@ -59,7 +59,7 @@ const updateReader = createAsyncThunk<
   `readers/updateReader`,
   async (reader, {extra: api, rejectWithValue}) => {
     try {
-      const responce = await api.put(`/readers1/${reader.id}`, toRAWReader(reader));
+      const responce = await api.put(`/readers/${reader.id}`, toRAWReader(reader));
       return responce.data;
     } catch (error) {
       return rejectWithValue(createErrorValue(error));
@@ -68,7 +68,8 @@ const updateReader = createAsyncThunk<
 );
 
 
-const isRejectedAction = isRejected(loadReaders, updateReader);
+const isARejectedAction = isRejected(loadReaders, updateReader);
+const isAPendingAction = isPending(loadReaders, updateReader);
 
 
 const readersSlice = createSlice({
@@ -80,11 +81,7 @@ const readersSlice = createSlice({
       // load
       .addCase(
         loadReaders.pending.toString(),
-        (state) => {
-          state.operation = FetchOperation.LOAD;
-          state.status = FetchStatus.LOADING;
-          state.error = null;
-        }
+        (state) => { state.operation = FetchOperation.LOAD }
       )
       .addCase(
         loadReaders.fulfilled.toString(),
@@ -96,11 +93,7 @@ const readersSlice = createSlice({
       // updateReader
       .addCase(
         updateReader.pending.toString(),
-        (state) => {
-          state.operation = FetchOperation.UPDATE;
-          state.status = FetchStatus.LOADING;
-          state.error = null;
-        }
+        (state) => { state.operation = FetchOperation.UPDATE }
       )
       .addCase(
         updateReader.fulfilled.toString(),
@@ -110,9 +103,17 @@ const readersSlice = createSlice({
           readersAdapter.updateOne(state, {id, changes: newData});
         }
       )
+      // PendingAction
+      .addMatcher(
+        isAPendingAction,
+        (state) => {
+          state.status = FetchStatus.LOADING;
+          state.error = null;
+        }
+      )
       // RejectedAction
       .addMatcher(
-        isRejectedAction,
+        isARejectedAction,
         (state, action) => {
           state.status = FetchStatus.REJECTED;
           state.error = Object.assign({status: null}, action.payload);

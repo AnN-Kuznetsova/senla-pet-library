@@ -1,5 +1,5 @@
 import {AxiosInstance} from "axios";
-import {createAsyncThunk, createEntityAdapter, createSlice, EntityId, isRejected, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createEntityAdapter, createSlice, EntityId, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
 
 import {FetchOperation, FetchStatus} from "../../const";
 import {createBook, createBooks, toRAWBook} from "../../adapters/book";
@@ -119,7 +119,8 @@ const updateBook = createAsyncThunk<
 );
 
 
-const isRejectedAction = isRejected(loadBooks, addNewBook, deleteBook, updateBook);
+const isARejectedAction = isRejected(loadBooks, addNewBook, deleteBook, updateBook);
+const isAPendingAction = isPending(loadBooks, addNewBook, deleteBook, updateBook);
 
 
 const booksSlice = createSlice({
@@ -136,11 +137,7 @@ const booksSlice = createSlice({
       // load
       .addCase(
         loadBooks.pending.toString(),
-        (state) => {
-          state.operation = FetchOperation.LOAD;
-          state.status = FetchStatus.LOADING;
-          state.error = null;
-        }
+        (state) => { state.operation = FetchOperation.LOAD }
       )
       .addCase(
         loadBooks.fulfilled.toString(),
@@ -152,11 +149,7 @@ const booksSlice = createSlice({
       // addNewBook
       .addCase(
         addNewBook.pending.toString(),
-        (state) => {
-          state.operation = FetchOperation.ADD_NEW;
-          state.status = FetchStatus.LOADING;
-          state.error = null;
-        }
+        (state) => { state.operation = FetchOperation.ADD_NEW }
       )
       .addCase(
         addNewBook.fulfilled.toString(),
@@ -168,11 +161,7 @@ const booksSlice = createSlice({
       // deleteBook
       .addCase(
         deleteBook.pending.toString(),
-        (state) => {
-          state.operation = FetchOperation.DELETE;
-          state.status = FetchStatus.LOADING;
-          state.error = null;
-        }
+        (state) => { state.operation = FetchOperation.DELETE }
       )
       .addCase(
         deleteBook.fulfilled.toString(),
@@ -185,11 +174,7 @@ const booksSlice = createSlice({
       // updateBook
       .addCase(
         updateBook.pending.toString(),
-        (state) => {
-          state.operation = FetchOperation.UPDATE;
-          state.status = FetchStatus.LOADING;
-          state.error = null;
-        }
+        (state) => { state.operation = FetchOperation.UPDATE }
       )
       .addCase(
         updateBook.fulfilled.toString(),
@@ -199,9 +184,17 @@ const booksSlice = createSlice({
           booksAdapter.updateOne(state, {id, changes: newData});
         }
       )
+      // PendingAction
+      .addMatcher(
+        isAPendingAction,
+        (state) => {
+          state.status = FetchStatus.LOADING;
+          state.error = null;
+        }
+      )
       // RejectedAction
       .addMatcher(
-        isRejectedAction,
+        isARejectedAction,
         (state, action) => {
           state.status = FetchStatus.REJECTED;
           state.error = Object.assign({status: null}, action.payload);
