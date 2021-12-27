@@ -1,8 +1,9 @@
 import * as React from "react";
 import {List, ListItem} from "@mui/material";
+import {useEffect, useState} from "react";
 
 import {BooksListItem} from "../books-list-item";
-import {getFilteredBooks/* , getFilteredEntities */} from "../../utils";
+import {getFilteredEntities} from "../../utils";
 import {useBooksFilter} from "../books-filter-form";
 import type {BookType} from "../../types";
 
@@ -33,12 +34,12 @@ export const BooksList: React.FC<PropsType> = (props: PropsType) => {
     getBooksFilter,
   } = useBooksFilter();
 
-  const [filter, setFilter] = React.useState(getBooksFilter());
-  const [filteredBooks, setFilteredBooks] = React.useState(getFilteredBooks(books, filter));
+  const [filter, setFilter] = useState(getBooksFilter());
+  const [filteredBooks, setFilteredBooks] = useState(getFilteredEntities(books, filter));
 
   const isFilter = mode === BooksListMode.DEFAULT || mode === BooksListMode.BOOK_CHOICE;
 
-  React.useEffect(() => {
+  useEffect(() => {
     setFilter((filter) => {
       const newFilter = getBooksFilter();
 
@@ -50,8 +51,8 @@ export const BooksList: React.FC<PropsType> = (props: PropsType) => {
     });
   }, [filter, getBooksFilter]);
 
-  React.useEffect(() => {
-    setFilteredBooks(getFilteredBooks(books, filter));
+  useEffect(() => {
+    setFilteredBooks(getFilteredEntities(books, filter));
   }, [books, filter]);
 
   return (

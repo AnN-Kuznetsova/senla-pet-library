@@ -3,7 +3,7 @@ import {debounce} from "lodash/fp";
 import {useEffect, useRef, useState} from "react";
 
 import {DEBOUNCE_DELAY, WAIT_DELAY, FetchStatus, TIME_TO_READ} from "./const";
-import type {BookFilterType, BookType} from "./types";
+import type {CreateFilterType} from "./types";
 
 
 const debounced = (func: ()=>unknown) => debounce(DEBOUNCE_DELAY, func);
@@ -51,50 +51,30 @@ const useWaitShow = (status: string | null): boolean => {
   return isWaitShow;
 };
 
-/*const getFilteredEntities = <Type extends FilterType>(entities: Type[], filters: FilterType): Type[]  => {
+const getFilteredEntities = <Type>(entities: Type[], filter: CreateFilterType<Type>): Type[] => {
   let filteredEntities = entities.slice();
-
-  /* for (const filter in filters) {
-    if (Object.prototype.hasOwnProperty.call(filters, filter)) {
-      const filterValue = filters[filter];
-
-      if (filterValue) {
-        filteredEntities = filteredEntities.filter((entity): boolean => {
-          const entityFilterValue: string = <string>entity[filter];
-          return entityFilterValue.toLowerCase().includes(filterValue.toLowerCase());
-        });
-      }
-    }
-  } *//*
-
-  return filteredEntities;
-}; */
-
-const getFilteredBooks = (books: BookType[], filter: BookFilterType): BookType[] => {
-  let filteredBooks = books.slice();
 
   for (const filterKey in filter) {
     if (Object.prototype.hasOwnProperty.call(filter, filterKey)) {
-      const filterValue: string = <string>filter[filterKey];
+      const filterValue: string = filter[filterKey] as unknown as string;
 
       if (filterValue) {
-        filteredBooks = filteredBooks.filter((book): boolean => {
-          const bookFilterValue: string = <string>book[filterKey];
-          return bookFilterValue.toLowerCase().includes(filterValue.toLowerCase());
+        filteredEntities = filteredEntities.filter((entity): boolean => {
+          const entityFilterValue: string = entity[filterKey] as unknown as string;
+          return entityFilterValue.toLowerCase().includes(filterValue.toLowerCase());
         });
       }
     }
   }
 
-  return filteredBooks;
+  return filteredEntities;
 };
 
 
 export {
   createErrorValue,
   debounced,
-  getFilteredBooks,
-  //getFilteredEntities,
+  getFilteredEntities,
   getTimeToRead,
   useWaitShow,
 };
