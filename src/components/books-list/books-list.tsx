@@ -38,6 +38,7 @@ export const BooksList: React.FC<PropsType> = (props: PropsType) => {
   const [filteredBooks, setFilteredBooks] = useState(getFilteredEntities(books, filter));
 
   const isFilter = mode === BooksListMode.DEFAULT || mode === BooksListMode.BOOK_CHOICE;
+  const isBooks = !!books.length;
 
   useEffect(() => {
     setFilter((filter) => {
@@ -57,11 +58,11 @@ export const BooksList: React.FC<PropsType> = (props: PropsType) => {
 
   return (
     <>
+      {isBooks && isFilter && renderBooksFilter()}
+
       {!filteredBooks.length && <Typography variant="h4">
         There are no books on the list.
       </Typography>}
-
-      {!!filteredBooks.length && isFilter && renderBooksFilter()}
 
       {!!filteredBooks.length &&
         <List>{
