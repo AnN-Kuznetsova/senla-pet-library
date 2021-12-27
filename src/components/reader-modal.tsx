@@ -17,11 +17,6 @@ interface PropsType {
 }
 
 
-/* const formatDate = (date: moment.Moment | null): string | null => {
-  return date ? date.format(`DD MMMM YYYY`) : null;
-}; */
-
-
 export const ReaderModal: React.FC<PropsType> = (props: PropsType) => {
   const {readerId} = props;
 

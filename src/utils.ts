@@ -70,10 +70,15 @@ const getFilteredEntities = <Type>(entities: Type[], filter: CreateFilterType<Ty
   return filteredEntities;
 };
 
+const formatDate = (date: moment.Moment | null): string | null => {
+  return date ? date.format(`DD MMMM YYYY`) : null;
+};
+
 
 export {
   createErrorValue,
   debounced,
+  formatDate,
   getFilteredEntities,
   getTimeToRead,
   useWaitShow,

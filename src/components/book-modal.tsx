@@ -1,15 +1,13 @@
 import * as React from "react";
-import * as moment from "moment";
 import {Typography} from "@mui/material";
 import {useSelector} from "react-redux";
 import {useState} from "react";
 
 import {BookCover} from "./book-cover";
 import {BookInfoForm} from "./book-info-form";
+import {BookTakenInfoMode, useBookTakenInfo} from "./book-taken-info";
 import {FormButtonControlls, FormButtonControllsType} from "./form-button-controls";
-import {getBookById, getTakenStatusById} from "../store/books/selectors";
-import {getTimeToRead} from "../utils";
-import type {RootStateType} from "..";
+import {getBookById} from "../store/books/selectors";
 
 
 interface PropsType {
@@ -17,24 +15,14 @@ interface PropsType {
 }
 
 
-const formatDate = (date: moment.Moment | null): string | null => {
-  return date ? date.format(`DD MMMM YYYY`) : null;
-};
-
-
 export const BookModal: React.FC<PropsType> = (props: PropsType) => {
   const {bookId} = props;
 
-  const book = useSelector(getBookById(bookId));
-  const bookStatus = useSelector((state: RootStateType) => getTakenStatusById(state, bookId));
-  const dateOfTaking = bookStatus ? bookStatus.dateOfTaking : null;
-  const timeToRead = getTimeToRead();
-  const willBeReturnedAfter: moment.Duration = dateOfTaking ? moment.duration(dateOfTaking.clone().add(timeToRead).diff(moment())) : null;
-  const willBeReturnedStr = willBeReturnedAfter ?
-    willBeReturnedAfter.days() >= 0 ? <>Will be returned after <b style={{color: "green"}}>{willBeReturnedAfter.humanize()}</b></>
-    : <>Delay return for <b style={{color: "red"}}>{willBeReturnedAfter.humanize()}</b></>
-    : null;
+  const {
+    renderBookTakenInfo,
+  } = useBookTakenInfo(bookId);
 
+  const book = useSelector(getBookById(bookId));
   const [isChange, setIsChange] = useState(false);
 
   const closeChangeWindow = () => {
@@ -60,13 +48,7 @@ export const BookModal: React.FC<PropsType> = (props: PropsType) => {
           <div className="book-modal__info">
             <Typography variant="h5">{book.title}</Typography>
             <p>{book.autor}
-              <span
-                className="book-modal__is-taken"
-                style={{color: dateOfTaking ? `red` : `green`}}
-              >{dateOfTaking ? `Is taken` : `Free`}</span>
-
-              {dateOfTaking && <span className="new-line">Date of taking: <b>{formatDate(dateOfTaking)}</b></span>}
-              {willBeReturnedStr && <span className="new-line">{willBeReturnedStr}</span>}
+              {renderBookTakenInfo(BookTakenInfoMode.DEFAULT)}
             </p>
 
             <FormButtonControlls

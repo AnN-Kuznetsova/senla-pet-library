@@ -1,15 +1,13 @@
 import * as React from "react";
 import {ListItemText} from "@mui/material";
 import {useDispatch} from "react-redux";
-import {useSelector} from "react-redux";
 
 import {BooksListMode} from "./books-list/books-list";
 import {BookModal} from "./book-modal";
+import {BookTakenInfoMode, useBookTakenInfo} from "./book-taken-info";
 import {ItemButton, ItemButtonMode} from "./item-button/item-button";
 import {deleteBook} from "../store/books/books";
-import {getTakenStatusById} from "../store/books/selectors";
 import type {BookType} from "../types";
-import type {RootStateType} from "..";
 
 
 interface PropsType {
@@ -26,8 +24,13 @@ export const BooksListItem: React.FC<PropsType> = (props: PropsType) => {
     onBookButtonClick,
   } = props;
 
+  const {
+    getBookStatus,
+    renderBookTakenInfo,
+  } = useBookTakenInfo(book.id);
+
   const dispatch = useDispatch();
-  const bookStatus = useSelector((state: RootStateType) => getTakenStatusById(state, book.id));
+  const bookStatus = getBookStatus();
   const textColor = bookStatus && mode === BooksListMode.DEFAULT ? `red` : `black`;
 
   const handleDeleteBookButtonClick = (bookId: string) => {
@@ -63,11 +66,15 @@ export const BooksListItem: React.FC<PropsType> = (props: PropsType) => {
       </>}
 
       {mode === BooksListMode.TAKED_BOOKS &&
-        <ItemButton
-          className={ItemButtonMode.WARNING}
-          textValue="Return"
-          onClick={handleBookButtonClick.bind(null, book)}
-        />
+        <>
+          {renderBookTakenInfo(BookTakenInfoMode.TAKED)}
+
+          <ItemButton
+            className={ItemButtonMode.WARNING}
+            textValue="Return"
+            onClick={handleBookButtonClick.bind(null, book)}
+          />
+        </>
       }
 
       {mode === BooksListMode.BOOK_CHOICE &&
