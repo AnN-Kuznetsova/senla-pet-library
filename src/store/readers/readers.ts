@@ -71,36 +71,55 @@ const readersSlice = createSlice({
   name: `readers`,
   initialState,
   reducers: {},
-  extraReducers: {
-    // load
-    [loadReaders.pending.toString()]: (state) => {
-      state.operation = FetchOperation.LOAD;
-      state.status = FetchStatus.LOADING;
-      state.error = null;
-    },
-    [loadReaders.fulfilled.toString()]: (state, action: PayloadAction<ReaderDataType[]>) => {
-      state.status = FetchStatus.RESOLVED;
-      readersAdapter.setAll(state, createReaders(action.payload));
-    },
-    [loadReaders.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
-      state.status = FetchStatus.REJECTED;
-      state.error = action.payload;
-    },
-    // updateReader
-    [updateReader.pending.toString()]: (state) => {
-      state.operation = FetchOperation.UPDATE;
-      state.status = FetchStatus.LOADING;
-      state.error = null;
-    },
-    [updateReader.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
-      state.status = FetchStatus.REJECTED;
-      state.error = action.payload;
-    },
-    [updateReader.fulfilled.toString()]: (state, action: PayloadAction<ReaderDataType>) => {
-      state.status = FetchStatus.RESOLVED;
-      const {id, ...newData} = createReader(action.payload);
-      readersAdapter.updateOne(state, {id, changes: newData});
-    },
+  extraReducers: (builder) => {
+    builder
+      // load
+      .addCase(
+        loadReaders.pending.toString(),
+        (state) => {
+          state.operation = FetchOperation.LOAD;
+          state.status = FetchStatus.LOADING;
+          state.error = null;
+        }
+      )
+      .addCase(
+        loadReaders.fulfilled.toString(),
+        (state, action: PayloadAction<ReaderDataType[]>) => {
+          state.status = FetchStatus.RESOLVED;
+          readersAdapter.setAll(state, createReaders(action.payload));
+        }
+      )
+      .addCase(
+        loadReaders.rejected.toString(),
+        (state, action: PayloadAction<ErrorType>) => {
+          state.status = FetchStatus.REJECTED;
+          state.error = action.payload;
+        }
+      )
+      // updateReader
+      .addCase(
+        updateReader.pending.toString(),
+        (state) => {
+          state.operation = FetchOperation.UPDATE;
+          state.status = FetchStatus.LOADING;
+          state.error = null;
+        }
+      )
+      .addCase(
+        updateReader.rejected.toString(),
+        (state, action: PayloadAction<ErrorType>) => {
+          state.status = FetchStatus.REJECTED;
+          state.error = action.payload;
+        }
+      )
+      .addCase(
+        updateReader.fulfilled.toString(),
+        (state, action: PayloadAction<ReaderDataType>) => {
+          state.status = FetchStatus.RESOLVED;
+          const {id, ...newData} = createReader(action.payload);
+          readersAdapter.updateOne(state, {id, changes: newData});
+        }
+      );
   },
 });
 

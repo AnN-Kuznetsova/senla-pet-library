@@ -127,65 +127,102 @@ const booksSlice = createSlice({
       state.status = null;
     },
   },
-  extraReducers: {
-    // load
-    [loadBooks.pending.toString()]: (state) => {
-      state.operation = FetchOperation.LOAD;
-      state.status = FetchStatus.LOADING;
-      state.error = null;
-    },
-    [loadBooks.fulfilled.toString()]: (state, action: PayloadAction<BookDataType[]>) => {
-      state.status = FetchStatus.RESOLVED;
-      booksAdapter.setAll(state, createBooks(action.payload));
-    },
-    [loadBooks.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
-      state.status = FetchStatus.REJECTED;
-      state.error = action.payload;
-    },
-    // addNewBook
-    [addNewBook.pending.toString()]: (state) => {
-      state.operation = FetchOperation.ADD_NEW;
-      state.status = FetchStatus.LOADING;
-      state.error = null;
-    },
-    [addNewBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
-      state.status = FetchStatus.REJECTED;
-      state.error = action.payload;
-    },
-    [addNewBook.fulfilled.toString()]: (state, action: PayloadAction<BookDataType>) => {
-      state.status = FetchStatus.RESOLVED;
-      booksAdapter.setOne(state, createBook(action.payload));
-    },
-    // deleteBook
-    [deleteBook.pending.toString()]: (state) => {
-      state.operation = FetchOperation.DELETE;
-      state.status = FetchStatus.LOADING;
-      state.error = null;
-    },
-    [deleteBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
-      state.status = FetchStatus.REJECTED;
-      state.error = action.payload;
-    },
-    [deleteBook.fulfilled.toString()]: (state, action: PayloadAction<string>) => {
-      state.status = FetchStatus.RESOLVED;
-      const bookId = action.payload;
-      booksAdapter.removeOne(state, bookId);
-    },
-    // updateBook
-    [updateBook.pending.toString()]: (state) => {
-      state.operation = FetchOperation.UPDATE;
-      state.status = FetchStatus.LOADING;
-      state.error = null;
-    },
-    [updateBook.rejected.toString()]: (state, action: PayloadAction<ErrorType>) => {
-      state.status = FetchStatus.REJECTED;
-      state.error = action.payload;
-    },
-    [updateBook.fulfilled.toString()]: (state, action: PayloadAction<BookDataType>) => {
-      state.status = FetchStatus.RESOLVED;
-      const {id, ...newData} = createBook(action.payload);
-      booksAdapter.updateOne(state, {id, changes: newData});
-    },
+  extraReducers: (builder) => {
+    builder
+      // load
+      .addCase(
+        loadBooks.pending.toString(),
+        (state) => {
+          state.operation = FetchOperation.LOAD;
+          state.status = FetchStatus.LOADING;
+          state.error = null;
+        }
+      )
+      .addCase(
+        loadBooks.fulfilled.toString(),
+        (state, action: PayloadAction<BookDataType[]>) => {
+          state.status = FetchStatus.RESOLVED;
+          booksAdapter.setAll(state, createBooks(action.payload));
+        }
+      )
+      .addCase(
+        loadBooks.rejected.toString(),
+        (state, action: PayloadAction<ErrorType>) => {
+          state.status = FetchStatus.REJECTED;
+          state.error = action.payload;
+        },
+      )
+      // addNewBook
+      .addCase(
+        addNewBook.pending.toString(),
+        (state) => {
+          state.operation = FetchOperation.ADD_NEW;
+          state.status = FetchStatus.LOADING;
+          state.error = null;
+        }
+      )
+      .addCase(
+        addNewBook.rejected.toString(),
+        (state, action: PayloadAction<ErrorType>) => {
+          state.status = FetchStatus.REJECTED;
+          state.error = action.payload;
+        }
+      )
+      .addCase(
+        addNewBook.fulfilled.toString(),
+        (state, action: PayloadAction<BookDataType>) => {
+          state.status = FetchStatus.RESOLVED;
+          booksAdapter.setOne(state, createBook(action.payload));
+        }
+      )
+      // deleteBook
+      .addCase(
+        deleteBook.pending.toString(),
+        (state) => {
+          state.operation = FetchOperation.DELETE;
+          state.status = FetchStatus.LOADING;
+          state.error = null;
+        }
+      )
+      .addCase(
+        deleteBook.rejected.toString(),
+        (state, action: PayloadAction<ErrorType>) => {
+          state.status = FetchStatus.REJECTED;
+          state.error = action.payload;
+        }
+      )
+      .addCase(
+        deleteBook.fulfilled.toString(),
+        (state, action: PayloadAction<string>) => {
+          state.status = FetchStatus.RESOLVED;
+          const bookId = action.payload;
+          booksAdapter.removeOne(state, bookId);
+        }
+      )
+      // updateBook
+      .addCase(
+        updateBook.pending.toString(),
+        (state) => {
+          state.operation = FetchOperation.UPDATE;
+          state.status = FetchStatus.LOADING;
+          state.error = null;
+        }
+      )
+      .addCase(
+        updateBook.rejected.toString(),
+        (state, action: PayloadAction<ErrorType>) => {
+          state.status = FetchStatus.REJECTED;
+          state.error = action.payload;
+        }
+      )
+      .addCase(
+        updateBook.fulfilled.toString(),
+        (state, action: PayloadAction<BookDataType>) => {
+          state.status = FetchStatus.RESOLVED;
+          const {id, ...newData} = createBook(action.payload);
+          booksAdapter.updateOne(state, {id, changes: newData});
+        }
+      );
   },
 });
 
