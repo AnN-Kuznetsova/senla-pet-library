@@ -1,0 +1,11 @@
+.reader-modal {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+.reader-modal__info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

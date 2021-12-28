@@ -29,16 +29,18 @@ export const ReadersList: React.FC<PropsType> = (props: PropsType) => {
   };
 
   return (
-    <List>{
-      readers.map((reader, index) => (
-        <ListItem key={index + reader.id}>
-          <ListItemText primary={reader.name} secondary={renderReaderStatus(!reader.books.length)} />
-          <ItemButton
-          onClick={handleMoreButtonClick.bind(null, reader)}
-          className={ItemButtonMode.MORE}
-          />
-        </ListItem>
-      ))
-    }</List>
+    <div className="list-wrapper">
+      <List>{
+        readers.map((reader, index) => (
+          <ListItem key={index + reader.id}>
+            <ListItemText primary={reader.name} secondary={renderReaderStatus(!reader.books.length)} />
+            <ItemButton
+            onClick={handleMoreButtonClick.bind(null, reader)}
+            className={ItemButtonMode.MORE}
+            />
+          </ListItem>
+        ))
+      }</List>
+    </div>
   );
 };

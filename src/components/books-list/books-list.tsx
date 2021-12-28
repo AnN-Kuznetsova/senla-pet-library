@@ -65,19 +65,21 @@ export const BooksList: React.FC<PropsType> = (props: PropsType) => {
       </Typography>}
 
       {!!filteredBooks.length &&
-        <List>{
-          filteredBooks.map((book, index) => {
-            return (
-              <ListItem key={index + book.id}>
-                <BooksListItem
-                  book={book}
-                  mode={mode}
-                  onBookButtonClick={onBookButtonClick}
-                />
-              </ListItem>
-            )
-          })
-        }</List>
+        <div className="list-wrapper">
+          <List>{
+            filteredBooks.map((book, index) => {
+              return (
+                <ListItem key={index + book.id}>
+                  <BooksListItem
+                    book={book}
+                    mode={mode}
+                    onBookButtonClick={onBookButtonClick}
+                  />
+                </ListItem>
+              )
+            })}
+          </List>
+        </div>
       }
     </>
   );
