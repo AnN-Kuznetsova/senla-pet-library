@@ -1,14 +1,13 @@
 import * as React from "react";
 import {Button, Stack} from "@mui/material";
-import {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import {useCallback, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 import {FetchOperation, FetchStatus} from "../const";
-import {useModal} from "./modal";
 import {ReadersList} from "./readers-list";
 import {getReadersInfo} from "../store/readers/selectors";
-import { useWaitShow } from "../utils";
-import { Info, InfoType } from "./info";
+import {resetReadersStatus} from "../store/readers/readers";
+import {useModal} from "./modal";
 
 
 export const ReadersSection: React.FC = () => {
@@ -19,13 +18,17 @@ export const ReadersSection: React.FC = () => {
     error: readersError,
   } = useSelector(getReadersInfo);
 
+  const dispatch = useDispatch();
+
+  const onModalClose = useCallback(() => {
+    dispatch(resetReadersStatus());
+  }, [dispatch]);
+
   const {
     renderModal,
     openModal,
-    closeModal,
-  } = useModal();
+  } = useModal(onModalClose);
 
-  const isWaitShow = useWaitShow(readersStatus);
   const isReadersNotLoad = readersOperation === FetchOperation.LOAD && readersStatus === FetchStatus.REJECTED;
 
   const [isReadersListShow, changeIsReadersListShow] = useState(false);
@@ -33,26 +36,6 @@ export const ReadersSection: React.FC = () => {
   const handleShowReadersButtonClick = () => {
     changeIsReadersListShow((isReadersListShow) => !isReadersListShow);
   };
-
-  useEffect(() => {
-    if (readersOperation === FetchOperation.UPDATE) {
-      switch (readersStatus) {
-        case FetchStatus.LOADING:
-          if ( isWaitShow) {
-            openModal(<Info type={InfoType.WAIT} />);
-          }
-          break;
-
-        case FetchStatus.REJECTED:
-          openModal(<Info type={InfoType.ERROR} />);
-          break;
-
-        case FetchStatus.RESOLVED:
-          closeModal();
-          break;
-      }
-    }
-  }, [readersOperation, readersStatus, isWaitShow, closeModal, openModal]);
 
   return (
     <Stack className="section">

@@ -75,7 +75,12 @@ const isAPendingAction = isPending(loadReaders, updateReader);
 const readersSlice = createSlice({
   name: `readers`,
   initialState,
-  reducers: {},
+  reducers: {
+    resetReadersStatus: (state) => {
+      state.operation = null;
+      state.status = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // load
@@ -122,8 +127,12 @@ const readersSlice = createSlice({
   },
 });
 
-const {reducer} = readersSlice;
+const {reducer, actions} = readersSlice;
 
+
+export const {
+  resetReadersStatus,
+} = actions;
 
 export {
   reducer,

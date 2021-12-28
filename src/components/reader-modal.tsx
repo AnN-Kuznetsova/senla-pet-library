@@ -4,11 +4,14 @@ import {Button, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 
-import {DATE_FORMAT} from "../adapters/reader";
 import {BooksList, BooksListMode} from "./books-list/books-list";
-import {getReaderById} from "../store/readers/selectors";
-import {updateReader} from "../store/readers/readers";
+import {DATE_FORMAT} from "../adapters/reader";
+import {FetchStatus} from "../const";
+import {Info, InfoType} from "./info";
 import {getBooksByIds, getFreeBooks} from "../store/books/selectors";
+import {getReaderById, getReadersInfo} from "../store/readers/selectors";
+import {resetReadersStatus, updateReader} from "../store/readers/readers";
+import {useWaitShow} from "../utils";
 import type {BookTakenStatusType} from "../types";
 
 
@@ -20,12 +23,17 @@ interface PropsType {
 export const ReaderModal: React.FC<PropsType> = (props: PropsType) => {
   const {readerId} = props;
 
-  const dispatch = useDispatch();
+  const {
+    status,
+    error,
+  } = useSelector(getReadersInfo);
 
+  const dispatch = useDispatch();
   const reader = useSelector(getReaderById(readerId));
   const freeBooks = useSelector(getFreeBooks);
   const takedBooksCount = reader.books.length;
   const takedBooks = useSelector(getBooksByIds(reader.books.map((book) => book.id)));
+  const isWaitShow = useWaitShow(status);
 
   const [isBookChoice, setIsBookChoice] = useState(false);
 
@@ -50,6 +58,10 @@ export const ReaderModal: React.FC<PropsType> = (props: PropsType) => {
     books.push(newBook);
 
     dispatch(updateReader(Object.assign({}, reader, {books})));
+  };
+
+  const handleErrorComponentClick = () => {
+    dispatch(resetReadersStatus());
   };
 
   return (
@@ -83,6 +95,21 @@ export const ReaderModal: React.FC<PropsType> = (props: PropsType) => {
           />}
         </div>
       </div>
+
+      {isWaitShow &&
+        <div className="absolute">
+          <Info type={InfoType.WAIT} />
+        </div>
+      }
+
+      {status === FetchStatus.REJECTED &&
+        <div
+          className="absolute absolute--clickable"
+          onClick={handleErrorComponentClick}
+        >
+          <Info type={InfoType.ERROR} error={error} />
+        </div>
+      }
     </>
   );
 };
