@@ -15,7 +15,7 @@ const api = createAPI();
 const store = createStore(api);
 
 
-const renderDom = () => {
+const renderDom = (): void => {
   ReactDom.render(
     <Provider store={store}>
       <App />

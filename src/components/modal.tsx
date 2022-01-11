@@ -15,7 +15,7 @@ interface PropsType {
 const modalElement: HTMLElement = document.querySelector(`#modal`);
 
 
-const Modal: React.FC<PropsType> = (props: PropsType) => {
+const Modal: React.FC<PropsType> = (props: PropsType): JSX.Element => {
   const {
     children,
     close,

@@ -18,7 +18,7 @@ const renderReaderStatus = (readerStatus: boolean) => (
 );
 
 
-export const ReadersList: React.FC<PropsType> = (props: PropsType) => {
+export const ReadersList: React.FC<PropsType> = (props: PropsType): JSX.Element => {
   const {
     readers,
     openModal,

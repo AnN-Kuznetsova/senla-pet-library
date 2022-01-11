@@ -11,7 +11,7 @@ interface PropsType {
 }
 
 
-const BooksFilterForm: React.FC<PropsType> = (props: PropsType) => {
+const BooksFilterForm: React.FC<PropsType> = (props: PropsType): JSX.Element => {
   const {setBooksFilter} = props;
   const [title, setTitle] = useState("");
   const [autor, setAutor] = useState("");

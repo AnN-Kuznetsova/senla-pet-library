@@ -10,7 +10,7 @@ import {resetReadersStatus} from "../store/readers/readers";
 import {useModal} from "./modal";
 
 
-export const ReadersSection: React.FC = () => {
+export const ReadersSection: React.FC = (): JSX.Element => {
   const {
     readers,
     operation: readersOperation,

@@ -5,7 +5,7 @@ import {BooksSection} from "./books-section";
 import {ReadersSection} from "./readers-section";
 
 
-export const MainPage: React.FC = () => {
+export const MainPage: React.FC = (): JSX.Element => {
   return (
     <main>
       <Stack spacing={2} direction="row" style={{width: "100%"}}>

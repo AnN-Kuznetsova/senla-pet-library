@@ -6,7 +6,7 @@ interface PropsType {
 }
 
 
-export const BookCover: React.FC<PropsType> = (props: PropsType) => {
+export const BookCover: React.FC<PropsType> = (props: PropsType): JSX.Element => {
   const {coverImgUrl} = props;
 
   return (

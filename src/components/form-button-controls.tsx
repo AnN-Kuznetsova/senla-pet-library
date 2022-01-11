@@ -21,7 +21,7 @@ interface PropsType {
 }
 
 
-export const FormButtonControlls: React.FC<PropsType> = (props: PropsType) => {
+export const FormButtonControlls: React.FC<PropsType> = (props: PropsType): JSX.Element => {
   const {
     buttons,
   } = props;

@@ -4,7 +4,7 @@ import {Typography} from "@mui/material";
 import {BookInfoForm} from "./book-info-form";
 
 
-export const NewBookModal: React.FC = () => {
+export const NewBookModal: React.FC = (): JSX.Element => {
   return (
     <React.Fragment>
       <Typography variant="h4">Заполнение данных новой книги</Typography>

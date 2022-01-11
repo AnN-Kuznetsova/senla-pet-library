@@ -22,7 +22,7 @@ interface PropsType {
 }
 
 
-export const BooksList: React.FC<PropsType> = (props: PropsType) => {
+export const BooksList: React.FC<PropsType> = (props: PropsType): JSX.Element => {
   const {
     books,
     mode,

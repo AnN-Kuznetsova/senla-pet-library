@@ -20,7 +20,7 @@ interface PropsType {
 }
 
 
-export const ReaderModal: React.FC<PropsType> = (props: PropsType) => {
+export const ReaderModal: React.FC<PropsType> = (props: PropsType): JSX.Element => {
   const {readerId} = props;
 
   const {

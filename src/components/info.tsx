@@ -16,7 +16,7 @@ interface PropsType {
 }
 
 
-export const Info: React.FC<PropsType> = (props: PropsType) => {
+export const Info: React.FC<PropsType> = (props: PropsType): JSX.Element => {
   const {
     type,
     error,

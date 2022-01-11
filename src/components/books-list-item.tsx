@@ -17,7 +17,7 @@ interface PropsType {
 }
 
 
-export const BooksListItem: React.FC<PropsType> = (props: PropsType) => {
+export const BooksListItem: React.FC<PropsType> = (props: PropsType): JSX.Element => {
   const {
     book,
     mode,

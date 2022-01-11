@@ -26,7 +26,7 @@ const getInputTextValidation = (text: string): boolean => {
 };
 
 
-export const BookInfoForm: React.FC<PropsType> = (props: PropsType) => {
+export const BookInfoForm: React.FC<PropsType> = (props: PropsType): JSX.Element => {
   const {
     book,
     onCancelButtonClick,

@@ -13,7 +13,7 @@ import {useModal} from "./modal";
 import {useWaitShow} from "../utils";
 
 
-export const BooksSection: React.FC = () => {
+export const BooksSection: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const books = useSelector(getBooks);
   const booksOperation = useSelector(getBooksOperation);
