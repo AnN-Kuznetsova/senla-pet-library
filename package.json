@@ -87,6 +87,11 @@
   "jest": {
     "setupFilesAfterEnv": [
       "<rootDir>/src/test-setup.ts"
+    ],
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx}",
+      "!**/node_modules/**",
+      "!**/vendor/**"
     ]
   }
 }
