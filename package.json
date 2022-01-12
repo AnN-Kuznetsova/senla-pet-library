@@ -5,8 +5,8 @@
   "description": "SENLA - pet-project Library",
   "scripts": {
     "eslint": "eslint --ext .tsx --ext .ts src/",
-    "test.jest": "jest",
-    "test": "npm run eslint && npm run test.jest",
+    "jest": "jest",
+    "test": "npm run eslint && npm run jest",
     "build": "webpack --mode production",
     "start": "webpack serve",
     "sb": "start-storybook -p 6006",
@@ -28,6 +28,7 @@
     "@storybook/preset-scss": "1.0.3",
     "@storybook/preset-typescript": "^3.0.0",
     "@storybook/react": "^6.4.4",
+    "@types/enzyme": "3.10.11",
     "@types/jest": "27.4.0",
     "@types/lodash": "4.14.177",
     "@types/lodash.debounce": "4.0.6",
@@ -36,12 +37,14 @@
     "@types/redux-mock-store": "1.0.3",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
     "@typescript-eslint/parser": "^5.3.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "0.6.6",
     "babel-jest": "27.4.6",
     "babel-loader": "8.2.3",
     "babel-polyfill": "6.26.0",
     "clean-webpack-plugin": "4.0.0",
     "copy-webpack-plugin": "9.1.0",
     "css-loader": "5.2.0",
+    "enzyme": "3.11.0",
     "eslint": "^7.1.0",
     "eslint-plugin-import": "2.25.2",
     "eslint-plugin-react": "7.26.1",
@@ -80,5 +83,10 @@
     "react-dom": "17.0.2",
     "react-redux": "7.2.6",
     "redux-typescript": "1.2.1"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/test-setup.ts"
+    ]
   }
 }
