@@ -3,7 +3,6 @@ import MockAdapter from "axios-mock-adapter";
 import {BooksStateType, loadBooks, reducer, resetBooksStatus} from "./books";
 import {FetchOperation, FetchStatus} from "../../const";
 import {createAPI} from "../../api";
-import { createStore } from "../store";
 
 
 global.window = Object.create(window);
@@ -20,8 +19,6 @@ const dispatch = jest.fn();
 const api = createAPI();
 const apiMock = new MockAdapter(api);
 
-const store = createStore(api);
-
 
 describe(`Books reducer`, () => {
   test(`should return the initial state`, () => {
@@ -35,6 +32,7 @@ describe(`Books reducer`, () => {
 
     expect(reducer(undefined, {type: ``})).toEqual(initialState);
   });
+
 
   test(`should reset books status`, () => {
     const state: BooksStateType = {
@@ -59,29 +57,41 @@ describe(`Books reducer`, () => {
 
 
 describe(`Books extraReducers`, () => {
-  const initialState: BooksStateType = {
-    ids: [],
-    entities: {},
-    operation: null,
-    status: null,
-    error: null,
-  };
+  let initialState: BooksStateType;
 
-  test(`should put correct info for loadBooks pending`, /* async */ () => {
+  beforeEach(() => {
+    initialState = {
+      ids: [],
+      entities: {},
+      operation: null,
+      status: null,
+      error: null,
+    };
+  });
+
+  
+  test(`should put correct info for loadBooks pending`, async () => {
     const actionPending = {
       type: loadBooks.pending.type,
     };
 
-    let state = /* await */ reducer(initialState, actionPending);
+    const state = reducer(initialState, actionPending);
 
     expect(state).toEqual({
       ...initialState,
       operation: FetchOperation.LOAD,
       status: FetchStatus.LOADING,
     });
-  // });
-//
-  // test(`should correct load books`, async () => {
+  });
+
+
+  test(`should correct load books`, async () => {
+    let state: BooksStateType = {
+      ...initialState,
+      operation: FetchOperation.LOAD,
+      status: FetchStatus.LOADING,
+    }
+
     const mockResponseData = [
       {
         "id": "b1",
@@ -102,11 +112,6 @@ describe(`Books extraReducers`, () => {
         "coverImgUrl": "./assets/img/old_man_and_sea_book.jpg"
       }
     ];
-
-    const actionFulfilled = {
-      type: loadBooks.fulfilled.type,
-      payload: mockResponseData,
-    };
 
     const resultState: BooksStateType = {
       ids: ["b1","b2","b3"],
@@ -140,23 +145,31 @@ describe(`Books extraReducers`, () => {
       .onGet(`/books`)
       .reply(200, mockResponseData);
 
-    const response = /* await */ loadBooks();
-
-    // reducer(initialState, loadBooks())
-    // console.log(response);
-
-    state = /* await */ reducer(state, actionFulfilled);
+    const responseAction = await loadBooks()(dispatch, ()=>{/**/}, api);
+    state = reducer(state, responseAction);
 
     expect(state).toEqual(resultState);
   });
+
+
+  test(`should reject with error`, async () => {
+    let state: BooksStateType = {
+      ...initialState,
+      operation: FetchOperation.LOAD,
+      status: FetchStatus.LOADING,
+    }
+
+    apiMock
+      .onGet(`/books`)
+      .reply(400);
+
+    const responseAction = await loadBooks()(dispatch, ()=>{/**/}, api);
+    state = reducer(state, responseAction);
+
+    expect(state.ids).toEqual([]);
+    expect(state.entities).toEqual({});
+    expect(state.operation).toBe(FetchOperation.LOAD);
+    expect(state.status).toBe(FetchStatus.REJECTED);
+    expect(state.error).toBeTruthy();
+  });
 });
-
-
-
-// describe(`Books operations (fetch) work correctly`, () => {
-//   test(`"loadBooks" should make a correct API call for saccess get request`, async () => {
-//     const booksLoader = loadBooks();
-
-//     await const books = loadBooks()
-//   });
-// });
