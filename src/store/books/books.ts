@@ -1,5 +1,5 @@
-import {AxiosInstance} from "axios";
 import {createAsyncThunk, createEntityAdapter, createSlice, EntityId, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
+import type {AxiosInstance} from "axios";
 
 import {FetchOperation, FetchStatus} from "../../const";
 import {createBook, createBooks, toRAWBook} from "../../adapters/book";

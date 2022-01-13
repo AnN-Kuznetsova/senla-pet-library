@@ -4,7 +4,7 @@ import {shallow} from "enzyme";
 import {ItemButton, ItemButtonMode} from "./item-button";
 
 
-describe(`Render <ItemButton>`, () => {
+describe(`<ItemButton>`, () => {
   it(`Should render button with correct text and class`, () => {
     const itemButtonElement = shallow(
       <ItemButton
@@ -13,8 +13,11 @@ describe(`Render <ItemButton>`, () => {
         onClick={()=>{/**/}}
       />);
 
+    expect(itemButtonElement.length).toBe(1);
     expect(itemButtonElement.text()).toBe(`Item-Button`);
     expect(itemButtonElement.hasClass(ItemButtonMode.WARNING));
+
+    expect(itemButtonElement).toMatchSnapshot();
   });
 
   it(`Should ItemButton be pressed`, () => {
@@ -25,6 +28,7 @@ describe(`Render <ItemButton>`, () => {
         onClick={onClick}
       />);
 
+    expect(itemButtonElement.length).toBe(1);
     expect(onClick).toBeCalledTimes(0);
 
     itemButtonElement.simulate(`click`);

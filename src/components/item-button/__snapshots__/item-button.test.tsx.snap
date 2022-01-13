@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ItemButton> Should render button with correct text and class 1`] = `ShallowWrapper {}`;

@@ -6,7 +6,6 @@
     "jsx": "react",
     "allowSyntheticDefaultImports": false,
     "noImplicitAny": true,
-    "esModuleInterop": true,
   },
   "include": ["src/**/*"],
   "exclude": [
