@@ -2,12 +2,12 @@ import * as React from "react";
 import {ListItemText} from "@mui/material";
 import {useDispatch} from "react-redux";
 
-import {BooksListMode} from "./books-list/books-list";
-import {BookModal} from "./book-modal";
-import {BookTakenInfoMode, useBookTakenInfo} from "./book-taken-info";
-import {ItemButton, ItemButtonMode} from "./item-button/item-button";
-import {deleteBook} from "../store/books/books";
-import type {BookType} from "../types";
+import {BooksListMode} from "../books-list/books-list";
+import {BookModal} from "../book-modal";
+import {BookTakenInfoMode, useBookTakenInfo} from "../book-taken-info";
+import {ItemButton, ItemButtonMode} from "../item-button/item-button";
+import {deleteBook} from "../../store/books/books";
+import type {BookType} from "../../types";
 
 
 interface PropsType {

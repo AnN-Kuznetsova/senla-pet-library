@@ -2,7 +2,7 @@ import * as React from "react";
 import {List, ListItem, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 
-import {BooksListItem} from "../books-list-item";
+import {BooksListItem} from "../books-list-item/books-list-item";
 import {getFilteredEntities} from "../../utils";
 import {useBooksFilter} from "../books-filter-form";
 import type {BookType} from "../../types";

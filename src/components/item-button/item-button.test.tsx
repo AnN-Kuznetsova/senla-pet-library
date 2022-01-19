@@ -4,8 +4,8 @@ import {shallow} from "enzyme";
 import {ItemButton, ItemButtonMode} from "./item-button";
 
 
-describe(`<ItemButton>`, () => {
-  it(`Should render button with correct text and class`, () => {
+describe(`ItemButton`, () => {
+  test(`Should render button with correct text and class`, () => {
     const itemButtonElement = shallow(
       <ItemButton
         textValue={`Item-Button`}
@@ -20,7 +20,7 @@ describe(`<ItemButton>`, () => {
     expect(itemButtonElement).toMatchSnapshot();
   });
 
-  it(`Should ItemButton be pressed`, () => {
+  test(`Should ItemButton be pressed`, () => {
     const onClick = jest.fn();
 
     const itemButtonElement = shallow(
