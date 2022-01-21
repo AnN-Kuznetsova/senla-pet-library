@@ -1,6 +1,5 @@
 import * as Enzyme from "enzyme";
-// @ts-ignore
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
+import * as Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import "regenerator-runtime/runtime";
 
 Enzyme.configure({

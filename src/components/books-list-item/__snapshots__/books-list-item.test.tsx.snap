@@ -1804,3 +1804,5 @@ LoadedCheerio {
   },
 }
 `;
+
+exports[`BooksListItem Should render correct when "BooksListMode" is "TAKED_BOOKS" 1`] = `ReactWrapper {}`;
