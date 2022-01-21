@@ -3,14 +3,14 @@ import {Button,Stack} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useState, useEffect} from "react";
 
-import {BooksList, BooksListMode} from "./books-list/books-list";
-import {FetchOperation, FetchStatus} from "../const";
-import {Info, InfoType} from "./info";
-import {NewBookModal} from "./new-book-modal";
-import {getBooks, getBooksError, getBooksOperation, getBooksStatus} from "../store/books/selectors";
-import {resetBooksStatus} from "../store/books/books";
-import {useModal} from "./modal";
-import {useWaitShow} from "../utils";
+import {BooksList, BooksListMode} from "../books-list/books-list";
+import {FetchOperation, FetchStatus} from "../../const";
+import {Info, InfoType} from "../info";
+import {NewBookModal} from "../new-book-modal";
+import {getBooks, getBooksError, getBooksOperation, getBooksStatus} from "../../store/books/selectors";
+import {resetBooksStatus} from "../../store/books/books";
+import {useModal} from "../modal";
+import {useWaitShow} from "../../utils";
 
 
 export const BooksSection: React.FC = (): JSX.Element => {
@@ -79,6 +79,7 @@ export const BooksSection: React.FC = (): JSX.Element => {
         variant="contained"
         disabled={isLoading || !books.length}
         onClick={handleShowBooksButtonClick}
+        data-test="showBooksButton"
       >
         {isBooksListShow && `Hide books list` || `Show books list`}
       </Button>

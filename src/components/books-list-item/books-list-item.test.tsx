@@ -230,8 +230,6 @@ describe(`BooksListItem`, () => {
 
       const children = booksListItemElement.children().at(0).children();
       expect(children.at(1).text()).toContain(`31 October 2021`);
-      console.log(moment());
-
       expect(children.at(1).text()).toContain(`after a month`);
       booksListItemElement.unmount();
     }

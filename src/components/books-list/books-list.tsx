@@ -66,7 +66,7 @@ export const BooksList: React.FC<PropsType> = (props: PropsType): JSX.Element =>
 
       {!!filteredBooks.length &&
         <div className="list-wrapper">
-          <List>{
+          <List data-test="list">{
             filteredBooks.map((book, index) => {
               return (
                 <ListItem key={index + book.id}>

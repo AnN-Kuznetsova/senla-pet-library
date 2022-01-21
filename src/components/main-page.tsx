@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Stack} from "@mui/material";
 
-import {BooksSection} from "./books-section";
+import {BooksSection} from "./books-section/books-section";
 import {ReadersSection} from "./readers-section";
 
 
