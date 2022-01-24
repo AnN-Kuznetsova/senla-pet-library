@@ -94,7 +94,8 @@
     "collectCoverageFrom": [
       "**/*.{ts,tsx}",
       "!**/node_modules/**",
-      "!**/vendor/**"
+      "!**/vendor/**",
+      "!**/src/stories/**"
     ],
     "preset": "ts-jest",
     "testEnvironment": "jsdom",
