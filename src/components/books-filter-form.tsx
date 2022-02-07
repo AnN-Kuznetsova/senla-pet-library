@@ -1,6 +1,7 @@
 import * as React from "react";
 import {FormControl, Input, InputLabel} from "@mui/material";
 import {useEffect, useCallback, useMemo, useState} from "react";
+import {useFormik} from "formik";
 
 import {debounced} from "../utils";
 import type {BookFilterType} from "../types";
@@ -13,23 +14,21 @@ interface PropsType {
 
 const BooksFilterForm: React.FC<PropsType> = (props: PropsType): JSX.Element => {
   const {setBooksFilter} = props;
-  const [title, setTitle] = useState("");
-  const [autor, setAutor] = useState("");
 
-  const handleInputTitleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
-  };
-
-  const handleInputAutorSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAutor(event.target.value);
-  };
+  const formik = useFormik({
+    initialValues: {
+      filterTitle: ``,
+      filterAutor: ``,
+    },
+    onSubmit: () => {/**/},
+  });
 
   const setFilter = useCallback(() => {
     setBooksFilter({
-      title,
-      autor,
+      title: formik.values.filterTitle,
+      autor: formik.values.filterAutor,
     });
-  }, [title, autor, setBooksFilter]);
+  }, [formik.values.filterTitle, formik.values.filterAutor, setBooksFilter]);
 
   const debouncedSetFilter = useMemo(
     () => debounced(setFilter),
@@ -39,17 +38,17 @@ const BooksFilterForm: React.FC<PropsType> = (props: PropsType): JSX.Element => 
   useEffect(() => {
     debouncedSetFilter();
     return debouncedSetFilter.cancel;
-  }, [title, autor, debouncedSetFilter]);
+  }, [formik.values.filterTitle, formik.values.filterAutor, debouncedSetFilter]);
 
   return (
     <form className="form" >
       <FormControl className="form__field-control">
-        <InputLabel htmlFor="book-title-filter">Введите название книги</InputLabel>
-        <Input id="book-title-filter" name="book-title-filter" type="text" value={title} onChange={handleInputTitleSearchChange} />
+        <InputLabel htmlFor="filterTitle">Введите название книги</InputLabel>
+        <Input id="filterTitle" name="filterTitle" type="text" value={formik.values.filterTitle} onChange={formik.handleChange} />
       </FormControl>
       <FormControl className="form__field-control">
-        <InputLabel htmlFor="book-autor-filter">Введите автора</InputLabel>
-        <Input id="book-autor-filter" name="book-autor-filter" type="text" value={autor} onChange={handleInputAutorSearchChange} />
+        <InputLabel htmlFor="filterAutor">Введите автора</InputLabel>
+        <Input id="filterAutor" name="filterAutor" type="text" value={formik.values.filterAutor} onChange={formik.handleChange} />
       </FormControl>
     </form>
   );
