@@ -1,7 +1,8 @@
 import * as React from "react";
+import * as Yup from "yup";
 import {Button, FormControl, Input, InputLabel} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
+import {useFormik} from "formik";
 
 import {BookCover} from "./book-cover";
 import {DEFOULT_COVER_IMGURL, FetchStatus} from "../const";
@@ -21,9 +22,13 @@ interface PropsType {
 }
 
 
-const getInputTextValidation = (text: string): boolean => {
-  return !!text;
-};
+const validationSchema = Yup.object({
+  title: Yup.string()
+    .required(`Title is required.`),
+  autor: Yup.string()
+    .required(`Autor is required.`),
+
+});
 
 
 export const BookInfoForm: React.FC<PropsType> = (props: PropsType): JSX.Element => {
@@ -38,51 +43,49 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType): JSX.Element
   const error = useSelector(getBooksError);
   const isWaitShow = useWaitShow(status);
 
-  const [title, setTitle] = useState(book ? book.title : "");
-  const [autor, setAutor] = useState(book ? book.autor : "");
-  const [coverImgUrl, setCoverImgUrl] = useState(book ? book.coverImgUrl : DEFOULT_COVER_IMGURL);
+  const formik = useFormik({
+    initialValues: {
+      title: book ? book.title : "",
+      autor: book ? book.autor : "",
+      coverImgUrl: book ? book.coverImgUrl : DEFOULT_COVER_IMGURL,
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      const newBookData = {
+        id: book ? book.id : ``,
+        title: values.title,
+        autor: values.autor,
+        coverImgUrl: values.coverImgUrl,
+      };
 
-  const handleInputTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
-  };
-
-  const handleInputAutorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAutor(event.target.value);
-  };
+      if (book) {
+        dispatch(updateBook({
+          book: newBookData,
+          onSubmit,
+        }));
+      } else {
+        dispatch(addNewBook(newBookData));
+      }
+    },
+    initialTouched: {
+      title: false,
+      autor: false,
+    },
+  });
 
   const handleCoverImgUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const imgFile = event.target.files[0];
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      setCoverImgUrl(reader.result);
+      formik.setFieldValue(`coverImgUrl`, reader.result);
     };
 
     reader.readAsDataURL(imgFile);
   };
 
-  const isValidate = getInputTextValidation(title) && getInputTextValidation(autor);
-  const isNewData = book ? (title !== book.title || autor !== book.autor || coverImgUrl !== book.coverImgUrl) : true;
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-
-    const newBookData = {
-      id: book ? book.id : ``,
-      title,
-      autor,
-      coverImgUrl,
-    };
-
-    if (book) {
-      dispatch(updateBook({
-        book: newBookData,
-        onSubmit,
-      }));
-    } else {
-      dispatch(addNewBook(newBookData));
-    }
-  };
+  const isNewData = book ? (formik.values.title !== book.title || formik.values.autor !== book.autor || formik.values.coverImgUrl !== book.coverImgUrl)
+    : Object.values(formik.touched).every((touch) => touch === true);
 
   const handleErrorComponentClick = () => {
     dispatch(resetBooksStatus());
@@ -91,7 +94,7 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType): JSX.Element
   const controllButtons: ControllButtonType[] = [];
   controllButtons.push({
     type: FormButtonControllsType.SAVE,
-    isDisabled: !(isValidate && isNewData),
+    isDisabled: !(formik.isValid  && isNewData),
     isSubmit: true,
     });
 
@@ -106,13 +109,20 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType): JSX.Element
     <React.Fragment>
       <form
         className="form  book-modal"
-        onSubmit={handleSubmit}
+        onSubmit={formik.handleSubmit}
       >
         <div className="form__field-control  form__field-control--img-loader" >
-          <BookCover coverImgUrl={coverImgUrl} />
+          <BookCover coverImgUrl={formik.values.coverImgUrl} />
 
-          <label htmlFor="book-cover-img-url" className="form__load-button">
-            <input id="book-cover-img-url" type="file" accept="image/png, image/jpeg, image/jpg" onChange={handleCoverImgUrlChange} hidden />
+          <label htmlFor="coverImgUrl" className="form__load-button">
+            <input
+              id="coverImgUrl"
+              name="coverImgUrl"
+              type="file"
+              accept="image/png, image/jpeg, image/jpg"
+              onChange={handleCoverImgUrlChange}
+              hidden
+            />
             <Button variant="outlined" component="span">
               Загрузить...
             </Button>
@@ -122,18 +132,34 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType): JSX.Element
         <div className="book-modal__info">
           <FormControl
             className="form__field-control"
-            error={!getInputTextValidation(title)}
+            error={!!formik.touched.title && !!formik.errors.title}
+
           >
-            <InputLabel htmlFor="book-title">Введите название</InputLabel>
-            <Input id="book-title" name="book-title" type="text" value={title} onChange={handleInputTitleChange} autoFocus={true} />
+            <InputLabel htmlFor="title">Введите название</InputLabel>
+            <Input
+              id="title"
+              name="title"
+              type="text"
+              value={formik.values.title}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              autoFocus={true}
+            />
           </FormControl>
 
           <FormControl
             className="form__field-control"
-            error={!getInputTextValidation(autor)}
+            error={!!formik.touched.autor && !!formik.errors.autor}
           >
-            <InputLabel htmlFor="book-autor">Введите автора</InputLabel>
-            <Input id="book-autor" name="book-autor" type="text" value={autor} onChange={handleInputAutorChange} />
+            <InputLabel htmlFor="autor">Введите автора</InputLabel>
+            <Input
+              id="autor"
+              name="autor"
+              type="text"
+              value={formik.values.autor}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
           </FormControl>
 
           <FormButtonControlls buttons={controllButtons} />
