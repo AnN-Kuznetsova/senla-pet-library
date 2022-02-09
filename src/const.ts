@@ -7,6 +7,11 @@ const WAIT_DELAY = 300; // ms
 const TIME_TO_READ = 30; // days
 const DEFOULT_COVER_IMGURL = `./assets/img/sass-logo.png`;
 
+enum AppRoute {
+  MAIN = `/`,
+  CHART_PAGE = `chart`,
+}
+
 enum FetchStatus {
   LOADING = `LOADING`,
   RESOLVED = `RESOLVED`,
@@ -62,12 +67,16 @@ const THEME = createTheme({
 });
 
 
+
+
+
 export {
   DEFOULT_COVER_IMGURL,
   DEBOUNCE_DELAY,
   WAIT_DELAY,
   TIME_TO_READ,
   THEME,
+  AppRoute,
   ThemeMode,
   FetchError,
   FetchOperation,
