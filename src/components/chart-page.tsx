@@ -6,15 +6,24 @@ import {
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
 } from "chart.js";
-import {Line} from "react-chartjs-2";
+import {Bar, Line} from "react-chartjs-2";
+import {MenuItem, Select} from "@mui/material";
 import {useSelector} from "react-redux";
+import {useState} from "react";
 
 import {getReaders} from "../store/readers/selectors";
 
+
+enum ChartMode {
+  LINE,
+  VERTICAL_BAR,
+  HORIZONTAL_BAR,
+}
 
 const Labels = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`];
 
@@ -24,6 +33,7 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
@@ -34,6 +44,13 @@ export const ChartPage: React.FC = (): JSX.Element => {
   const readers = useSelector(getReaders);
   const takenBooks = readers.filter((reader) => reader.books.length)
     .flatMap((reader) => reader.books);
+
+  const chartModes = (Object.keys(ChartMode) as Array<keyof typeof ChartMode>).filter((key) => isNaN(+key) === true);
+  const [chartMode, setChartMode] = useState(ChartMode.LINE);
+
+  const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setChartMode(+event.target.value);
+  };
 
   const options = {
     responsive: true,
@@ -49,6 +66,16 @@ export const ChartPage: React.FC = (): JSX.Element => {
           size: 25,
           weight: `bold`,
         },
+      },
+    },
+  };
+
+  const verticalChartOptions = {
+    ...options,
+    indexAxis: 'y' as const,
+    elements: {
+      bar: {
+        borderWidth: 2,
       },
     },
   };
@@ -83,6 +110,27 @@ export const ChartPage: React.FC = (): JSX.Element => {
   };
 
   return (
-    <Line options={options} data={chartData} />
+    <div className="chart-wrapper">
+      <Select
+        id="chartSelect"
+        variant="standard"
+        sx={{ m: 1, minWidth: 300 }}
+        value={chartMode}
+        onChange={handleSelectChange}
+      >
+        {
+          chartModes.map((mode, index) => {
+            const label = mode.toLocaleLowerCase().split(`_`).map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(` `) + ` Chart`;
+            return (
+              <MenuItem value={ChartMode[mode]} key={mode + index}>{label}</MenuItem>
+            );
+          })
+        }
+      </Select>
+
+      {chartMode === ChartMode.LINE && <Line options={options} data={chartData} />}
+      {chartMode === ChartMode.VERTICAL_BAR && <Bar options={options} data={chartData} />}
+      {chartMode === ChartMode.HORIZONTAL_BAR && <Bar options={verticalChartOptions} data={chartData} />}
+    </div>
   );
 };
