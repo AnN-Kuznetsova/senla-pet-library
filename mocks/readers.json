@@ -20,7 +20,7 @@
       },
       {
         "id": "b3",
-        "dateOfTaking": "2021-10-31"
+        "dateOfTaking": "2018-10-31"
       }
     ]
   },
@@ -28,6 +28,15 @@
     "id": "r3",
     "name": "Nikolay",
     "age": "18",
-    "books": []
+    "books": [
+      {
+        "id": "b5",
+        "dateOfTaking": "2021-05-20"
+      },
+      {
+        "id": "b8",
+        "dateOfTaking": "2021-05-03"
+      }
+    ]
   }
 ]
