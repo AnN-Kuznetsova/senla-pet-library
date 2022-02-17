@@ -128,9 +128,11 @@ export const ChartPage: React.FC = (): JSX.Element => {
         }
       </Select>
 
-      {chartMode === ChartMode.LINE && <Line options={options} data={chartData} />}
-      {chartMode === ChartMode.VERTICAL_BAR && <Bar options={options} data={chartData} />}
-      {chartMode === ChartMode.HORIZONTAL_BAR && <Bar options={verticalChartOptions} data={chartData} />}
+      <div className="chart">
+        {chartMode === ChartMode.LINE && <Line options={options} data={chartData} />}
+        {chartMode === ChartMode.VERTICAL_BAR && <Bar options={options} data={chartData} />}
+        {chartMode === ChartMode.HORIZONTAL_BAR && <Bar options={verticalChartOptions} data={chartData} />}
+      </div>
     </div>
   );
 };
