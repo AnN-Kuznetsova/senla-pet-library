@@ -13,16 +13,16 @@ enum AppRoute {
 }
 
 enum FetchStatus {
-  LOADING = `LOADING`,
-  RESOLVED = `RESOLVED`,
-  REJECTED = `REJECTED`,
+  LOADING,
+  RESOLVED,
+  REJECTED,
 }
 
 enum FetchOperation {
-  LOAD = `LOAD`,
-  ADD_NEW = `ADD_NEW`,
-  UPDATE = `UPDATE`,
-  DELETE = `DELETE`,
+  LOAD,
+  ADD_NEW,
+  UPDATE,
+  DELETE,
 }
 
 enum FetchError {

@@ -14,8 +14,8 @@ export interface BooksStateType {
   entities: {
     [key: string]: BookType,
   },
-  operation: string | null,
-  status: string | null,
+  operation: FetchOperation | null,
+  status: FetchStatus | null,
   error: ErrorType | null,
 }
 

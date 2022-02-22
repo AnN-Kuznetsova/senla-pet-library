@@ -22,7 +22,7 @@ const createErrorValue = (error: unknown & {response?: object, request: XMLHttpR
   }
 };
 
-const useWaitShow = (status: string | null): boolean => {
+const useWaitShow = (status: FetchStatus | null): boolean => {
   const [isWaitShow, setIsWaitShow] = useState(false);
   const waitTimerRef =  useRef(null);
 
@@ -39,7 +39,7 @@ const useWaitShow = (status: string | null): boolean => {
   };
 
   useEffect(() => {
-    if (status && status.includes(FetchStatus.LOADING)) {
+    if (status === FetchStatus.LOADING) {
       createTimer();
     } else {
       clearTimer();

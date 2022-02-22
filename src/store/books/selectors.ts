@@ -1,5 +1,6 @@
 import {createSelector} from "reselect";
 
+import {FetchOperation, FetchStatus} from "../../const";
 import {booksSelectors} from "./books";
 import {getReaders} from "../readers/selectors";
 import type {RootStateType} from "../..";
@@ -8,9 +9,9 @@ import type {BookTakenStatusType, BookType, ErrorType} from "../../types";
 
 const getBooks = (state: RootStateType): BookType[] => booksSelectors.selectAll(state) as BookType[];
 
-const getBooksOperation = (state: RootStateType): string | null => state.books.operation;
+const getBooksOperation = (state: RootStateType): FetchOperation | null => state.books.operation;
 
-const getBooksStatus = (state: RootStateType): string | null => state.books.status;
+const getBooksStatus = (state: RootStateType): FetchStatus | null => state.books.status;
 
 const getBooksError = (state: RootStateType): ErrorType | null => state.books.error;
 

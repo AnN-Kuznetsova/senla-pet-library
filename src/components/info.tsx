@@ -6,8 +6,8 @@ import {FetchError} from "../const";
 
 
 export enum InfoType {
-  WAIT = `WAIT`,
-  ERROR = `ERROR`,
+  WAIT,
+  ERROR ,
 }
 
 interface PropsType {

@@ -38,8 +38,8 @@ describe(`Books reducer`, () => {
     const state: BooksStateType = {
       ids: [],
       entities: {},
-      operation: `operation`,
-      status: `status`,
+      operation: FetchOperation.LOAD,
+      status: FetchStatus.REJECTED,
       error: null,
     };
 
@@ -69,7 +69,7 @@ describe(`Books extraReducers`, () => {
     };
   });
 
-  
+
   test(`should put correct info for loadBooks pending`, async () => {
     const actionPending = {
       type: loadBooks.pending.type,

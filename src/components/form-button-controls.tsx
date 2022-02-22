@@ -3,9 +3,9 @@ import {Button} from "@mui/material";
 
 
 export enum FormButtonControllsType {
-  CHANGE = `CHANGE`,
-  SAVE = `SAVE`,
-  CANCEL = `CANCEL`,
+  CHANGE,
+  SAVE,
+  CANCEL,
 }
 
 

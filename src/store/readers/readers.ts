@@ -13,8 +13,8 @@ export interface ReadersStateType {
   entities: {
     [key: string]: ReaderType,
   },
-  operation: string | null,
-  status: string | null,
+  operation: FetchOperation | null,
+  status: FetchStatus | null,
   error: ErrorType | null,
 }
 

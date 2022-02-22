@@ -9,9 +9,9 @@ import type {BookType} from "../../types";
 
 
 export enum BooksListMode {
-  DEFAULT = `DEFAULT`,
-  BOOK_CHOICE = `BOOK_CHOICE`,
-  TAKED_BOOKS = `TAKED_BOOK`,
+  DEFAULT,
+  BOOK_CHOICE,
+  TAKED_BOOKS,
 }
 
 
