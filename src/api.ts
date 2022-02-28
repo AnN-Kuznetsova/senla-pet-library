@@ -1,6 +1,5 @@
 import axios, {AxiosInstance} from "axios";
 
-
 export const createAPI = (onFailRequest?: (error: Error) => void): AxiosInstance => {
   const api = axios.create({
     baseURL: location.origin,
@@ -8,7 +7,7 @@ export const createAPI = (onFailRequest?: (error: Error) => void): AxiosInstance
     withCredentials: true,
   });
 
-  const onSuccess = <T>(response: T ): T => {
+  const onSuccess = <T>(response: T): T => {
     return response;
   };
 

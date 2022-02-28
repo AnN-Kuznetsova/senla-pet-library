@@ -7,8 +7,8 @@ import {ItemButton, ItemButtonMode} from "./item-button/item-button";
 
 
 interface PropsType {
-  children: React.ReactElement,
-  close: () => void,
+  children: React.ReactElement;
+  close: () => void;
 }
 
 

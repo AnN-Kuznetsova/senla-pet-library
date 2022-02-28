@@ -2,10 +2,10 @@ import type {BookType} from "../types";
 
 
 interface BookDataType {
-  id: string,
-  title: string,
-  autor: string,
-  coverImgUrl: string | ArrayBuffer,
+  id: string;
+  title: string;
+  autor: string;
+  coverImgUrl: string | ArrayBuffer;
 }
 
 
@@ -14,7 +14,7 @@ const createBook = (bookData: BookDataType): BookType => {
     id: bookData.id,
     title: bookData.title,
     autor: bookData.autor,
-    coverImgUrl: bookData.coverImgUrl
+    coverImgUrl: bookData.coverImgUrl,
   };
 };
 

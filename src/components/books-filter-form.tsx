@@ -7,7 +7,7 @@ import type {BookFilterType} from "../types";
 
 
 interface PropsType {
-  setBooksFilter: (payload: BookFilterType) => void,
+  setBooksFilter: (payload: BookFilterType) => void;
 }
 
 
@@ -42,14 +42,26 @@ const BooksFilterForm: React.FC<PropsType> = (props: PropsType): JSX.Element => 
   }, [title, autor, debouncedSetFilter]);
 
   return (
-    <form className="form" >
+    <form className="form">
       <FormControl className="form__field-control">
         <InputLabel htmlFor="book-title-filter">Введите название книги</InputLabel>
-        <Input id="book-title-filter" name="book-title-filter" type="text" value={title} onChange={handleInputTitleSearchChange} />
+        <Input
+          id="book-title-filter"
+          name="book-title-filter"
+          type="text"
+          value={title}
+          onChange={handleInputTitleSearchChange}
+        />
       </FormControl>
       <FormControl className="form__field-control">
         <InputLabel htmlFor="book-autor-filter">Введите автора</InputLabel>
-        <Input id="book-autor-filter" name="book-autor-filter" type="text" value={autor} onChange={handleInputAutorSearchChange} />
+        <Input
+          id="book-autor-filter"
+          name="book-autor-filter"
+          type="text"
+          value={autor}
+          onChange={handleInputAutorSearchChange}
+        />
       </FormControl>
     </form>
   );

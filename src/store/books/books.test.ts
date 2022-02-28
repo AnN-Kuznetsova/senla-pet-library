@@ -9,8 +9,8 @@ global.window = Object.create(window);
 const url = `http://localhost`;
 Object.defineProperty(window, `location`, {
   value: {
-    href: url
-  }
+    href: url,
+  },
 });
 
 
@@ -97,20 +97,20 @@ describe(`Books extraReducers`, () => {
         "id": "b1",
         "title": "The Hound of the Baskervilles",
         "autor": "Arthur Conan Doyle",
-        "coverImgUrl": "./assets/img/hound.jpg"
+        "coverImgUrl": "./assets/img/hound.jpg",
       },
       {
         "id": "b2",
         "title": "The Adventures of Sherlock Holmes",
         "autor": "Arthur Conan Doyle",
-        "coverImgUrl": "./assets/img/Adventures_of_sherlock_holmes.jpg"
+        "coverImgUrl": "./assets/img/Adventures_of_sherlock_holmes.jpg",
       },
       {
         "id": "b3",
         "title": "The Old Man And The Sea",
         "autor": "Ernest Hemingway",
-        "coverImgUrl": "./assets/img/old_man_and_sea_book.jpg"
-      }
+        "coverImgUrl": "./assets/img/old_man_and_sea_book.jpg",
+      },
     ];
 
     const resultState: BooksStateType = {
@@ -134,7 +134,7 @@ describe(`Books extraReducers`, () => {
           autor: "Ernest Hemingway",
           coverImgUrl: "./assets/img/old_man_and_sea_book.jpg",
 
-        }
+        },
       },
       operation: FetchOperation.LOAD,
       status: FetchStatus.RESOLVED,

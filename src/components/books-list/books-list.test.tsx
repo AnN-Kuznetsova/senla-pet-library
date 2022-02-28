@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as moment from "moment";
 import configureStore from "redux-mock-store";
-import {Provider} from 'react-redux'
+import {Provider} from "react-redux";
 import {mount} from "enzyme";
 
 import {BooksList, BooksListMode} from "./books-list";
@@ -9,31 +9,31 @@ import {BooksList, BooksListMode} from "./books-list";
 const mockStore = configureStore([]);
 const store = mockStore({
   books: {
-    ids: ["b1","b2","b3"],
-      entities: {
-        b1: {
-          id: "b1",
-          title: "The Hound of the Baskervilles",
-          autor: "Arthur Conan Doyle",
-          coverImgUrl: "",
-        },
-        b2: {
-          id: "b2",
-          title: "The Adventures of Sherlock Holmes",
-          autor: "Arthur Conan Doyle",
-          coverImgUrl: "",
-        },
-        b3: {
-          id: "b3",
-          title: "The Old Man And The Sea",
-          autor: "Ernest Hemingway",
-          coverImgUrl: "",
-
-        }
+    ids: ["b1", "b2", "b3"],
+    entities: {
+      b1: {
+        id: "b1",
+        title: "The Hound of the Baskervilles",
+        autor: "Arthur Conan Doyle",
+        coverImgUrl: "",
       },
-      operation: null,
-      status: null,
-      error: null,
+      b2: {
+        id: "b2",
+        title: "The Adventures of Sherlock Holmes",
+        autor: "Arthur Conan Doyle",
+        coverImgUrl: "",
+      },
+      b3: {
+        id: "b3",
+        title: "The Old Man And The Sea",
+        autor: "Ernest Hemingway",
+        coverImgUrl: "",
+
+      },
+    },
+    operation: null,
+    status: null,
+    error: null,
   },
   readers: {
     ids: ["r1"],
@@ -42,10 +42,12 @@ const store = mockStore({
         id: "r1",
         name: "Reader 1",
         age: "25",
-        books: [{
-          id: "b2",
-          dateOfTaking: moment("2021-10-31"),
-        }],
+        books: [
+          {
+            id: "b2",
+            dateOfTaking: moment("2021-10-31"),
+          },
+        ],
       },
     },
     operation: null,

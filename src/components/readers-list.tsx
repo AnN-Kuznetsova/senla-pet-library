@@ -7,8 +7,8 @@ import type {ReaderType} from "../types";
 
 
 interface PropsType {
-  readers: ReaderType[],
-  openModal: (children: React.ReactElement) => void,
+  readers: ReaderType[];
+  openModal: (children: React.ReactElement) => void;
 }
 
 
@@ -35,8 +35,8 @@ export const ReadersList: React.FC<PropsType> = (props: PropsType): JSX.Element 
           <ListItem key={index + reader.id}>
             <ListItemText primary={reader.name} secondary={renderReaderStatus(!reader.books.length)} />
             <ItemButton
-            onClick={handleMoreButtonClick.bind(null, reader)}
-            className={ItemButtonMode.MORE}
+              onClick={handleMoreButtonClick.bind(null, reader)}
+              className={ItemButtonMode.MORE}
             />
           </ListItem>
         ))

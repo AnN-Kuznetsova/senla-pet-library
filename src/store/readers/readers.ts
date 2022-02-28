@@ -1,5 +1,12 @@
 import {AxiosInstance} from "axios";
-import {createAsyncThunk, createEntityAdapter, createSlice, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createEntityAdapter,
+  createSlice,
+  isPending,
+  isRejected,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 
 import {FetchOperation, FetchStatus} from "../../const";
 import {createReader, createReaders, ReaderDataType, toRAWReader} from "../../adapters/reader";
@@ -9,13 +16,13 @@ import type {RootStateType} from "../..";
 
 
 export interface ReadersStateType {
-  ids: string[],
+  ids: string[];
   entities: {
-    [key: string]: ReaderType,
-  },
-  operation: FetchOperation | null,
-  status: FetchStatus | null,
-  error: ErrorType | null,
+    [key: string]: ReaderType;
+  };
+  operation: FetchOperation | null;
+  status: FetchStatus | null;
+  error: ErrorType | null;
 }
 
 
@@ -35,7 +42,7 @@ const loadReaders = createAsyncThunk<
   Promise<ReaderDataType[] | unknown>,
   void,
   {
-    extra: AxiosInstance
+    extra: AxiosInstance;
   }
 >(
   `readers/loadReaders`,
@@ -53,7 +60,7 @@ const updateReader = createAsyncThunk<
   Promise<ReaderType | unknown>,
   ReaderType,
   {
-    extra: AxiosInstance,
+    extra: AxiosInstance;
   }
 >(
   `readers/updateReader`,

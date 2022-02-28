@@ -1,15 +1,15 @@
 import * as React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { useSelector } from "react-redux";
+import {ComponentStory, ComponentMeta} from "@storybook/react";
+import {useSelector} from "react-redux";
 
-import { BooksList, BooksListMode } from "./books-list";
-import { getBooks, getBooksByIds, getFreeBooks } from "../../store/books/selectors";
-import { getReaders } from "../../store/readers/selectors";
-import { withMockRedux } from "../../stories/decorators/with-mock-redux";
 
+import {BooksList, BooksListMode} from "./books-list";
+import {getBooks, getBooksByIds, getFreeBooks} from "../../store/books/selectors";
+import {getReaders} from "../../store/readers/selectors";
+import {withMockRedux} from "../../stories/decorators/with-mock-redux";
 
 export default {
-  title: 'BooksList',
+  title: "BooksList",
   component: BooksList,
   decorators: [withMockRedux],
   argTypes: {},
@@ -27,12 +27,12 @@ const Template: ComponentStory<typeof BooksList> = (args) => {
   const takedBooks = useSelector(getBooksByIds(readers[1].books.map((book) => book.id)));
 
   switch (mode) {
-    case BooksListMode.BOOK_CHOICE:
-      books = freeBooks;
-      break;
-    case BooksListMode.TAKED_BOOKS:
-      books = takedBooks;
-      break;
+  case BooksListMode.BOOK_CHOICE:
+    books = freeBooks;
+    break;
+  case BooksListMode.TAKED_BOOKS:
+    books = takedBooks;
+    break;
   }
 
   return <BooksList

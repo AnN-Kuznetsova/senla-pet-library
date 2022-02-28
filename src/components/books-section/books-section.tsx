@@ -7,7 +7,12 @@ import {BooksList, BooksListMode} from "../books-list/books-list";
 import {FetchOperation, FetchStatus} from "../../const";
 import {Info, InfoType} from "../info";
 import {NewBookModal} from "../new-book-modal";
-import {getBooks, getBooksError, getBooksOperation, getBooksStatus} from "../../store/books/selectors";
+import {
+  getBooks,
+  getBooksError,
+  getBooksOperation,
+  getBooksStatus,
+} from "../../store/books/selectors";
 import {resetBooksStatus} from "../../store/books/books";
 import {useModal} from "../modal";
 import {useWaitShow} from "../../utils";
@@ -21,8 +26,8 @@ export const BooksSection: React.FC = (): JSX.Element => {
   const booksError = useSelector(getBooksError);
   const isWaitShow = useWaitShow(booksStatus);
 
-  const isLoading = booksOperation === FetchOperation.LOAD && booksStatus === FetchStatus.LOADING
   const isBooksNotLoad = booksOperation === FetchOperation.LOAD && booksStatus === FetchStatus.REJECTED;
+  const isLoading = booksOperation === FetchOperation.LOAD && booksStatus === FetchStatus.LOADING;
 
   const [isBooksListShow, changeIsBooksListShow] = useState(false);
   const handleShowBooksButtonClick = () => {
@@ -46,19 +51,19 @@ export const BooksSection: React.FC = (): JSX.Element => {
   useEffect(() => {
     if (booksOperation === FetchOperation.DELETE) {
       switch (booksStatus) {
-        case FetchStatus.LOADING:
-          if (isWaitShow) {
-            openModal(<Info type={InfoType.WAIT} />);
-          }
-          break;
+      case FetchStatus.LOADING:
+        if (isWaitShow) {
+          openModal(<Info type={InfoType.WAIT} />);
+        }
+        break;
 
-        case FetchStatus.REJECTED:
-          openModal(<Info type={InfoType.ERROR} />);
-          break;
+      case FetchStatus.REJECTED:
+        openModal(<Info type={InfoType.ERROR} />);
+        break;
 
-        case FetchStatus.RESOLVED:
-          closeModal();
-          break;
+      case FetchStatus.RESOLVED:
+        closeModal();
+        break;
       }
     }
   }, [booksOperation, booksStatus, isWaitShow, closeModal, openModal]);
@@ -66,8 +71,8 @@ export const BooksSection: React.FC = (): JSX.Element => {
   useEffect(() => {
     if (booksOperation === FetchOperation.ADD_NEW) {
       switch (booksStatus) {
-        case FetchStatus.RESOLVED:
-          closeModal();
+      case FetchStatus.RESOLVED:
+        closeModal();
         break;
       }
     }
@@ -87,7 +92,9 @@ export const BooksSection: React.FC = (): JSX.Element => {
         variant="contained"
         disabled={isLoading || isBooksNotLoad}
         onClick={handleAddNewBookButtonClick}
-      >+</Button>
+      >
+        +
+      </Button>
 
       {isLoading && <h2>Loading...</h2>}
 

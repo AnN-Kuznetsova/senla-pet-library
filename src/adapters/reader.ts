@@ -7,13 +7,13 @@ export const DATE_FORMAT = `YYYY-MM-DD`;
 
 
 interface ReaderDataType {
-  id: string,
-  name: string,
-  age: string,
+  id: string;
+  name: string;
+  age: string;
   books: {
-    id: string,
-    dateOfTaking: string | null,
-  }[],
+    id: string;
+    dateOfTaking: string | null;
+  }[];
 }
 
 

@@ -1,4 +1,11 @@
-import {createAsyncThunk, createEntityAdapter, createSlice, EntityId, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createEntityAdapter,
+  createSlice, EntityId,
+  isPending,
+  isRejected,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import type {AxiosInstance} from "axios";
 
 import {FetchOperation, FetchStatus} from "../../const";
@@ -101,22 +108,22 @@ const updateBook = createAsyncThunk<
   {
     book: BookType,
     onSubmit: () => void,
-  },
+      },
   {
     extra: AxiosInstance,
   }
->(
-  `books/updateBook`,
-  async ({book, onSubmit}, {extra: api, rejectWithValue}) => {
-    try {
-      const response = await api.put(`/books/${book.id}`, toRAWBook(book));
-      onSubmit();
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(createErrorValue(error));
-    }
-  }
-);
+      >(
+      `books/updateBook`,
+      async ({book, onSubmit}, {extra: api, rejectWithValue}) => {
+        try {
+          const response = await api.put(`/books/${book.id}`, toRAWBook(book));
+          onSubmit();
+          return response.data;
+        } catch (error) {
+          return rejectWithValue(createErrorValue(error));
+        }
+      }
+      );
 
 
 const isARejectedAction = isRejected(loadBooks, addNewBook, deleteBook, updateBook);

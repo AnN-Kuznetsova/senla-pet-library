@@ -6,7 +6,7 @@ import {DEBOUNCE_DELAY, WAIT_DELAY, FetchStatus, TIME_TO_READ} from "./const";
 import type {CreateFilterType} from "./types";
 
 
-const debounced = (func: ()=>unknown) => debounce(DEBOUNCE_DELAY, func);
+const debounced = (func: () => unknown) => debounce(DEBOUNCE_DELAY, func);
 
 const getTimeToRead = (): moment.Duration => {
   return moment.duration(TIME_TO_READ, `days`);
@@ -24,7 +24,7 @@ const createErrorValue = (error: unknown & {response?: object, request: XMLHttpR
 
 const useWaitShow = (status: FetchStatus | null): boolean => {
   const [isWaitShow, setIsWaitShow] = useState(false);
-  const waitTimerRef =  useRef(null);
+  const waitTimerRef = useRef(null);
 
   const createTimer = () => {
     waitTimerRef.current = setTimeout(() => {

@@ -1,7 +1,7 @@
 import {readersSelectors} from "./readers";
 import type {RootStateType} from "../..";
-import type { ReaderType } from "../../types";
 
+import type {ReaderType} from "../../types";
 
 const getReadersInfo = (state: RootStateType) => ({
   readers: readersSelectors.selectAll(state) as ReaderType[],

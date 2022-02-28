@@ -16,9 +16,9 @@ export enum BooksListMode {
 
 
 interface PropsType {
-  books: BookType[],
-  mode: BooksListMode,
-  onBookButtonClick: (prop: unknown) => void,
+  books: BookType[];
+  mode: BooksListMode;
+  onBookButtonClick: (prop: unknown) => void;
 }
 
 
@@ -60,9 +60,9 @@ export const BooksList: React.FC<PropsType> = (props: PropsType): JSX.Element =>
     <>
       {isBooks && isFilter && renderBooksFilter()}
 
-      {!filteredBooks.length && <Typography variant="h4">
-        There are no books on the list.
-      </Typography>}
+      {!filteredBooks.length && (
+        <Typography variant="h4">There are no books on the list.</Typography>
+      )}
 
       {!!filteredBooks.length &&
         <div className="list-wrapper">

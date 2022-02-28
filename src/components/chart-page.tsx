@@ -25,7 +25,20 @@ enum ChartMode {
   HORIZONTAL_BAR,
 }
 
-const Labels = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`];
+const Labels = [
+  `January`,
+  `February`,
+  `March`,
+  `April`,
+  `May`,
+  `June`,
+  `July`,
+  `August`,
+  `September`,
+  `October`,
+  `November`,
+  `December`,
+];
 
 // регистрирует плагины для графика
 ChartJS.register(
@@ -72,7 +85,7 @@ export const ChartPage: React.FC = (): JSX.Element => {
 
   const verticalChartOptions = {
     ...options,
-    indexAxis: 'y' as const,
+    indexAxis: "y" as const,
     elements: {
       bar: {
         borderWidth: 2,
@@ -85,8 +98,7 @@ export const ChartPage: React.FC = (): JSX.Element => {
   const labels = [];
 
   for (let i = Labels.length - 1; i >= 0; i--) {
-    labels.push(nowMonth - i < 0 ? Labels[nowMonth + Labels.length - i]
-      : Labels[nowMonth - i]);
+    labels.push(nowMonth - i < 0 ? Labels[nowMonth + Labels.length - i] : Labels[nowMonth - i]);
   }
 
   const data = labels.map((label) => takenBooks.filter((book) => {
@@ -114,7 +126,7 @@ export const ChartPage: React.FC = (): JSX.Element => {
       <Select
         id="chartSelect"
         variant="standard"
-        sx={{ m: 1, minWidth: 300 }}
+        sx={{m: 1, minWidth: 300}}
         value={chartMode}
         onChange={handleSelectChange}
       >

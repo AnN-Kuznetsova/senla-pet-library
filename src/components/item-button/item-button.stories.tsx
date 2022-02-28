@@ -1,13 +1,13 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
+import {ComponentStory, ComponentMeta} from "@storybook/react";
+import {action} from "@storybook/addon-actions";
 
-import { ItemButton, ItemButtonMode } from "./item-button";
 
+import {ItemButton, ItemButtonMode} from "./item-button";
 
 export default {
-  title: 'ItemButton',
+  title: "ItemButton",
   component: ItemButton,
   argTypes: {
     //backgroundColor: { control: 'color' },

@@ -1,6 +1,5 @@
-import {createTheme} from '@mui/material/styles';
-import {lime, lightGreen, red, deepOrange} from '@mui/material/colors';
-
+import {createTheme} from "@mui/material/styles";
+import {lime, lightGreen, red, deepOrange} from "@mui/material/colors";
 
 const DEBOUNCE_DELAY = 500; // ms
 const WAIT_DELAY = 300; // ms
@@ -65,9 +64,6 @@ const THEME = createTheme({
     },
   },
 });
-
-
-
 
 
 export {

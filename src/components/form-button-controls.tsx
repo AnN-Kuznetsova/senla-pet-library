@@ -10,21 +10,19 @@ export enum FormButtonControllsType {
 
 
 export interface ControllButtonType {
-  type: FormButtonControllsType,
-  isDisabled?: boolean,
-  isSubmit?: boolean,
-  onClick?: () => void,
+  type: FormButtonControllsType;
+  isDisabled?: boolean;
+  isSubmit?: boolean;
+  onClick?: () => void;
 }
 
 interface PropsType {
-  buttons: ControllButtonType[],
+  buttons: ControllButtonType[];
 }
 
 
 export const FormButtonControlls: React.FC<PropsType> = (props: PropsType): JSX.Element => {
-  const {
-    buttons,
-  } = props;
+  const {buttons} = props;
 
   return (
     <div className="controll-buttons">
@@ -32,15 +30,15 @@ export const FormButtonControlls: React.FC<PropsType> = (props: PropsType): JSX.
         let label = ``;
 
         switch (button.type) {
-          case FormButtonControllsType.CHANGE:
-            label = `Change`;
-            break;
-          case FormButtonControllsType.SAVE:
-            label = `Save`;
-            break;
-          case FormButtonControllsType.CANCEL:
-            label = `Cancel`;
-            break;
+        case FormButtonControllsType.CHANGE:
+          label = `Change`;
+          break;
+        case FormButtonControllsType.SAVE:
+          label = `Save`;
+          break;
+        case FormButtonControllsType.CANCEL:
+          label = `Cancel`;
+          break;
         }
 
         return (

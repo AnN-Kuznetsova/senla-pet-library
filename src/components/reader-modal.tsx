@@ -16,7 +16,7 @@ import type {BookTakenStatusType} from "../types";
 
 
 interface PropsType {
-  readerId: string,
+  readerId: string;
 }
 
 
@@ -75,7 +75,9 @@ export const ReaderModal: React.FC<PropsType> = (props: PropsType): JSX.Element 
               variant="contained"
               style={{marginLeft: "auto"}}
               onClick={handleTakeButtonClick}
-            >{takeButtonTitle}</Button>
+            >
+              {takeButtonTitle}
+            </Button>
           </div>
 
           <Typography variant="h6">Taken Books: {takedBooksCount}</Typography>
@@ -85,14 +87,14 @@ export const ReaderModal: React.FC<PropsType> = (props: PropsType): JSX.Element 
               books={freeBooks}
               mode={BooksListMode.BOOK_CHOICE}
               onBookButtonClick={handleTakeBookButtonClick}
-          />}
+            />}
 
           {!isBookChoice && !!takedBooksCount &&
             <BooksList
               books={takedBooks}
               mode={BooksListMode.TAKED_BOOKS}
               onBookButtonClick={handleReturnBookButtonClick}
-          />}
+            />}
         </div>
       </div>
 

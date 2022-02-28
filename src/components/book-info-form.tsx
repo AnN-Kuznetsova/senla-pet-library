@@ -16,9 +16,9 @@ import type {ControllButtonType} from "./form-button-controls";
 
 
 interface PropsType {
-  book?: BookType,
-  onCancelButtonClick?: () => void,
-  onSubmit?: () => void,
+  book?: BookType;
+  onCancelButtonClick?: () => void;
+  onSubmit?: () => void;
 }
 
 
@@ -84,7 +84,10 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType): JSX.Element
     reader.readAsDataURL(imgFile);
   };
 
-  const isNewData = book ? (formik.values.title !== book.title || formik.values.autor !== book.autor || formik.values.coverImgUrl !== book.coverImgUrl)
+  const isNewData = book
+    ? formik.values.title !== book.title ||
+      formik.values.autor !== book.autor ||
+      formik.values.coverImgUrl !== book.coverImgUrl
     : Object.values(formik.touched).every((touch) => touch === true);
 
   const handleErrorComponentClick = () => {
@@ -94,9 +97,9 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType): JSX.Element
   const controllButtons: ControllButtonType[] = [];
   controllButtons.push({
     type: FormButtonControllsType.SAVE,
-    isDisabled: !(formik.isValid  && isNewData),
+    isDisabled: !(formik.isValid && isNewData),
     isSubmit: true,
-    });
+  });
 
   if (onCancelButtonClick) {
     controllButtons.push({
@@ -180,6 +183,6 @@ export const BookInfoForm: React.FC<PropsType> = (props: PropsType): JSX.Element
           <Info type={InfoType.ERROR} error={error} />
         </div>
       }
-  </React.Fragment>
+    </React.Fragment>
   );
 };

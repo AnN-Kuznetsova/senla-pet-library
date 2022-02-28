@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as moment from "moment";
 import configureStore from "redux-mock-store";
-import {Provider} from 'react-redux'
+import {Provider} from "react-redux";
 import {mount, render} from "enzyme";
 
 import {DATE_FORMAT} from "../../adapters/reader";
@@ -18,7 +18,7 @@ jest.mock(`react`, () => {
   return {
     ...originalModule,
     useLayoutEffect: jest.requireActual(`react`).useEffect,
-  }
+  };
 });
 
 const mockStore = configureStore([]);
@@ -66,7 +66,7 @@ describe(`BooksListItem`, () => {
 
   test(`Should render correct when "BooksListMode" is "BOOK_CHOICE"`, () => {
     const booksState: BooksStateType = {
-      ids: ["b1","b2","b3"],
+      ids: ["b1", "b2", "b3"],
       entities: {
         b1: {
           id: "b1",
@@ -86,7 +86,7 @@ describe(`BooksListItem`, () => {
           autor: "Ernest Hemingway",
           coverImgUrl: "",
 
-        }
+        },
       },
       operation: null,
       status: null,
@@ -99,10 +99,12 @@ describe(`BooksListItem`, () => {
           id: "r1",
           name: "Reader 1",
           age: "25",
-          books: [{
-            id: "b2",
-            dateOfTaking: moment("2021-10-31", DATE_FORMAT),
-          }],
+          books: [
+            {
+              id: "b2",
+              dateOfTaking: moment("2021-10-31", DATE_FORMAT),
+            },
+          ],
         },
       },
       operation: null,
@@ -137,7 +139,7 @@ describe(`BooksListItem`, () => {
 
   test(`Should render correct when "BooksListMode" is "TAKED_BOOKS"`, () => {
     const booksState: BooksStateType = {
-      ids: ["b1","b2","b3"],
+      ids: ["b1", "b2", "b3"],
       entities: {
         b1: {
           id: "b1",
@@ -157,7 +159,7 @@ describe(`BooksListItem`, () => {
           autor: "Ernest Hemingway",
           coverImgUrl: "",
 
-        }
+        },
       },
       operation: null,
       status: null,
@@ -170,10 +172,12 @@ describe(`BooksListItem`, () => {
           id: "r1",
           name: "Reader 1",
           age: "25",
-          books: [{
-            id: "b2",
-            dateOfTaking: moment("2021-10-31", DATE_FORMAT),
-          }],
+          books: [
+            {
+              id: "b2",
+              dateOfTaking: moment("2021-10-31", DATE_FORMAT),
+            },
+          ],
         },
       },
       operation: null,

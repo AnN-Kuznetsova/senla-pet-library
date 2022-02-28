@@ -11,7 +11,7 @@ import {getBookById} from "../store/books/selectors";
 
 
 interface PropsType {
-  bookId: string,
+  bookId: string;
 }
 
 
@@ -47,15 +47,18 @@ export const BookModal: React.FC<PropsType> = (props: PropsType): JSX.Element =>
 
           <div className="book-modal__info">
             <Typography variant="h5">{book.title}</Typography>
-            <p>{book.autor}
+            <p>
+              {book.autor}
               {renderBookTakenInfo(BookTakenInfoMode.DEFAULT)}
             </p>
 
             <FormButtonControlls
-              buttons={[{
-                type: FormButtonControllsType.CHANGE,
-                onClick: handleChangeButtonClick,
-              }]}
+              buttons={[
+                {
+                  type: FormButtonControllsType.CHANGE,
+                  onClick: handleChangeButtonClick,
+                },
+              ]}
             />
           </div>
         </div>

@@ -11,9 +11,9 @@ import type {BookType} from "../../types";
 
 
 interface PropsType {
-  book: BookType,
-  mode: BooksListMode,
-  onBookButtonClick: (prop: unknown) => void,
+  book: BookType;
+  mode: BooksListMode;
+  onBookButtonClick: (prop: unknown) => void;
 }
 
 
@@ -53,17 +53,19 @@ export const BooksListItem: React.FC<PropsType> = (props: PropsType): JSX.Elemen
         style={{color: `${textColor}`}}
       />
 
-      {mode === BooksListMode.DEFAULT && <>
-        <ItemButton
-          className={ItemButtonMode.MORE}
-          onClick={handleBookButtonClick.bind(null, book)}
-        />
-        <ItemButton
-          className={ItemButtonMode.DELETE}
-          isDisabled={!!bookStatus}
-          onClick={handleDeleteBookButtonClick.bind(null, book.id)}
-        />
-      </>}
+      {mode === BooksListMode.DEFAULT && (
+        <>
+          <ItemButton
+            className={ItemButtonMode.MORE}
+            onClick={handleBookButtonClick.bind(null, book)}
+          />
+          <ItemButton
+            className={ItemButtonMode.DELETE}
+            isDisabled={!!bookStatus}
+            onClick={handleDeleteBookButtonClick.bind(null, book.id)}
+          />
+        </>
+      )}
 
       {mode === BooksListMode.TAKED_BOOKS &&
         <>
@@ -79,10 +81,10 @@ export const BooksListItem: React.FC<PropsType> = (props: PropsType): JSX.Elemen
 
       {mode === BooksListMode.BOOK_CHOICE &&
         <ItemButton
-         className={ItemButtonMode.ON_RIGHT}
-         textValue="Take"
-         onClick={handleBookButtonClick.bind(null, book)}
-      / >
+          className={ItemButtonMode.ON_RIGHT}
+          textValue="Take"
+          onClick={handleBookButtonClick.bind(null, book)}
+        / >
       }
     </>
   );

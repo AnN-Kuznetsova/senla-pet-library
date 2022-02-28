@@ -14,8 +14,8 @@ export enum BookTakenInfoMode {
 
 
 interface PropsType {
-  dateOfTaking: moment.Moment,
-  mode: BookTakenInfoMode,
+  dateOfTaking: moment.Moment;
+  mode: BookTakenInfoMode;
 }
 
 
@@ -30,14 +30,14 @@ export const BookTakenInfo: React.FC<PropsType> = (props: PropsType): JSX.Elemen
 
   const willBeReturnedStr = willBeReturnedAfter ?
     willBeReturnedAfter.days() >= 0 ? <>Will be returned after <b style={{color: "green"}}>{willBeReturnedAfter.humanize()}</b></>
-    : <>Delay return for <b style={{color: "red"}}>{willBeReturnedAfter.humanize()}</b></>
+      : <>Delay return for <b style={{color: "red"}}>{willBeReturnedAfter.humanize()}</b></>
     : null;
 
   return (
     <span style={{
       display: "block",
       marginRight: "100px",
-      minWidth: "200px"
+      minWidth: "200px",
     }}>
       {mode === BookTakenInfoMode.DEFAULT &&
         <span

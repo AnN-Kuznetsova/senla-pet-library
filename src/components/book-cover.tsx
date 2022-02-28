@@ -2,7 +2,7 @@ import * as React from "react";
 
 
 interface PropsType {
-  coverImgUrl: string | ArrayBuffer,
+  coverImgUrl: string | ArrayBuffer;
 }
 
 
