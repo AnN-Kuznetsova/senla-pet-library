@@ -29,6 +29,23 @@ extends: [
   # "plugin:prettier/recommended",
 ]
 
+settings:
+  react:
+    version: "16"
+  import/resolver:
+    node:
+      extensions: [".js", ".jsx"]
+
+overrides: [
+  {
+    files: ["*.config.js"],
+    rules: {
+      "@typescript-eslint/no-var-requires": "off",
+      "no-undef": "off",
+    },
+  }
+]
+
 rules: {
   "no-console": "error",
   "react/react-in-jsx-scope": "off",
@@ -79,10 +96,3 @@ rules: {
   "object-property-newline": ["error", { "allowAllPropertiesOnSameLine": true }],
   # "prettier/prettier": "error",
 }
-
-settings:
-  react:
-    version: "16"
-  import/resolver:
-    node:
-      extensions: [".js", ".jsx"]

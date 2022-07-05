@@ -74,26 +74,26 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: `babel-loader`,
-        }
+        },
       }, {
         test: /\.(tsx|ts)?$/,
         exclude: /node_modules/,
         use: {
           loader: `ts-loader`,
-        }
+        },
       }, {
         test: /\.(scss|css)$/,
         exclude: /node_modules/,
         use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
-      }
+      },
     ],
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-        title: 'SENLA - pet-project Library',
-        template: path.resolve(__dirname, './src/assets/index-template.html'),
-        filename: 'index.html',
+      title: 'SENLA - pet-project Library',
+      template: path.resolve(__dirname, './src/assets/index-template.html'),
+      filename: 'index.html',
     }),
     new CopyPlugin({
       patterns: [
@@ -105,5 +105,5 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', 'json'],
   },
   devtool: `source-map`,
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development'
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 };
